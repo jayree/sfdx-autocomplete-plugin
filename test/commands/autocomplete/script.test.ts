@@ -19,19 +19,6 @@ skipwindows('autocomplete:script', () => {
 
   test
     .stdout()
-    .command(['autocomplete:script'])
-    .it('outputs bash profile config', ctx => {
-      ctx.config.shell = 'bash';
-      expect(ctx.stdout).to.contain(`
-# sfdx autocomplete setup
-SFDX_AC_BASH_SETUP_PATH=${
-        global.config.cacheDir
-      }/autocomplete/bash_setup && test -f $SFDX_AC_BASH_SETUP_PATH && source $SFDX_AC_BASH_SETUP_PATH;
-`);
-    });
-
-  test
-    .stdout()
     .command(['autocomplete:script', 'bash'])
     .it('outputs bash profile config', ctx => {
       expect(ctx.stdout).to.contain(`
