@@ -1,0 +1,86 @@
+{
+  "name": "sfdx-autocmplt",
+  "description": "autocomplete plugin for sfdx",
+  "version": "0.1.0",
+  "author": "jayree @jayree",
+  "bugs": "https://github.com/jayree/sfdx-autocomplete/issues",
+  "dependencies": {
+    "@oclif/command": "^1.5.8",
+    "@oclif/config": "^1.10.4",
+    "@oclif/errors": "^1.2.2",
+    "@salesforce/command": "^1.2.0",
+    "chalk": "^2.4.2",
+    "fs-extra": "^7.0.1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.21.0",
+    "@oclif/plugin-help": "^2.1.4",
+    "@oclif/semantic-release": "^3.1.1",
+    "@salesforce/dev-scripts": "^0.3.11",
+    "@types/fs-extra": "^5.0.4",
+    "codecov": "^4.0.0-0",
+    "commitlint": "^7.2.1",
+    "globby": "^8.0.1",
+    "husky": "^1.3.1",
+    "patch-package": "^5.1.1",
+    "per-env": "git+https://github.com/jayree/per-env.git#83c526deda58c8eca6070bb55e1194405a7538d6",
+    "semantic-release": "^15.13.2",
+    "tslib": "^1.9.3",
+    "tslint": "^5",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-microsoft-contrib": "^5",
+    "typescript": "3.1.6",
+    "typescript-tslint-plugin": "^0.2.1"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/lib/src",
+    "/oclif.manifest.json",
+    "/yarn.lock"
+  ],
+  "homepage": "https://github.com/jayree/sfdx-autocomplete",
+  "keywords": [
+    "sfdx-plugin",
+    "sfdx",
+    "autocomplete"
+  ],
+  "license": "MIT",
+  "oclif": {
+    "commands": "./lib/src/commands",
+    "bin": "sfdx",
+    "devPlugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "jayree/sfdx-autocomplete",
+  "scripts": {
+    "build": "yarn sfdx-build",
+    "clean": "yarn sfdx-clean",
+    "clean-all": "yarn sfdx-clean all",
+    "compile": "yarn sfdx-compile",
+    "docs": "yarn sfdx-docs",
+    "format": "yarn sfdx-format",
+    "lint": "yarn sfdx-lint",
+    "lint-fix": "yarn sfdx-lint --fix",
+    "postcompile": "oclif-dev manifest && oclif-dev readme",
+    "postinstall": "per-env",
+    "postinstall:development": "yarn patch-package && yarn sfdx-install",
+    "postpack": "rimraf oclif.manifest.json",
+    "prepack": "yarn sfdx-build",
+    "prepare": "per-env",
+    "prepare:development": "yarn sfdx-build",
+    "semantic-release": "semantic-release",
+    "test": "yarn sfdx-test",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "version": "oclif-dev manifest && oclif-dev readme && git add README.md oclif.manifest.json"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "yarn sfdx-husky-commit-msg",
+      "pre-commit": "yarn sfdx-husky-pre-commit",
+      "pre-push": "yarn sfdx-husky-pre-push"
+    }
+  }
+}

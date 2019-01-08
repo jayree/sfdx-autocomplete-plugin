@@ -1,0 +1,5 @@
+{
+  "test": {
+    "testsPath": "lib/test/**/*test.js"
+  }
+}
