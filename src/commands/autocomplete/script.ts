@@ -8,7 +8,7 @@ export default class Script extends AutocompleteBase {
   public static args = [{ name: 'shell', description: 'shell type', required: false }];
 
   public async run() {
-    const shell = this.args.shell || this.config.shell;
+    const shell = this.args.shell /* istanbul ignore next */ || this.config.shell;
 
     this.errorIfNotSupportedShell(shell);
 

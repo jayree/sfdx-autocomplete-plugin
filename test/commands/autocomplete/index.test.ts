@@ -19,27 +19,6 @@ skipwindows('autocomplete', () => {
 
   test
     .stdout()
-    .command(['autocomplete'])
-    .it('provides bash instructions', ctx => {
-      expect(ctx.stdout).to.contain(`
-Setup Instructions for SFDX CLI Autocomplete ---
-
-1) Add the autocomplete env var to your bash profile and source it
-$ printf \"$(sfdx autocomplete:script bash)\" >> ~/.bashrc; source ~/.bashrc
-
-NOTE: If your terminal starts as a login shell you may need to print the init script into ~/.bash_profile or ~/.profile.
-
-2) Test it out, e.g.:
-$ sfdx <TAB><TAB>                 # Command completion
-$ sfdx command --<TAB><TAB>       # Flag completion
-
-Enjoy!
-
-`);
-    });
-
-  test
-    .stdout()
     .command(['autocomplete', 'bash'])
     .it('provides bash instructions', ctx => {
       expect(ctx.stdout).to.contain(`
