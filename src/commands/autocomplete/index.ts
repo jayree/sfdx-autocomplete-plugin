@@ -23,7 +23,7 @@ export default class Index extends AutocompleteBase {
   };
 
   public async run() {
-    const shell = this.args.shell || this.config.shell;
+    const shell = this.args.shell /* istanbul ignore next */ || this.config.shell;
 
     this.errorIfNotSupportedShell(shell);
 
