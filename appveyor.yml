@@ -9,6 +9,5 @@ install:
   - yarn
 test_script:
   - .\bin\run --help
-  - yarn test-without-coverage
 
 build: off

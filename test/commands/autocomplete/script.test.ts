@@ -15,14 +15,13 @@ skipwindows('autocomplete:script', () => {
     global.config = new Config(config);
     global.config.cacheDir = path.join(__dirname, '../../../../test/assets/cache');
     global.config.bin = 'sfdx';
-    this.config = new Config(config);
-    this.config.shell = 'bash';
   });
 
   test
     .stdout()
     .command(['autocomplete:script'])
     .it('outputs bash profile config', ctx => {
+      ctx.config.shell = 'bash';
       expect(ctx.stdout).to.contain(`
 # sfdx autocomplete setup
 SFDX_AC_BASH_SETUP_PATH=${
