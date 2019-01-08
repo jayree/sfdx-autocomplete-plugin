@@ -17,7 +17,6 @@ _refs:
     command: yarn
   test: &test
     name: Testing
-    shell: /bin/bash
     command: yarn test
   coverage: &coverage
     name: Submitting code coverage to codecov

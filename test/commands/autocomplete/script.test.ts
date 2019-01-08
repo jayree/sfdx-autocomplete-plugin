@@ -15,6 +15,7 @@ skipwindows('autocomplete:script', () => {
     global.config = new Config(config);
     global.config.cacheDir = path.join(__dirname, '../../../../test/assets/cache');
     global.config.bin = 'sfdx';
+    global.config.shell = 'bash';
   });
 
   test
