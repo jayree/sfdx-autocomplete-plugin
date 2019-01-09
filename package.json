@@ -3,7 +3,7 @@
   "description": "autocomplete plugin for sfdx",
   "version": "0.1.0",
   "author": "jayree @jayree",
-  "bugs": "https://github.com/jayree/sfdx-autocomplete/issues",
+  "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "dependencies": {
     "@oclif/command": "^1.5.8",
     "@oclif/config": "^1.10.4",
@@ -40,7 +40,7 @@
     "/oclif.manifest.json",
     "/yarn.lock"
   ],
-  "homepage": "https://github.com/jayree/sfdx-autocomplete",
+  "homepage": "https://github.com/jayree/sfdx-autocomplete-plugin",
   "keywords": [
     "sfdx-plugin",
     "sfdx",
@@ -54,7 +54,7 @@
       "@oclif/plugin-help"
     ]
   },
-  "repository": "jayree/sfdx-autocomplete",
+  "repository": "jayree/sfdx-autocomplete-plugin",
   "scripts": {
     "build": "yarn sfdx-build",
     "clean": "yarn sfdx-clean",
