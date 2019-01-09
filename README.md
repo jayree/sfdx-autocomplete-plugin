@@ -6,7 +6,7 @@ based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplet
 
 [![sfdx](https://img.shields.io/badge/cli-sfdx-brightgreen.svg)](https://developer.salesforce.com/tools/sfdxcli)
 [![Version](https://img.shields.io/npm/v/sfdx-autocmplt.svg)](https://npmjs.org/package/sfdx-autocmplt)
-[![CircleCI](https://circleci.com/gh/jayree/sfdx-autocomplete-plugin/tree/master.svg?style=shield)](https://circleci.com/gh/jayree/sfdx-autocomplete-plugin/tree/master)
+[![CircleCI](https://circleci.com/gh/jayree/sfdx-autocomplete-plugin.svg?style=shield)](https://circleci.com/gh/jayree/sfdx-autocomplete-plugin)
 [![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/jayree/sfdx-autocomplete-plugin?branch=master&svg=true)](https://ci.appveyor.com/project/jayree/sfdx-autocomplete-plugin/branch/master)
 [![Codecov](https://codecov.io/gh/jayree/sfdx-autocomplete-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/jayree/sfdx-autocomplete-plugin)
 [![Downloads/week](https://img.shields.io/npm/dw/sfdx-autocmplt.svg)](https://npmjs.org/package/sfdx-autocmplt)
