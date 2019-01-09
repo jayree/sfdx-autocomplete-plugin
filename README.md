@@ -60,5 +60,5 @@ EXAMPLES
   $ sfdx autocomplete --refresh-cache
 ```
 
-_See code: [src/commands/autocomplete/index.ts](https://github.com/jayree/sfdx-autocomplete/blob/v0.1.0/src/commands/autocomplete/index.ts)_
+_See code: [src/commands/autocomplete/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v0.1.0/src/commands/autocomplete/index.ts)_
 <!-- commandsstop -->
