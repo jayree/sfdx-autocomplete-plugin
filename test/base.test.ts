@@ -1,5 +1,5 @@
 import { Config } from '@oclif/config';
-import { expect } from 'chai';
+import { expect, test } from '@salesforce/command/lib/test';
 import * as path from 'path';
 
 import { AutocompleteBase } from '../src/base';
@@ -29,7 +29,7 @@ skipwindows('autocompleteBase', () => {
     await cmd.run();
   });
 
-  it('#errorIfWindows', async () => {
+  test.it('#errorIfWindows', async () => {
     try {
       cmd.errorIfWindows();
     } catch (e) {
@@ -37,7 +37,7 @@ skipwindows('autocompleteBase', () => {
     }
   });
 
-  it('#errorIfNotSupportedShell', async () => {
+  test.it('#errorIfNotSupportedShell', async () => {
     try {
       cmd.errorIfNotSupportedShell('fish');
     } catch (e) {
@@ -45,7 +45,7 @@ skipwindows('autocompleteBase', () => {
     }
   });
 
-  it('#autocompleteCacheDir', async () => {
+  test.it('#autocompleteCacheDir', async () => {
     expect(cmd.autocompleteCacheDir).to.eq(path.join(cmd.sfdxCacheDir, 'autocomplete'));
   });
 });
