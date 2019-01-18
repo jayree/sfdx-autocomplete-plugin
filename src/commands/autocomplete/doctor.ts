@@ -50,7 +50,6 @@ export default class Doctor extends AutocompleteBase {
 
     // check shell command cache
     const shellCmdCache = path.join(this.autocompleteCacheDir, shell === 'zsh' ? 'commands_setters' : 'commands');
-    console.log(shellCmdCache);
     const shellCmdCacheValue = fs.existsSync(shellCmdCache) ? 'present' : 'missing';
     data.push({ name: `${shell} commands cache`, value: shellCmdCacheValue });
 
@@ -86,12 +85,19 @@ export default class Doctor extends AutocompleteBase {
             this.log(`${c.id} (hidden)`);
           } else {
             const results = Object.keys(c.flags).map((f: string) => {
+              let out = `--${f}`;
               // tslint:disable-next-line: no-any
               const flag: any = c.flags[f];
-              if (flag.hidden) return `--${f} (hidden)`;
-              else if (flag.completion) {
-                return `--${f} (completion)`;
-              } else return `--${f}`;
+              if (flag.type === 'option') {
+                out += '=';
+              }
+              if (flag.hasOwnProperty('completion') || this.findCompletion(flag.name, c.id)) {
+                out += '(c)';
+              }
+              if (flag.hidden) {
+                out += '(h)';
+              }
+              return out;
             });
             if (results.length) this.log(`${c.id} -> ${results}`);
           }
