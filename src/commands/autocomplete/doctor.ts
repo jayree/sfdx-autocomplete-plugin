@@ -91,7 +91,7 @@ export default class Doctor extends AutocompleteBase {
               if (flag.type === 'option') {
                 out += '=';
               }
-              if (flag.hasOwnProperty('completion') || this.findCompletion(flag.name, c.id)) {
+              if (this.findCompletion(f, c.id)) {
                 out += '(c)';
               }
               if (flag.hidden) {
