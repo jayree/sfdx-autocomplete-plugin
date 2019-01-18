@@ -1,4 +1,3 @@
-import { Plugin } from '@oclif/config';
 import { flags } from '@salesforce/command';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -245,36 +244,6 @@ _${cliBin}
     await this.ensureCommands();
     // 3. save (generated) autocomplete files
     await this.createFiles();
-  }
-
-  private async ensureCommands() {
-    const cache = JSON.parse(await fs.readFile(path.resolve(this.sfdxCacheDir, 'plugins.json'), 'utf8')).plugins;
-    this.config.plugins = [];
-
-    for (const pluginDir of Object.keys(cache)) {
-      const root = path.resolve(pluginDir, 'package.json');
-      try {
-        const pjson = JSON.parse(await fs.readFile(root, 'utf8'));
-        if (pjson.files) {
-          const plugin = new Plugin({ root });
-          await plugin.load();
-          this.logger.info('plugin loaded: ' + root);
-          this.config.plugins.push(plugin);
-        } else {
-          this.logger.warn('plugin not vaild: ' + root);
-          this.config.plugins.push(cache[pluginDir]);
-        }
-      } catch (err) {
-        /* istanbul ignore else*/
-        if (err.code === 'ENOENT') {
-          this.logger.warn('File not found: ' + root);
-          this.config.plugins.push(cache[pluginDir]);
-        } else {
-          this.logger.error(err.message);
-          throw err;
-        }
-      }
-    }
   }
 
   private async ensureDirs() {

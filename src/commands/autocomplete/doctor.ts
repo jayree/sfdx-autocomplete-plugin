@@ -5,8 +5,6 @@ import * as path from 'path';
 import { AutocompleteBase } from '../../base';
 import { fetchCache } from '../../cache';
 
-import Create from './create';
-
 export default class Doctor extends AutocompleteBase {
   public static hidden = true;
   public static description = 'autocomplete diagnostic';
@@ -19,7 +17,7 @@ export default class Doctor extends AutocompleteBase {
   public async run() {
     this.config.plugins = await fetchCache(path.join(this.autocompleteCacheDir, 'plugins'), 60 * 60 * 24, {
       cacheFn: async () => {
-        await Create.run([], this.config);
+        await this.ensureCommands();
         return this.config.plugins;
       }
     });
