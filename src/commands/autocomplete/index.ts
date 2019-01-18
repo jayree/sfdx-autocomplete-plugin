@@ -38,6 +38,7 @@ export default class Index extends AutocompleteBase {
     if (!isInTest) this.ux.startSpinner(`${chalk.bold('Building the autocomplete cache')}`);
     await Create.run([], this.config);
     await this.updateCache(targetUserNameCompletion, 'targetusername');
+    await updateCache(path.join(this.autocompleteCacheDir, 'plugins'), this.config.plugins);
     /* istanbul ignore next */
     if (!isInTest) this.ux.stopSpinner();
 

@@ -31,6 +31,13 @@ export default class Options extends AutocompleteBase {
 
     // ex: heroku autocomplete:options 'heroku addons:destroy -a myapp myaddon'
     try {
+      this.config.plugins = await fetchCache(path.join(this.autocompleteCacheDir, 'plugins'), 60 * 60 * 24, {
+        cacheFn: async () => {
+          await Create.run([], this.config);
+          return this.config.plugins;
+        }
+      });
+
       const commandStateVars = await this.processCommandLine();
       const completion = this.determineCompletion(commandStateVars);
       const options = await this.fetchOptions(completion);
@@ -47,7 +54,6 @@ export default class Options extends AutocompleteBase {
     const id = commandLineToComplete[1];
 
     // find Command
-    await Create.run([], this.config);
     const C = this.config.findCommand(id);
     let klass;
     if (C) {

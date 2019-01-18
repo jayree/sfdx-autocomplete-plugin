@@ -3,6 +3,7 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 
 import { AutocompleteBase } from '../../base';
+import { fetchCache } from '../../cache';
 
 import Create from './create';
 
@@ -16,7 +17,12 @@ export default class Doctor extends AutocompleteBase {
   };
 
   public async run() {
-    await Create.run([], this.config);
+    this.config.plugins = await fetchCache(path.join(this.autocompleteCacheDir, 'plugins'), 60 * 60 * 24, {
+      cacheFn: async () => {
+        await Create.run([], this.config);
+        return this.config.plugins;
+      }
+    });
 
     const shell = this.args.shell || this.config.shell;
     this.errorIfNotSupportedShell(shell);
