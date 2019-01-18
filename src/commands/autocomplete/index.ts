@@ -1,6 +1,11 @@
 import { flags } from '@salesforce/command';
 import chalk from 'chalk';
+import * as path from 'path';
+import { targetUserNameCompletion } from '../../completions';
+
 import { AutocompleteBase } from '../../base';
+import { updateCache } from '../../cache';
+
 import Create from './create';
 
 export default class Index extends AutocompleteBase {
@@ -32,6 +37,7 @@ export default class Index extends AutocompleteBase {
     /* istanbul ignore next */
     if (!isInTest) this.ux.startSpinner(`${chalk.bold('Building the autocomplete cache')}`);
     await Create.run([], this.config);
+    await this.updateCache(targetUserNameCompletion, 'targetusername');
     /* istanbul ignore next */
     if (!isInTest) this.ux.stopSpinner();
 
@@ -61,5 +67,11 @@ ${chalk.cyan(`$ ${bin} command --${tabStr}`)}       # Flag completion
 Enjoy!
 `);
     }
+  }
+  // tslint:disable-next-line: no-any
+  private async updateCache(completion: any, cacheKey: string) {
+    const cachePath = path.join(this.completionsCacheDir, cacheKey);
+    const options = await completion.options({ config: this.config });
+    await updateCache(cachePath, options);
   }
 }

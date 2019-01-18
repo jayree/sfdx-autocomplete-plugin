@@ -1,6 +1,7 @@
 import { Config } from '@oclif/config';
 import { SfdxCommand } from '@salesforce/command';
 import * as path from 'path';
+import { completionMapping } from './completions';
 
 declare global {
   namespace NodeJS {
@@ -17,6 +18,18 @@ export abstract class AutocompleteBase extends SfdxCommand {
 
   public get cliBinEnvVar() {
     return global.config.bin.toUpperCase().replace('-', '_');
+  }
+
+  public get autocompleteCacheDir(): string {
+    return path.join(global.config.cacheDir, 'autocomplete');
+  }
+
+  public get sfdxCacheDir(): string {
+    return path.resolve(global.config.cacheDir);
+  }
+
+  public get completionsCacheDir(): string {
+    return path.join(global.config.cacheDir, 'autocomplete', 'completions');
   }
 
   public errorIfWindows() {
@@ -37,11 +50,8 @@ export abstract class AutocompleteBase extends SfdxCommand {
     }
   }
 
-  public get autocompleteCacheDir(): string {
-    return path.join(global.config.cacheDir, 'autocomplete');
-  }
-
-  public get sfdxCacheDir(): string {
-    return path.resolve(global.config.cacheDir);
+  // tslint:disable-next-line: no-any
+  protected findCompletion(name: string, id: string): any | undefined {
+    return completionMapping[name];
   }
 }

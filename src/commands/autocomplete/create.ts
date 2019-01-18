@@ -17,6 +17,11 @@ export default class Create extends AutocompleteBase {
     return path.join(this.autocompleteCacheDir, 'bash_setup');
   }
 
+  private get bashCommandsListPath(): string {
+    // <cacheDir>/autocomplete/commands
+    return path.join(this.autocompleteCacheDir, 'commands');
+  }
+
   private get zshSetupScriptPath(): string {
     // <cachedir>/autocomplete/zsh_setup
     return path.join(this.autocompleteCacheDir, 'zsh_setup');
@@ -151,6 +156,11 @@ if ! type __ltrim_colon_completions >/dev/null 2>&1; then
   }
 fi
 
+_${cliBin}_compreply_cli () {
+  opts=("$(${cliBin} autocomplete:options "$(echo "\${COMP_WORDS[*]}")")")
+  COMPREPLY=( $(compgen -W "\${opts}" -- \${cur}) )
+}
+
 _${cliBin}()
 {
 
@@ -169,6 +179,8 @@ ${this.bashCommandsWithFlagsList}
       if [[ $cur == "-"* ]] ; then
         opts=$(printf "$commands" | grep "\${COMP_WORDS[1]}" | sed -n "s/^\${COMP_WORDS[1]} //p")
         COMPREPLY=( $(compgen -W  "\${opts}" -- \${cur}) )
+                else
+          _${cliBin}_compreply_cli
       fi
   fi
   return 0
@@ -277,8 +289,26 @@ _${cliBin}
   private async createFiles() {
     await fs.writeFile(this.bashSetupScriptPath, this.bashSetupScript);
     await fs.writeFile(this.bashCompletionFunctionPath, this.bashCompletionFunction);
+    await fs.writeFile(this.bashCommandsListPath, this.bashCommandsList);
     await fs.writeFile(this.zshSetupScriptPath, this.zshSetupScript);
     await fs.writeFile(this.zshCompletionFunctionPath, this.zshCompletionFunction);
+    // await fs.writeFile(this.zshCompletionSettersPath, this.zshCompletionSetters)
+  }
+
+  private get bashCommandsList(): string {
+    return this.commands
+      .map(c => {
+        try {
+          const publicFlags = this.genCmdPublicFlags(c).trim();
+          return `${c.id} ${publicFlags}`;
+        } catch (err) {
+          this.ux.error(`Error creating bash completion for command ${c.id}, moving on...`);
+          this.ux.error(err.message);
+          this.logger.error(err.message);
+          return '';
+        }
+      })
+      .join('\n');
   }
 
   private genZshFlagSpecs(klass: CommandCompletion): string {
