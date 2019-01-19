@@ -29,6 +29,7 @@ export default class Options extends AutocompleteBase {
 
     // ex: heroku autocomplete:options 'heroku addons:destroy -a myapp myaddon'
     try {
+      /* istanbul ignore next */
       this.config.plugins = await fetchCache(path.join(this.autocompleteCacheDir, 'plugins'), 60 * 60 * 24, {
         cacheFn: async () => {
           await this.ensureCommands();
@@ -39,6 +40,7 @@ export default class Options extends AutocompleteBase {
       const commandStateVars = await this.processCommandLine();
       const completion = this.determineCompletion(commandStateVars);
       const options = await this.fetchOptions(completion);
+      /* istanbul ignore else*/
       if (options) this.log(options);
     } catch (err) {
       // write to ac log
@@ -92,9 +94,11 @@ export default class Options extends AutocompleteBase {
     } else {
       const cmdArgs = klass.args || [];
       // variable arg (strict: false)
+      /* istanbul ignore else*/
       if (!klass.strict) {
         cacheKey = cmdArgs[0] && cmdArgs[0].name.toLowerCase();
         cacheCompletion = this.findCompletion(cacheKey, id);
+        /* istanbul ignore else*/
         if (!cacheCompletion) this.throwError(`Cannot complete variable arg position for ${id}`);
       } else if (argsIndex > cmdArgs.length - 1) {
         this.throwError(`Cannot complete arg position ${argsIndex} for ${id}`);
@@ -105,6 +109,7 @@ export default class Options extends AutocompleteBase {
     }
 
     // try to auto-populate the completion object
+    /* istanbul ignore else*/
     if (!cacheCompletion) {
       cacheCompletion = this.findCompletion(cacheKey, id);
     }
@@ -116,6 +121,7 @@ export default class Options extends AutocompleteBase {
   private async fetchOptions(cache: any) {
     const { cacheCompletion, cacheKey } = cache;
     // build/retrieve & return options cache
+    /* istanbul ignore else*/
     if (cacheCompletion && cacheCompletion.options) {
       const ctx = {
         args: this.parsedArgs,
@@ -213,6 +219,7 @@ export default class Options extends AutocompleteBase {
         // we're a flag value
 
         // add parsedFlag
+        /* istanbul ignore else*/
         if (flagName) this.parsedFlags[flagName] = wild;
 
         argIsFlagValue = true;

@@ -270,7 +270,7 @@ _${cliBin}
         try {
           const publicFlags = this.genCmdPublicFlags(c).trim();
           return `${c.id} ${publicFlags}`;
-        } catch (err) {
+        } catch (err) /* istanbul ignore next*/ {
           this.ux.error(`Error creating bash completion for command ${c.id}, moving on...`);
           this.ux.error(err.message);
           this.logger.error(err.message);

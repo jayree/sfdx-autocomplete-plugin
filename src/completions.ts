@@ -23,7 +23,7 @@ export declare type ICompletion = {
 export const targetUserNameCompletion: ICompletion = {
   cacheDuration: oneDay,
   options: async () => {
-    return Object.keys((await fs.readJSON('/Users/jrinder/.sfdx/alias.json'))['orgs']);
+    return Object.keys((await fs.readJSON(global.config.home + '/.sfdx/alias.json'))['orgs']);
   }
 };
 
