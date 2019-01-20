@@ -441,8 +441,4 @@ ${cmdsWithDesc.join('\n')}
 }
 `;
   }
-
-  private wantsLocalFiles(flag: string) {
-    return ['file', 'procfile'].includes(flag);
-  }
 }

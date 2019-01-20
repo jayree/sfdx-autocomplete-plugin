@@ -85,4 +85,8 @@ export abstract class AutocompleteBase extends SfdxCommand {
   protected findCompletion(name: string, id: string): any | undefined {
     return completionMapping[name];
   }
+
+  protected wantsLocalFiles(flag: string) {
+    return ['file', 'procfile', 'configfile'].includes(flag);
+  }
 }

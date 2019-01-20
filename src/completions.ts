@@ -22,6 +22,14 @@ export declare type ICompletion = {
   options(ctx: ICompletionContext): Promise<string[]>;
 };
 
+export const loglevelCompletion: ICompletion = {
+  skipCache: true,
+
+  options: async () => {
+    return ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
+  }
+};
+
 export const targetUserNameCompletion: ICompletion = {
   cacheDuration: oneDay,
   options: async () => {
@@ -60,5 +68,6 @@ export const targetUserNameCompletion: ICompletion = {
 };
 
 export const completionMapping: { [key: string]: ICompletion } = {
-  targetusername: targetUserNameCompletion
+  targetusername: targetUserNameCompletion,
+  loglevel: loglevelCompletion
 };
