@@ -400,12 +400,12 @@ _${cliBin}
         // tslint:disable-next-line: no-any
         const f = (command.flags && command.flags[flag]) || ({ description: '' } as any);
         const isBoolean = f.type === 'boolean';
-        const hasCompletion = f.hasOwnProperty('completion') || this.findCompletion(flag, id);
+        const hasCompletion =
+          f.hasOwnProperty('completion') || this.findCompletion(flag, id) || this.wantsLocalFiles(flag);
         const name = isBoolean ? flag : `${flag}=-`;
         let cachecompl = '';
         if (hasCompletion) {
-          // tslint:disable-next-line: no-any
-          cachecompl = (this.wantsLocalFiles(flag) as any) ? ':_files' : ': :_sfdx_compadd_flag_options';
+          cachecompl = this.wantsLocalFiles(flag) ? ': :_files' : ': :_sfdx_compadd_flag_options';
         }
         const help = isBoolean ? '(switch) ' : hasCompletion ? '(autocomplete) ' : '';
         const completion = `--${name}[${help}${f.description}]${cachecompl}`;
@@ -443,6 +443,6 @@ ${cmdsWithDesc.join('\n')}
   }
 
   private wantsLocalFiles(flag: string) {
-    ['file', 'procfile'].includes(flag);
+    return ['file', 'procfile'].includes(flag);
   }
 }
