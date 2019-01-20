@@ -1,5 +1,7 @@
 import { IConfig } from '@oclif/config';
+import { core } from '@salesforce/command';
 import * as fs from 'fs-extra';
+import * as path from 'path';
 
 export const oneDay = 60 * 60 * 24;
 
@@ -23,7 +25,37 @@ export declare type ICompletion = {
 export const targetUserNameCompletion: ICompletion = {
   cacheDuration: oneDay,
   options: async () => {
-    return Object.keys((await fs.readJSON(global.config.home + '/.sfdx/alias.json'))['orgs']);
+    const aliases = Object.keys(
+      (await fs.readJSON(path.join(core.Global.DIR, core.Aliases.getFileName())))[core.AliasGroup.ORGS]
+    );
+    // console.log(await core.AuthInfo.listAllAuthFiles());
+    const aliasesToDelete = [];
+    /*     for (const a of aliases) {
+      try {
+        const org = await core.Org.create({
+          aliasOrUsername: a
+        });
+        await org.refreshAuth();
+        // console.log(org.getField(core.Org.Fields['STATUS']));
+      } catch (error) {
+        aliasesToDelete.push(a);
+      }
+    } */
+
+    await Promise.all(
+      aliases.map(async a => {
+        try {
+          const org = await core.Org.create({
+            aliasOrUsername: a
+          });
+          await org.refreshAuth();
+          // console.log(org.getField(core.Org.Fields['STATUS']));
+        } catch (error) {
+          aliasesToDelete.push(a);
+        }
+      })
+    );
+    return aliases.filter(alias => !aliasesToDelete.includes(alias));
   }
 };
 
