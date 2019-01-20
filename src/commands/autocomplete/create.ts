@@ -1,3 +1,4 @@
+import { Command } from '@oclif/config';
 import { flags } from '@salesforce/command';
 import * as fs from 'fs-extra';
 import * as path from 'path';
@@ -24,6 +25,11 @@ export default class Create extends AutocompleteBase {
   private get zshSetupScriptPath(): string {
     // <cachedir>/autocomplete/zsh_setup
     return path.join(this.autocompleteCacheDir, 'zsh_setup');
+  }
+
+  private get zshCompletionSettersPath(): string {
+    // <cacheDir>/autocomplete/commands_setters
+    return path.join(this.autocompleteCacheDir, 'commands_setters');
   }
 
   private get bashFunctionsDir(): string {
@@ -53,8 +59,28 @@ export default class Create extends AutocompleteBase {
 `;
   }
 
+  private get envCommandsPath(): string {
+    return `SFDX_AC_COMMANDS_PATH=${path.join(this.autocompleteCacheDir, 'commands')};`;
+  }
+
+  private get skipEllipsis(): boolean {
+    return process.env.SFDX_AC_ZSH_SKIP_ELLIPSIS === '1';
+  }
+
+  private get completionDotsFunc(): string {
+    return `expand-or-complete-with-dots() {
+  echo -n "..."
+  zle expand-or-complete
+  zle redisplay
+}
+zle -N expand-or-complete-with-dots
+bindkey "^I" expand-or-complete-with-dots`;
+  }
+
   private get zshSetupScript(): string {
-    return `
+    return `${this.skipEllipsis ? '' : this.completionDotsFunc}
+${this.envCommandsPath}
+SFDX_AC_ZSH_SETTERS_PATH=\${SFDX_AC_COMMANDS_PATH}_setters && test -f $SFDX_AC_ZSH_SETTERS_PATH && source $SFDX_AC_ZSH_SETTERS_PATH;
 fpath=(
 ${this.zshFunctionsDir}
 $fpath
@@ -110,7 +136,7 @@ compinit;\n`;
     return this.commands
       .map(c => {
         return `${c.id})
-  _command_flags=(
+  _sfdx_flags=(
     ${this.genZshFlagSpecs(c)}
   )
 ;;\n`;
@@ -197,9 +223,9 @@ complete -F _${cliBin} ${cliBin}
     return `#compdef ${cliBin}
 
 _${cliBin} () {
-  local _command_id=\${words[2]}
-  local _cur=\${words[CURRENT]}
-  local -a _command_flags=()
+  local _sfdx_command_id=\${words[2]}
+  local _sfdx_cur=\${words[CURRENT]}
+  local -a _sfdx_flags=()
 
   ## public cli commands & flags
   local -a _all_commands=(
@@ -207,25 +233,50 @@ ${allCommandsMeta}
   )
 
   _set_flags () {
-    case $_command_id in
+    case $_sfdx_command_id in
 ${caseStatementForFlagsMeta}
     esac
   }
   ## end public cli commands & flags
 
-  _complete_commands () {
-    _describe -t all-commands "all commands" _all_commands
+  ## all commands
+  _sfdx_complete_commands () {
+   local -a _sfdx_all_commands_list
+   if type _sfdx_set_all_commands_list >/dev/null 2>&1; then
+    echo "\${words}" >> ~/sfdxcommands
+     _sfdx_set_all_commands_list
+     _describe -t all-commands "all commands" _sfdx_all_commands_list
+     return
+   fi
+   echo "\${words}" >> ~/sfdxcommands_fallback
+   # fallback to grep'ing cmds from cache
+   compadd $(grep -oe '^[a-zA-Z0-9:_-]\+' $SFDX_AC_COMMANDS_PATH)
+  }
+  ## end all commands
+
+    _sfdx_compadd_args () {
+      echo "\${words}" >> ~/sfdxtrace
+    compadd $(echo $([[ -n $REPORTTIME ]] && REPORTTIME=100; ${cliBin} autocomplete:options "\${words}"))
+  }
+
+  _sfdx_compadd_flag_options () {
+    echo "\${words}" >> ~/sfdxoptions
+    _sfdx_compadd_args
   }
 
   if [ $CURRENT -gt 2 ]; then
-    if [[ "$_cur" == -* ]]; then
-      _set_flags
+    if [[ "$_sfdx_cur" == -* ]]; then
+      echo "_sfdx_set_\${_sfdx_command_id//:/_}_flags" >> ~/sfdxflag
+      local _sfdx_flag_completion_func="_sfdx_set_\${_sfdx_command_id//:/_}_flags"
+      declare -f $_sfdx_flag_completion_func > /dev/null && $_sfdx_flag_completion_func || touch ~/sfdxerror
+    else
+        _sfdx_compadd_args
     fi
   fi
 
 
-  _arguments -S '1: :_complete_commands' \\
-                $_command_flags
+  _arguments -S '1: :_sfdx_complete_commands' \\
+                $_sfdx_flags
 }
 
 _${cliBin}
@@ -261,7 +312,7 @@ _${cliBin}
     await fs.writeFile(this.bashCommandsListPath, this.bashCommandsList);
     await fs.writeFile(this.zshSetupScriptPath, this.zshSetupScript);
     await fs.writeFile(this.zshCompletionFunctionPath, this.zshCompletionFunction);
-    // await fs.writeFile(this.zshCompletionSettersPath, this.zshCompletionSetters)
+    await fs.writeFile(this.zshCompletionSettersPath, this.zshCompletionSetters);
   }
 
   private get bashCommandsList(): string {
@@ -294,11 +345,104 @@ _${cliBin}
       .join('\n');
   }
 
+  private get zshCompletionSetters(): string {
+    const cmdsSetter = this.zshCommandsSetter;
+    const flagSetters = this.zshCommandsFlagsSetters;
+    return `${cmdsSetter}\n${flagSetters}`;
+  }
+
+  private get zshCommandsSetter(): string {
+    const cmdsWithDescriptions = this.commands.map(c => {
+      try {
+        // tslint:disable-next-line: no-any
+        return this.genCmdWithDescription(c as any);
+      } catch (err) {
+        this.ux.error(`Error creating zsh autocomplete for command ${c.id}, moving on...`);
+        this.ux.error(err.message);
+        this.logger.error(err.message);
+        return '';
+      }
+    });
+
+    return this.genZshAllCmdsListSetter(cmdsWithDescriptions);
+  }
+
+  private genCmdWithDescription(command: Command): string {
+    let description = '';
+    if (command.description) {
+      const text = command.description.split('\n')[0];
+      description = `:"${text}"`;
+    }
+    return `"${command.id.replace(/:/g, '\\:')}"${description}`;
+  }
+
+  private get zshCommandsFlagsSetters(): string {
+    return this.commands
+      .map(c => {
+        try {
+          // tslint:disable-next-line: no-any
+          return this.genZshCmdFlagsSetter(c as any);
+        } catch (err) {
+          this.ux.error(`Error creating zsh autocomplete for command ${c.id}, moving on...`);
+          this.ux.error(err.message);
+          this.logger.error(err.message);
+          return '';
+        }
+      })
+      .join('\n');
+  }
+
+  private genZshCmdFlagsSetter(command: Command): string {
+    const id = command.id;
+    const flagscompletions = Object.keys(command.flags || {})
+      .filter(flag => command.flags && !command.flags[flag].hidden)
+      .map(flag => {
+        // tslint:disable-next-line: no-any
+        const f = (command.flags && command.flags[flag]) || ({ description: '' } as any);
+        const isBoolean = f.type === 'boolean';
+        const hasCompletion = f.hasOwnProperty('completion') || this.findCompletion(flag, id);
+        const name = isBoolean ? flag : `${flag}=-`;
+        let cachecompl = '';
+        if (hasCompletion) {
+          // tslint:disable-next-line: no-any
+          cachecompl = (this.wantsLocalFiles(flag) as any) ? ':_files' : ': :_sfdx_compadd_flag_options';
+        }
+        const help = isBoolean ? '(switch) ' : hasCompletion ? '(autocomplete) ' : '';
+        const completion = `--${name}[${help}${f.description}]${cachecompl}`;
+        return `"${completion}"`;
+      })
+      .join('\n');
+
+    if (flagscompletions) {
+      return `_sfdx_set_${id.replace(/:/g, '_')}_flags () {
+_sfdx_flags=(
+${flagscompletions}
+)
+}
+`;
+    }
+    return `# no flags for ${id}`;
+  }
+
   private genCmdPublicFlags(command: CommandCompletion): string {
     const cflags = command.flags /* istanbul ignore next*/ || {};
     return Object.keys(cflags)
       .filter(flag => !cflags[flag].hidden)
       .map(flag => `--${flag}`)
       .join(' ');
+  }
+
+  private genZshAllCmdsListSetter(cmdsWithDesc: string[]): string {
+    return `
+_sfdx_set_all_commands_list () {
+_sfdx_all_commands_list=(
+${cmdsWithDesc.join('\n')}
+)
+}
+`;
+  }
+
+  private wantsLocalFiles(flag: string) {
+    ['file', 'procfile'].includes(flag);
   }
 }
