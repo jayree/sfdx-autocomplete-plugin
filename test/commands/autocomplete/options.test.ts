@@ -132,6 +132,13 @@ describe('AutocompleteOptions', () => {
       test
         .stderr()
         .stdout()
+        .command(['autocomplete:options', 'sfdx cachedcommand:test --loglevel'])
+        .it('errors on unsupported shell', ctx => {
+          expect(ctx.stdout).to.contain('debug');
+        });
+      test
+        .stderr()
+        .stdout()
         .command(['autocomplete:options', 'sfdx cachedcommand:test --no'])
         .it('errors on unsupported shell', ctx => {
           expect(ctx.stdout).to.contain('');

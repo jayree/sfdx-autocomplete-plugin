@@ -34,7 +34,9 @@ export const targetUserNameCompletion: ICompletion = {
   cacheDuration: oneDay,
   options: async () => {
     const aliases = Object.keys(
-      (await fs.readJSON(path.join(core.Global.DIR, core.Aliases.getFileName())))[core.AliasGroup.ORGS]
+      (await fs.readJSON(path.join(global.config.home, core.Global.STATE_FOLDER, core.Aliases.getFileName())))[
+        core.AliasGroup.ORGS
+      ]
     );
     // console.log(await core.AuthInfo.listAllAuthFiles());
     const aliasesToDelete = [];
@@ -58,7 +60,7 @@ export const targetUserNameCompletion: ICompletion = {
           });
           await org.refreshAuth();
           // console.log(org.getField(core.Org.Fields['STATUS']));
-        } catch (error) {
+        } catch (error /* istanbul ignore next */) {
           aliasesToDelete.push(a);
         }
       })
