@@ -106,6 +106,12 @@
               "description": "username or alias for the target org; overrides default target org",
               "required": false,
               "hidden": true
+            },
+            "instanceurl": {
+              "char": "r",
+              "description": "username or alias for the target org; overrides default target org",
+              "required": false,
+              "hidden": true
             }
           }
         }

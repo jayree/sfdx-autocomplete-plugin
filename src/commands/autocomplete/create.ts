@@ -233,6 +233,7 @@ ${flagscompletions}
 }
 `;
     }
+    /* istanbul ignore next*/
     return `# no flags for ${id}`;
   }
 
