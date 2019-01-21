@@ -28,9 +28,9 @@ skipwindows('autocompleteCreate', () => {
   test.it('file paths', () => {
     const dir = global.config.cacheDir;
     expect(cmd.bashSetupScriptPath).to.eq(`${dir}/autocomplete/bash_setup`);
-    expect(cmd.bashCompletionFunctionPath).to.eq(`${dir}/autocomplete/functions/bash/sfdx.bash`);
     expect(cmd.zshSetupScriptPath).to.eq(`${dir}/autocomplete/zsh_setup`);
-    expect(cmd.zshCompletionFunctionPath).to.eq(`${dir}/autocomplete/functions/zsh/_sfdx`);
+    expect(cmd.bashCommandsListPath).to.eq(`${dir}/autocomplete/commands`);
+    expect(cmd.zshCompletionSettersPath).to.eq(`${dir}/autocomplete/commands_setters`);
   });
 
   test.it('#bashSetupScript', () => {
@@ -50,58 +50,5 @@ $fpath
 autoload -Uz compinit;
 compinit;
 `);
-  });
-
-  test.it('#bashCompletionFunction', () => {
-    expect(cmd.bashCompletionFunction).to.eq(`#!/usr/bin/env bash
-
-if ! type __ltrim_colon_completions >/dev/null 2>&1; then
-  #   Copyright © 2006-2008, Ian Macdonald <ian@caliban.org>
-  #             © 2009-2017, Bash Completion Maintainers
-  __ltrim_colon_completions() {
-      # If word-to-complete contains a colon,
-      # and bash-version < 4,
-      # or bash-version >= 4 and COMP_WORDBREAKS contains a colon
-      if [[
-          "$1" == *:* && (
-              \${BASH_VERSINFO[0]} -lt 4 ||
-              (\${BASH_VERSINFO[0]} -ge 4 && "$COMP_WORDBREAKS" == *:*)
-          )
-      ]]; then
-          # Remove colon-word prefix from COMPREPLY items
-          local colon_word=\${1%\${1##*:}}
-          local i=\${#COMPREPLY[*]}
-          while [ $((--i)) -ge 0 ]; do
-              COMPREPLY[$i]=\${COMPREPLY[$i]#"$colon_word"}
-          done
-      fi
-  }
-fi
-
-_sfdx()
-{
-
-  local cur="\${COMP_WORDS[COMP_CWORD]}" opts IFS=$' \\t\\n'
-  COMPREPLY=()
-
-  local commands="
-autocomplete --json --loglevel --refresh-cache
-cachedcommand:test --json --loglevel
-"
-
-  if [[ "\${COMP_CWORD}" -eq 1 ]] ; then
-      opts=$(printf "$commands" | grep -Eo '^[a-zA-Z0-9:_-]+')
-      COMPREPLY=( $(compgen -W "\${opts}" -- \${cur}) )
-       __ltrim_colon_completions "$cur"
-  else
-      if [[ $cur == "-"* ]] ; then
-        opts=$(printf "$commands" | grep "\${COMP_WORDS[1]}" | sed -n "s/^\${COMP_WORDS[1]} //p")
-        COMPREPLY=( $(compgen -W  "\${opts}" -- \${cur}) )
-      fi
-  fi
-  return 0
-}
-
-complete -F _sfdx sfdx\n`);
   });
 });

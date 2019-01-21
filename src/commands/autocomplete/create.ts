@@ -168,7 +168,7 @@ compinit;\n`;
       try {
         // tslint:disable-next-line: no-any
         return this.genCmdWithDescription(c as any);
-      } catch (err) {
+      } catch (err) /* istanbul ignore next*/ {
         this.ux.error(`Error creating zsh autocomplete for command ${c.id}, moving on...`);
         this.ux.error(err.message);
         this.logger.error(err.message);
@@ -194,7 +194,7 @@ compinit;\n`;
         try {
           // tslint:disable-next-line: no-any
           return this.genZshCmdFlagsSetter(c as any);
-        } catch (err) {
+        } catch (err) /* istanbul ignore next*/ {
           this.ux.error(`Error creating zsh autocomplete for command ${c.id}, moving on...`);
           this.ux.error(err.message);
           this.logger.error(err.message);

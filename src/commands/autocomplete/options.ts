@@ -42,7 +42,7 @@ export default class Options extends AutocompleteBase {
       const options = await this.fetchOptions(completion);
       /* istanbul ignore else*/
       if (options) this.log(options);
-    } catch (err) {
+    } catch (err) /* istanbul ignore next*/ {
       // write to ac log
       this.logger.error(err.message);
     }

@@ -101,7 +101,7 @@ export default class Doctor extends AutocompleteBase {
             });
             if (results.length) this.log(`${c.id} -> ${results}`);
           }
-        } catch {
+        } catch /* istanbul ignore next*/ {
           this.log(`Error creating autocomplete for command ${c.id}`);
         }
       });
