@@ -30,6 +30,14 @@ export const loglevelCompletion: ICompletion = {
   }
 };
 
+export const instanceurlCompletion: ICompletion = {
+  skipCache: true,
+
+  options: async () => {
+    return ['https://test.salesforce.com', 'https://login.salesforce.com'];
+  }
+};
+
 export const targetUserNameCompletion: ICompletion = {
   cacheDuration: oneDay,
   options: async () => {
@@ -71,5 +79,6 @@ export const targetUserNameCompletion: ICompletion = {
 
 export const completionMapping: { [key: string]: ICompletion } = {
   targetusername: targetUserNameCompletion,
-  loglevel: loglevelCompletion
+  loglevel: loglevelCompletion,
+  instanceurl: instanceurlCompletion
 };
