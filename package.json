@@ -10,8 +10,7 @@
     "@oclif/errors": "^1.2.2",
     "@salesforce/command": "^1.2.0",
     "chalk": "^2.4.2",
-    "fs-extra": "^7.0.1",
-    "per-env": "git+https://github.com/jayree/per-env.git#83c526deda58c8eca6070bb55e1194405a7538d6"
+    "fs-extra": "^7.0.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.21.0",
@@ -35,7 +34,8 @@
   "files": [
     "/lib/src",
     "/oclif.manifest.json",
-    "/yarn.lock"
+    "/yarn.lock",
+    "/bin/per-env.js"
   ],
   "homepage": "https://github.com/jayree/sfdx-autocomplete-plugin",
   "keywords": [
@@ -62,11 +62,11 @@
     "lint": "yarn sfdx-lint",
     "lint-fix": "yarn sfdx-lint --fix",
     "postcompile": "oclif-dev manifest && oclif-dev readme",
-    "postinstall": "per-env",
+    "postinstall": "node bin/per-env.js",
     "postinstall:development": "yarn patch-package && yarn sfdx-install",
     "postpack": "rimraf oclif.manifest.json",
     "prepack": "yarn sfdx-build",
-    "prepare": "per-env",
+    "prepare": "node bin/per-env.js",
     "prepare:development": "yarn sfdx-build",
     "pretest": "yarn sfdx-build",
     "semantic-release": "semantic-release",

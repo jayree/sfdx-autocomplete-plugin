@@ -1673,7 +1673,7 @@ cross-spawn@^5.0.1, cross-spawn@^5.1.0:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
-cross-spawn@^6.0.0, cross-spawn@^6.0.4, cross-spawn@^6.0.5:
+cross-spawn@^6.0.0, cross-spawn@^6.0.5:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
   dependencies:
@@ -4706,12 +4706,6 @@ path-type@^3.0.0:
 pathval@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-1.1.0.tgz#b942e6d4bde653005ef6b71361def8727d0645e0"
-
-"per-env@git+https://github.com/jayree/per-env.git#83c526deda58c8eca6070bb55e1194405a7538d6":
-  version "1.0.2"
-  resolved "git+https://github.com/jayree/per-env.git#83c526deda58c8eca6070bb55e1194405a7538d6"
-  dependencies:
-    cross-spawn "^6.0.4"
 
 performance-now@^2.1.0:
   version "2.1.0"
