@@ -46,19 +46,8 @@ export const targetUserNameCompletion: ICompletion = {
         core.AliasGroup.ORGS
       ]
     );
-    // console.log(await core.AuthInfo.listAllAuthFiles());
+
     const aliasesToDelete = [];
-    /*     for (const a of aliases) {
-      try {
-        const org = await core.Org.create({
-          aliasOrUsername: a
-        });
-        await org.refreshAuth();
-        // console.log(org.getField(core.Org.Fields['STATUS']));
-      } catch (error) {
-        aliasesToDelete.push(a);
-      }
-    } */
 
     await Promise.all(
       aliases.map(async a => {
@@ -67,7 +56,6 @@ export const targetUserNameCompletion: ICompletion = {
             aliasOrUsername: a
           });
           await org.refreshAuth();
-          // console.log(org.getField(core.Org.Fields['STATUS']));
         } catch (error /* istanbul ignore next */) {
           aliasesToDelete.push(a);
         }
