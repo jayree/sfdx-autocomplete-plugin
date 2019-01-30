@@ -68,7 +68,6 @@
     "prepack": "yarn sfdx-build",
     "prepare": "node bin/per-env.js",
     "prepare:development": "yarn sfdx-build",
-    "pretest": "yarn sfdx-build",
     "semantic-release": "semantic-release",
     "test": "yarn sfdx-test",
     "test-without-coverage": "yarn mocha --require source-map-support/register --recursive 'lib/test/**/*test.js'",
