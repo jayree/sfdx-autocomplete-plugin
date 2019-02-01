@@ -239,10 +239,10 @@
     debug "^4.1.0"
     tslib "^1.9.3"
 
-"@oclif/config@^1.12.0":
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/@oclif/config/-/config-1.12.0.tgz#384c1502927d03581862ae3b68d8790b17590a7f"
-  integrity sha512-RB6A+N7Dq5DcFOQEhPpB8DdXtMQm2VDgdtgBKUdot815tj4gW7nDmRZBEwU85x4Xhep7Dx3tpaXobA6bFlSOWg==
+"@oclif/config@^1.12.4":
+  version "1.12.4"
+  resolved "https://registry.yarnpkg.com/@oclif/config/-/config-1.12.4.tgz#664f7f43c79a5b6674c35d1fd4a98c596c8a8630"
+  integrity sha512-lZR5Qs9NEbQ9PsOZN0nALMBisTTa53ajRsyuhMwSQtDP8B7jISqWS9czYRfn9eYA+/xWgcjwRILCHuJFtdEuTA==
   dependencies:
     debug "^4.1.1"
     tslib "^1.9.3"
@@ -294,6 +294,20 @@
     indent-string "^3.2.0"
     lodash.template "^4.4.0"
     string-width "^2.1.1"
+    strip-ansi "^5.0.0"
+    widest-line "^2.0.1"
+    wrap-ansi "^4.0.0"
+
+"@oclif/plugin-help@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-help/-/plugin-help-2.1.6.tgz#ae14cbe2c5cd3eaf5f796d205ffbe66d3e369173"
+  integrity sha512-M4kTERpPWNSM1Mga7K/zo9DWHLCVf2FRaIeXPoytmTPd+0kSvG3TR0Vc1bwx9/cxXoYyYGgEejwNlrfayr8FZw==
+  dependencies:
+    "@oclif/command" "^1.5.8"
+    chalk "^2.4.1"
+    indent-string "^3.2.0"
+    lodash.template "^4.4.0"
+    string-width "^3.0.0"
     strip-ansi "^5.0.0"
     widest-line "^2.0.1"
     wrap-ansi "^4.0.0"
@@ -398,9 +412,10 @@
     tslint-microsoft-contrib "^5"
     typescript "3.1.6"
 
-"@salesforce/dev-scripts@^0.3.11":
-  version "0.3.11"
-  resolved "https://registry.yarnpkg.com/@salesforce/dev-scripts/-/dev-scripts-0.3.11.tgz#6b7a571f8be5ecb6de795e00197dc67e3f0e02cd"
+"@salesforce/dev-scripts@^0.3.12":
+  version "0.3.12"
+  resolved "https://registry.yarnpkg.com/@salesforce/dev-scripts/-/dev-scripts-0.3.12.tgz#0139478e0e792154a5e2bf0a1c03c06dab0c0b9d"
+  integrity sha512-bL2hFZ2Ac0cm0Av3LtlugQNiNlCSCeZPUThy6JJtB5A9de9mgEovMa1GyDxKCOOGPGJ3hk2JuToHaJVWiq9T3g==
   dependencies:
     "@commitlint/cli" "^7"
     "@commitlint/config-conventional" "^7"
@@ -1931,6 +1946,11 @@ editor@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/editor/-/editor-1.0.0.tgz#60c7f87bd62bcc6a894fa8ccd6afb7823a24f742"
   integrity sha1-YMf4e9YrzGqJT6jM1q+3gjok90I=
+
+emoji-regex@^7.0.1:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
+  integrity sha512-CwBLREIQ7LvYFB0WyRvwhq5N5qPhc6PMjD6bYggFlI5YyDgl+0vxq5VHbMOFqLg7hfWzmu8T5Z1QofhmTIhItA==
 
 encoding@^0.1.11:
   version "0.1.12"
@@ -5745,6 +5765,15 @@ string-width@^1.0.1:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^4.0.0"
 
+string-width@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-3.0.0.tgz#5a1690a57cc78211fffd9bf24bbe24d090604eb1"
+  integrity sha512-rr8CUxBbvOZDUvc5lNIJ+OC1nPVpz+Siw9VBtUjB9b6jZehZLFt0JMCZzShFHIsI8cbhm0EsNIfWJMFV3cu3Ew==
+  dependencies:
+    emoji-regex "^7.0.1"
+    is-fullwidth-code-point "^2.0.0"
+    strip-ansi "^5.0.0"
+
 string_decoder@~0.10.x:
   version "0.10.31"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
@@ -6113,10 +6142,10 @@ typedoc@0.13.0:
     typedoc-default-themes "^0.5.0"
     typescript "3.1.x"
 
-typescript-tslint-plugin@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/typescript-tslint-plugin/-/typescript-tslint-plugin-0.3.0.tgz#b58ab0227d12b576371742bc75604b8a7a2784ae"
-  integrity sha512-QlfcS5YebM55cUISn3mgal+ePtsRmyh1RJ0DqHPrF7+NEDO8P+ucDsD1GlLyYaIJQvVAbkekUmczsjzQk5eoKA==
+typescript-tslint-plugin@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/typescript-tslint-plugin/-/typescript-tslint-plugin-0.3.1.tgz#d86ae0342c9e8f9ecfcbcc47f7a7c2b5ab0e86f9"
+  integrity sha512-h8HEPBm36UEs901ld1x6m5eY/UFb4mF+A0nvERr4BWMww5wnV5nfcm9ZFt18foYL0GQ5NVMt1Tb3466WUU8dRQ==
   dependencies:
     minimatch "^3.0.4"
     mock-require "^3.0.2"
