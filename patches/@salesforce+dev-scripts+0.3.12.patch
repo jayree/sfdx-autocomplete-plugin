@@ -12,14 +12,43 @@ index d9f31b6..43e1026 100755
  
  shell.exec(`${tsc} -p . --pretty`, {
    cwd: packageRoot
+diff --git a/node_modules/@salesforce/dev-scripts/bin/sfdx-docs.js b/node_modules/@salesforce/dev-scripts/bin/sfdx-docs.js
+index 939048a..93626f9 100755
+--- a/node_modules/@salesforce/dev-scripts/bin/sfdx-docs.js
++++ b/node_modules/@salesforce/dev-scripts/bin/sfdx-docs.js
+@@ -13,7 +13,8 @@ const shell = require('../utils/shelljs');
+ const loadRootPath = require('../utils/load-root-path');
+ const packageRoot = require('../utils/package-path');
+ const { isMultiPackageProject } = require('../utils/project-type');
+-const typedoc = require.resolve('typedoc/bin/typedoc');
++const path = require('path');
++const typedoc = path.resolve(require.resolve('typedoc'), '../../../', '.bin', 'typedoc');
+ 
+ const options = require('@salesforce/dev-config/typedoc');
+ 
+diff --git a/node_modules/@salesforce/dev-scripts/bin/sfdx-lint.js b/node_modules/@salesforce/dev-scripts/bin/sfdx-lint.js
+index 68dc22e..80f42b7 100755
+--- a/node_modules/@salesforce/dev-scripts/bin/sfdx-lint.js
++++ b/node_modules/@salesforce/dev-scripts/bin/sfdx-lint.js
+@@ -11,7 +11,8 @@ const shell = require('../utils/shelljs');
+ const exists = require('../utils/exists');
+ const packageRoot = require('../utils/package-path');
+ 
+-const lint = require.resolve('tslint/bin/tslint');
++const path = require('path');
++const lint = path.resolve(require.resolve('tslint'), '../../../', '.bin', 'tslint');
+ 
+ const extras = process.argv.slice(2).join(' ');
+ 
 diff --git a/node_modules/@salesforce/dev-scripts/bin/sfdx-test.js b/node_modules/@salesforce/dev-scripts/bin/sfdx-test.js
-index 981a56d..cb3c7b3 100755
+index 981a56d..65efd29 100755
 --- a/node_modules/@salesforce/dev-scripts/bin/sfdx-test.js
 +++ b/node_modules/@salesforce/dev-scripts/bin/sfdx-test.js
-@@ -11,7 +11,8 @@ const shell = require('../utils/shelljs');
+@@ -10,8 +10,8 @@ const shell = require('../utils/shelljs');
+ 
  const packageRoot = require('../utils/package-path');
  const SfdxDevConfig = require('../utils/sfdx-dev-config');
- 
+-
 -const nyc = require.resolve('nyc/bin/nyc');
 +const path = require('path');
 +const nyc = path.resolve(require.resolve('nyc'), '../../', '.bin', 'nyc');
