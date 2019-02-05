@@ -86,16 +86,20 @@ export default class Options extends AutocompleteBase {
       const slicedArgvCount = slicedArgv.length;
       const lastArgvArg = slicedArgv[slicedArgvCount - 1];
       const previousArgvArg = slicedArgv[slicedArgvCount - 2];
+      /* istanbul ignore next*/
       const argvFlag = curPositionIsFlagValue ? previousArgvArg : lastArgvArg;
       const { name, flag } = this.findFlagFromWildArg(argvFlag, klass);
       if (!flag) this.throwError(`${argvFlag} is not a valid flag for ${id}`);
+      /* istanbul ignore next*/
       cacheKey = name || flag.name;
       cacheCompletion = flag.completion;
     } else {
+      /* istanbul ignore next*/
       const cmdArgs = klass.args || [];
       // variable arg (strict: false)
       /* istanbul ignore else*/
       if (!klass.strict) {
+        /* istanbul ignore next*/
         cacheKey = cmdArgs[0] && cmdArgs[0].name.toLowerCase();
         cacheCompletion = this.findCompletion(cacheKey, id);
         /* istanbul ignore else*/
@@ -131,8 +135,10 @@ export default class Options extends AutocompleteBase {
         config: this.config
       };
       // use cacheKey function or fallback to arg/flag name
+      /* istanbul ignore next*/
       const ckey = cacheCompletion.cacheKey ? await cacheCompletion.cacheKey(ctx) : null;
 
+      /* istanbul ignore next*/
       const key: string = ckey || cacheKey || 'unknown_key_error';
 
       const flagCachePath = path.join(this.completionsCacheDir, key);
@@ -143,6 +149,7 @@ export default class Options extends AutocompleteBase {
       const options = await fetchCache(flagCachePath, duration, opts);
 
       // return options cache
+      /* istanbul ignore next*/
       return (options || []).join('\n');
     }
   }
@@ -156,6 +163,7 @@ export default class Options extends AutocompleteBase {
     let name = wild.replace(/^-+/, '');
     name = name.replace(/=(.+)?$/, '');
     const unknown = { flag: undefined, name: undefined };
+    /* istanbul ignore next*/
     if (!klass.flags) return unknown;
     const cFlags = klass.flags;
 

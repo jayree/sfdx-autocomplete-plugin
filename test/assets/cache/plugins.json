@@ -101,17 +101,23 @@
               "helpValue": "(trace|debug|info|warn|error|fatal)",
               "options": ["trace", "debug", "info", "warn", "error", "fatal"]
             },
+            "file": {
+              "char": "f",
+              "description": "filename",
+              "required": false,
+              "hidden": false
+            },
             "targetusername": {
               "char": "u",
               "description": "username or alias for the target org; overrides default target org",
               "required": false,
-              "hidden": true
+              "hidden": false
             },
             "instanceurl": {
               "char": "r",
               "description": "username or alias for the target org; overrides default target org",
               "required": false,
-              "hidden": true
+              "hidden": false
             }
           }
         }

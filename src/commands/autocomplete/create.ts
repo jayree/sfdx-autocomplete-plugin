@@ -206,9 +206,11 @@ compinit;\n`;
 
   private genZshCmdFlagsSetter(command: Command): string {
     const id = command.id;
+    /* istanbul ignore next*/
     const flagscompletions = Object.keys(command.flags || {})
       .filter(flag => command.flags && !command.flags[flag].hidden)
       .map(flag => {
+        /* istanbul ignore next*/
         // tslint:disable-next-line: no-any
         const f = (command.flags && command.flags[flag]) || ({ description: '' } as any);
         const isBoolean = f.type === 'boolean';
@@ -225,6 +227,7 @@ compinit;\n`;
       })
       .join('\n');
 
+    /* istanbul ignore next*/
     if (flagscompletions) {
       return `_sfdx_set_${id.replace(/:/g, '_')}_flags () {
 _sfdx_flags=(

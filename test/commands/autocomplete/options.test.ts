@@ -121,47 +121,47 @@ describe('AutocompleteOptions', () => {
       });
     });
 
-    describe('????', () => {
+    describe('test flags', () => {
       test
         .stderr()
         .stdout()
         .command(['autocomplete:options', 'sfdx cachedcommand:test --targetusername'])
-        .it('errors on unsupported shell', ctx => {
+        .it('test targetusername', ctx => {
           expect(ctx.stdout).to.contain('my-app');
         });
       test
         .stderr()
         .stdout()
         .command(['autocomplete:options', 'sfdx cachedcommand:test --loglevel'])
-        .it('errors on unsupported shell', ctx => {
+        .it('test loglevel', ctx => {
           expect(ctx.stdout).to.contain('debug');
         });
       test
         .stderr()
         .stdout()
         .command(['autocomplete:options', 'sfdx cachedcommand:test --instanceurl'])
-        .it('errors on unsupported shell', ctx => {
+        .it('test instanceurl', ctx => {
           expect(ctx.stdout).to.contain('https');
         });
       test
         .stderr()
         .stdout()
         .command(['autocomplete:options', 'sfdx cachedcommand:test --no'])
-        .it('errors on unsupported shell', ctx => {
+        .it('test non-existing', ctx => {
           expect(ctx.stdout).to.contain('');
         });
       test
         .stderr()
         .stdout()
         .command(['autocomplete:options', 'sfdx cachedcommand:test'])
-        .it('errors on unsupported shell', ctx => {
+        .it('test no flag', ctx => {
           expect(ctx.stdout).to.contain('');
         });
       test
         .stderr()
         .stdout()
         .command(['autocomplete:options', 'sfdx cachedcommand:xxx'])
-        .it('errors on unsupported shell', ctx => {
+        .it('test wrong command', ctx => {
           expect(ctx.stdout).to.contain('');
         });
     });
