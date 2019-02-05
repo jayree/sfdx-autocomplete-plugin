@@ -45,7 +45,13 @@
           "aliases": [],
           "buildHelpLine": ["autocomplete:script", "\u001b[2moutputs autocomplete config script for shells\u001b[22m"],
           "buildHelp": "\u001b[1mUSAGE\u001b[22m\n  $ sfdx autocomplete:script [SHELL]\n\n\u001b[1mARGUMENTS\u001b[22m\n  SHELL  \u001b[2mshell type\u001b[22m\n\n\u001b[1mOPTIONS\u001b[22m\n  --json                                          \u001b[2mformat output as json\u001b[22m\n  --loglevel=(trace|debug|info|warn|error|fatal)  \u001b[2mlogging level for this command invocation\u001b[22m",
-          "flags": {}
+          "flags": {
+            "targetusername": {
+              "char": "u",
+              "description": "username or alias for the target org; overrides default target org",
+              "required": false
+            }
+          }
         }
       ],
       "topics": [
@@ -94,6 +100,24 @@
               "required": false,
               "helpValue": "(trace|debug|info|warn|error|fatal)",
               "options": ["trace", "debug", "info", "warn", "error", "fatal"]
+            },
+            "file": {
+              "char": "f",
+              "description": "filename",
+              "required": false,
+              "hidden": false
+            },
+            "targetusername": {
+              "char": "u",
+              "description": "username or alias for the target org; overrides default target org",
+              "required": false,
+              "hidden": false
+            },
+            "instanceurl": {
+              "char": "r",
+              "description": "username or alias for the target org; overrides default target org",
+              "required": false,
+              "hidden": false
             }
           }
         }

@@ -2,7 +2,8 @@ sfdx-autocomplete
 ==========================
 
 autocomplete plugin for sfdx (bash & zsh)  
-based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete)
+based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete) and
+[heroku/heroku-cli-autocomplete](https://github.com/heroku/heroku-cli-autocomplete)
 
 [![sfdx](https://img.shields.io/badge/cli-sfdx-brightgreen.svg)](https://developer.salesforce.com/tools/sfdxcli)
 [![Version](https://img.shields.io/npm/v/sfdx-autocmplt.svg)](https://npmjs.org/package/sfdx-autocmplt)

@@ -6,31 +6,27 @@
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "dependencies": {
     "@oclif/command": "^1.5.8",
-    "@oclif/config": "^1.10.4",
+    "@oclif/config": "^1.12.4",
     "@oclif/errors": "^1.2.2",
     "@salesforce/command": "^1.2.0",
     "chalk": "^2.4.2",
-    "fs-extra": "^7.0.1",
-    "per-env": "git+https://github.com/jayree/per-env.git#83c526deda58c8eca6070bb55e1194405a7538d6"
+    "fs-extra": "^7.0.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.21.0",
-    "@oclif/plugin-help": "^2.1.4",
+    "@oclif/plugin-help": "^2.1.6",
     "@oclif/semantic-release": "^3.1.1",
-    "@salesforce/dev-scripts": "^0.3.11",
+    "@salesforce/dev-scripts": "^0.3.12",
     "@types/fs-extra": "^5.0.4",
     "codecov": "^3.1.0",
-    "commitlint": "^7.2.1",
-    "globby": "^8.0.1",
     "husky": "^1.3.1",
-    "patch-package": "^5.1.1",
-    "semantic-release": "^15.13.2",
+    "patch-package": "^6.0.2",
     "tslib": "^1.9.3",
     "tslint": "^5",
-    "tslint-config-prettier": "^1.17.0",
+    "tslint-config-prettier": "^1.18.0",
     "tslint-microsoft-contrib": "^5",
     "typescript": "3.1.6",
-    "typescript-tslint-plugin": "^0.2.1"
+    "typescript-tslint-plugin": "^0.3.1"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -38,7 +34,8 @@
   "files": [
     "/lib/src",
     "/oclif.manifest.json",
-    "/yarn.lock"
+    "/yarn.lock",
+    "/bin/per-env.js"
   ],
   "homepage": "https://github.com/jayree/sfdx-autocomplete-plugin",
   "keywords": [
@@ -65,11 +62,11 @@
     "lint": "yarn sfdx-lint",
     "lint-fix": "yarn sfdx-lint --fix",
     "postcompile": "oclif-dev manifest && oclif-dev readme",
-    "postinstall": "per-env",
+    "postinstall": "node bin/per-env.js",
     "postinstall:development": "yarn patch-package && yarn sfdx-install",
     "postpack": "rimraf oclif.manifest.json",
     "prepack": "yarn sfdx-build",
-    "prepare": "per-env",
+    "prepare": "node bin/per-env.js",
     "prepare:development": "yarn sfdx-build",
     "semantic-release": "semantic-release",
     "test": "yarn sfdx-test",

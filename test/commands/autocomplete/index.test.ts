@@ -14,6 +14,7 @@ skipwindows('autocomplete', () => {
     await config.load();
     global.config = new Config(config);
     global.config.cacheDir = path.join(__dirname, '../../../../test/assets/cache');
+    global.config.home = path.join(__dirname, '../../../../test/assets/home');
     global.config.bin = 'sfdx';
   });
 
