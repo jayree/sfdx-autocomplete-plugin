@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v1.1.0...v1.1.1) (2019-02-07)
+
+
+### Bug Fixes
+
+* added missing packaged scripts ([3afbca6](https://github.com/jayree/sfdx-autocomplete-plugin/commit/3afbca6))
+* added missing unpackaged flag to file autocomplete ([896b777](https://github.com/jayree/sfdx-autocomplete-plugin/commit/896b777))
+
 # [1.1.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v1.0.1...v1.1.0) (2019-02-05)
 
 
