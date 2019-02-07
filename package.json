@@ -35,7 +35,8 @@
     "/lib/src",
     "/oclif.manifest.json",
     "/yarn.lock",
-    "/bin/per-env.js"
+    "/bin/per-env.js",
+    "autocomplete"
   ],
   "homepage": "https://github.com/jayree/sfdx-autocomplete-plugin",
   "keywords": [
