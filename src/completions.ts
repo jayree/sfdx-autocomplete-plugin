@@ -41,27 +41,31 @@ export const instanceurlCompletion: ICompletion = {
 export const targetUserNameCompletion: ICompletion = {
   cacheDuration: oneDay,
   options: async () => {
-    const aliases = Object.keys(
-      (await fs.readJSON(path.join(global.config.home, core.Global.STATE_FOLDER, core.Aliases.getFileName())))[
-        core.AliasGroup.ORGS
-      ]
-    );
+    try {
+      const aliases = Object.keys(
+        (await fs.readJSON(path.join(global.config.home, core.Global.STATE_FOLDER, core.Aliases.getFileName())))[
+          core.AliasGroup.ORGS
+        ]
+      );
 
-    const aliasesToDelete = [];
+      const aliasesToDelete = [];
 
-    await Promise.all(
-      aliases.map(async a => {
-        try {
-          const org = await core.Org.create({
-            aliasOrUsername: a
-          });
-          await org.refreshAuth();
-        } catch (error /* istanbul ignore next */) {
-          aliasesToDelete.push(a);
-        }
-      })
-    );
-    return aliases.filter(alias => !aliasesToDelete.includes(alias));
+      await Promise.all(
+        aliases.map(async a => {
+          try {
+            const org = await core.Org.create({
+              aliasOrUsername: a
+            });
+            await org.refreshAuth();
+          } catch (error /* istanbul ignore next */) {
+            aliasesToDelete.push(a);
+          }
+        })
+      );
+      return aliases.filter(alias => !aliasesToDelete.includes(alias));
+    } catch (error) {
+      return [];
+    }
   }
 };
 

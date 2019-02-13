@@ -120,50 +120,67 @@ describe('AutocompleteOptions', () => {
         expect(cmd.parsedArgs).to.deep.equal({ app: 'foo' });
       });
     });
+  });
+  describe('test flags', () => {
+    test
+      .stderr()
+      .stdout()
+      .command(['autocomplete:options', 'sfdx cachedcommand:test --targetusername'])
+      .it('test targetusername', ctx => {
+        expect(ctx.stdout).to.contain('my-app');
+      });
+    test
+      .stderr()
+      .stdout()
+      .command(['autocomplete:options', 'sfdx cachedcommand:test --loglevel'])
+      .it('test loglevel', ctx => {
+        expect(ctx.stdout).to.contain('debug');
+      });
+    test
+      .stderr()
+      .stdout()
+      .command(['autocomplete:options', 'sfdx cachedcommand:test --instanceurl'])
+      .it('test instanceurl', ctx => {
+        expect(ctx.stdout).to.contain('https');
+      });
+    test
+      .stderr()
+      .stdout()
+      .command(['autocomplete:options', 'sfdx cachedcommand:test --no'])
+      .it('test non-existing', ctx => {
+        expect(ctx.stdout).to.contain('');
+      });
+    test
+      .stderr()
+      .stdout()
+      .command(['autocomplete:options', 'sfdx cachedcommand:test'])
+      .it('test no flag', ctx => {
+        expect(ctx.stdout).to.contain('');
+      });
+    test
+      .stderr()
+      .stdout()
+      .command(['autocomplete:options', 'sfdx cachedcommand:xxx'])
+      .it('test wrong command', ctx => {
+        expect(ctx.stdout).to.contain('');
+      });
+  });
+});
 
-    describe('test flags', () => {
-      test
-        .stderr()
-        .stdout()
-        .command(['autocomplete:options', 'sfdx cachedcommand:test --targetusername'])
-        .it('test targetusername', ctx => {
-          expect(ctx.stdout).to.contain('my-app');
-        });
-      test
-        .stderr()
-        .stdout()
-        .command(['autocomplete:options', 'sfdx cachedcommand:test --loglevel'])
-        .it('test loglevel', ctx => {
-          expect(ctx.stdout).to.contain('debug');
-        });
-      test
-        .stderr()
-        .stdout()
-        .command(['autocomplete:options', 'sfdx cachedcommand:test --instanceurl'])
-        .it('test instanceurl', ctx => {
-          expect(ctx.stdout).to.contain('https');
-        });
-      test
-        .stderr()
-        .stdout()
-        .command(['autocomplete:options', 'sfdx cachedcommand:test --no'])
-        .it('test non-existing', ctx => {
-          expect(ctx.stdout).to.contain('');
-        });
-      test
-        .stderr()
-        .stdout()
-        .command(['autocomplete:options', 'sfdx cachedcommand:test'])
-        .it('test no flag', ctx => {
-          expect(ctx.stdout).to.contain('');
-        });
-      test
-        .stderr()
-        .stdout()
-        .command(['autocomplete:options', 'sfdx cachedcommand:xxx'])
-        .it('test wrong command', ctx => {
-          expect(ctx.stdout).to.contain('');
-        });
-    });
+describe('AutocompleteOptions (w/o alias.json)', () => {
+  before(async () => {
+    await config.load();
+    global.config.home = path.join(__dirname, '../../../../test/assets/home2');
+    await fs.remove(path.join(__dirname, '../../../../test/assets/cache/autocomplete/completions'));
+  });
+
+  describe('test flags', () => {
+    test
+      .stderr()
+      .stdout()
+      .command(['autocomplete:options', 'sfdx cachedcommand:test --targetusername'])
+      .it('test targetusername', ctx => {
+        expect(ctx.stdout).to.contain('');
+      });
   });
 });
