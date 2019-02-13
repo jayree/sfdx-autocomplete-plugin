@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v1.1.1...v1.1.2) (2019-02-13)
+
+
+### Bug Fixes
+
+* provide instructions if no aliases are registered ([e8193cc](https://github.com/jayree/sfdx-autocomplete-plugin/commit/e8193cc))
+* updated dependencies ([fad6203](https://github.com/jayree/sfdx-autocomplete-plugin/commit/fad6203))
+
 ## [1.1.1](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v1.1.0...v1.1.1) (2019-02-07)
 
 
