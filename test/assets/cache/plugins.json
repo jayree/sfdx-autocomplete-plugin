@@ -118,6 +118,12 @@
               "description": "username or alias for the target org; overrides default target org",
               "required": false,
               "hidden": false
+            },
+            "resultformat": {
+              "char": "f",
+              "description": "username or alias for the target org; overrides default target org",
+              "required": false,
+              "hidden": false
             }
           }
         }

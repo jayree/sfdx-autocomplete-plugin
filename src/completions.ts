@@ -30,6 +30,14 @@ export const loglevelCompletion: ICompletion = {
   }
 };
 
+export const resultformatCompletion: ICompletion = {
+  skipCache: true,
+
+  options: async () => {
+    return ['human', 'csv', 'json'];
+  }
+};
+
 export const instanceurlCompletion: ICompletion = {
   skipCache: true,
 
@@ -72,5 +80,6 @@ export const targetUserNameCompletion: ICompletion = {
 export const completionMapping: { [key: string]: ICompletion } = {
   targetusername: targetUserNameCompletion,
   loglevel: loglevelCompletion,
-  instanceurl: instanceurlCompletion
+  instanceurl: instanceurlCompletion,
+  resultformat: resultformatCompletion
 };
