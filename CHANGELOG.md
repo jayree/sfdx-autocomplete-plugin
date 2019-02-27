@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v1.1.2...v1.2.0) (2019-02-27)
+
+
+### Bug Fixes
+
+* added resultformatCompletion ([067ed07](https://github.com/jayree/sfdx-autocomplete-plugin/commit/067ed07))
+* updated dependencies ([010b1ac](https://github.com/jayree/sfdx-autocomplete-plugin/commit/010b1ac))
+
+
+### Features
+
+* added missing fileCompletion for flags: ([1c7e9e4](https://github.com/jayree/sfdx-autocomplete-plugin/commit/1c7e9e4))
+
 ## [1.1.2](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v1.1.1...v1.1.2) (2019-02-13)
 
 
