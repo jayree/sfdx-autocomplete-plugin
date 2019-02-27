@@ -146,6 +146,13 @@ describe('AutocompleteOptions', () => {
     test
       .stderr()
       .stdout()
+      .command(['autocomplete:options', 'sfdx cachedcommand:test --resultformat'])
+      .it('test resultformat', ctx => {
+        expect(ctx.stdout).to.contain('csv');
+      });
+    test
+      .stderr()
+      .stdout()
       .command(['autocomplete:options', 'sfdx cachedcommand:test --no'])
       .it('test non-existing', ctx => {
         expect(ctx.stdout).to.contain('');

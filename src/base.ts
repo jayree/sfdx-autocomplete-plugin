@@ -87,6 +87,17 @@ export abstract class AutocompleteBase extends SfdxCommand {
   }
 
   protected wantsLocalFiles(flag: string) {
-    return ['file', 'procfile', 'configfile', 'unpackaged'].includes(flag);
+    return [
+      'file',
+      'procfile',
+      'configfile',
+      'unpackaged',
+      'deploydir',
+      'manifest',
+      'sourcepath',
+      'outputdir',
+      'rootdir',
+      'csvfile'
+    ].includes(flag);
   }
 }
