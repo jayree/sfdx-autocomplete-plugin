@@ -4,14 +4,10 @@
     "autocomplete": {
       "id": "autocomplete",
       "description": "display autocomplete instructions",
-      "pluginName": "@heroku-cli/plugin-autocomplete",
+      "pluginName": "plugin-autocomplete",
       "pluginType": "core",
       "aliases": [],
-      "examples": [
-        "$ heroku autocomplete",
-        "$ heroku autocomplete bash",
-        "$ heroku autocomplete zsh"
-      ],
+      "examples": ["$ sfdx autocomplete", "$ sfdx autocomplete bash", "$ sfdx autocomplete zsh"],
       "flags": {
         "skip-instructions": {
           "name": "skip-instructions",
@@ -31,14 +27,14 @@
     "autocomplete:foo": {
       "id": "autocomplete:foo",
       "description": "foo cmd for autocomplete testing",
-      "pluginName": "@heroku-cli/plugin-autocomplete",
+      "pluginName": "plugin-autocomplete",
       "pluginType": "core",
       "aliases": [],
       "flags": {
-        "app": {
-          "name": "app",
+        "targetusername": {
+          "name": "targetusername",
           "type": "option",
-          "description": "app to use"
+          "description": "targetusername to use"
         },
         "bar": {
           "name": "bar",

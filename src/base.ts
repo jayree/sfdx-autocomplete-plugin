@@ -1,47 +1,48 @@
-import Command, {flags} from '@heroku-cli/command'
-import * as fs from 'fs-extra'
-import * as path from 'path'
+import { flags } from '@oclif/command';
+import { SfdxCommand } from '@salesforce/command';
+import * as fs from 'fs-extra';
+import * as path from 'path';
 
-import {CompletionLookup} from './completions'
+import { CompletionLookup } from './completions';
 
-export abstract class AutocompleteBase extends Command {
+export abstract class AutocompleteBase extends SfdxCommand {
   public errorIfWindows() {
     if (this.config.windows) {
-      throw new Error('Autocomplete is not currently supported in Windows')
+      throw new Error('Autocomplete is not currently supported in Windows');
     }
   }
 
   public errorIfNotSupportedShell(shell: string) {
     if (!shell) {
-      this.error('Missing required argument shell')
+      this.error('Missing required argument shell');
     }
-    this.errorIfWindows()
+    this.errorIfWindows();
     if (!['bash', 'zsh'].includes(shell)) {
-      throw new Error(`${shell} is not a supported shell for autocomplete`)
+      throw new Error(`${shell} is not a supported shell for autocomplete`);
     }
   }
 
   public get autocompleteCacheDir(): string {
-    return path.join(this.config.cacheDir, 'autocomplete')
+    return path.join(this.config.cacheDir, 'autocomplete');
   }
 
   public get completionsCacheDir(): string {
-    return path.join(this.config.cacheDir, 'autocomplete', 'completions')
+    return path.join(this.config.cacheDir, 'autocomplete', 'completions');
   }
 
   public get acLogfilePath(): string {
-    return path.join(this.config.cacheDir, 'autocomplete.log')
+    return path.join(this.config.cacheDir, 'autocomplete.log');
   }
 
-  writeLogFile(msg: string) {
-    const now = new Date()
-    let entry = `[${now}] ${msg}\n`
-    let fd = fs.openSync(this.acLogfilePath, 'a')
+  public writeLogFile(msg: string) {
+    const now = new Date();
+    const entry = `[${now}] ${msg}\n`;
+    const fd = fs.openSync(this.acLogfilePath, 'a');
     // @ts-ignore
-    fs.write(fd, entry)
+    fs.write(fd, entry);
   }
 
   protected findCompletion(cmdId: string, name: string, description = ''): flags.ICompletion | undefined {
-    return new CompletionLookup(cmdId, name, description).run()
+    return new CompletionLookup(cmdId, name, description).run();
   }
 }

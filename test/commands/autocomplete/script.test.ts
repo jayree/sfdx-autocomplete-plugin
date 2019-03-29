@@ -1,6 +1,7 @@
-import {expect, test} from '@oclif/test'
+import { expect, test } from '@oclif/test';
 
-const {default: runtest} = require('../../helpers/runtest')
+// tslint:disable-next-line: no-var-requires
+const { default: runtest } = require('../../helpers/runtest');
 
 runtest('autocomplete:script', () => {
   test
@@ -8,32 +9,29 @@ runtest('autocomplete:script', () => {
     .command(['autocomplete:script', 'bash'])
     .it('outputs bash profile config', ctx => {
       expect(ctx.stdout).to.contain(`
-# heroku autocomplete setup
-HEROKU_AC_BASH_SETUP_PATH=${
-    ctx.config.cacheDir
-  }/autocomplete/bash_setup && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH;
-`
-    )
-    })
+# sfdx autocomplete setup
+SFDX_AC_BASH_SETUP_PATH=${
+        ctx.config.cacheDir
+      }/autocomplete/bash_setup && test -f $SFDX_AC_BASH_SETUP_PATH && source $SFDX_AC_BASH_SETUP_PATH;
+`);
+    });
 
   test
     .stdout()
     .command(['autocomplete:script', 'zsh'])
     .it('outputs zsh profile config', ctx => {
       expect(ctx.stdout).to.contain(`
-# heroku autocomplete setup
-HEROKU_AC_ZSH_SETUP_PATH=${
-    ctx.config.cacheDir
-  }/autocomplete/zsh_setup && test -f $HEROKU_AC_ZSH_SETUP_PATH && source $HEROKU_AC_ZSH_SETUP_PATH;
-`
-    )
-    })
+# sfdx autocomplete setup
+SFDX_AC_ZSH_SETUP_PATH=${
+        ctx.config.cacheDir
+      }/autocomplete/zsh_setup && test -f $SFDX_AC_ZSH_SETUP_PATH && source $SFDX_AC_ZSH_SETUP_PATH;
+`);
+    });
 
   test
-    .stdout()
+    .stderr()
     .command(['autocomplete:script', 'fish'])
-    .catch(e => {
-      expect(e.message).to.contain('fish is not a supported shell for autocomplete')
-    })
-    .it('errors on unsupported shell')
-})
+    .it('errors on unsupported shell', ctx => {
+      expect(ctx.stderr).to.contain('fish is not a supported shell for autocomplete');
+    });
+});

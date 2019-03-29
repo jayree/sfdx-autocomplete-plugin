@@ -1,52 +1,65 @@
-@heroku-cli/plugin-autocomplete
-===============================
+sfdx-autocomplete
+==========================
 
+autocomplete plugin for sfdx (bash & zsh)  
+based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete) and
+[heroku/heroku-cli-autocomplete](https://github.com/heroku/heroku-cli-autocomplete)
 
-
-[![Version](https://img.shields.io/npm/v/@heroku-cli/plugin-autocomplete.svg)](https://npmjs.org/package/@heroku-cli/plugin-autocomplete)
-[![CircleCI](https://circleci.com/gh/heroku/heroku-cli-autocomplete/tree/master.svg?style=shield)](https://circleci.com/gh/heroku/heroku-cli-autocomplete/tree/master)
-[![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/heroku/heroku-cli-autocomplete?branch=master&svg=true)](https://ci.appveyor.com/project/heroku/heroku-cli-autocomplete/branch/master)
-[![Codecov](https://codecov.io/gh/heroku/heroku-cli-autocomplete/branch/master/graph/badge.svg)](https://codecov.io/gh/heroku/heroku-cli-autocomplete)
-[![Downloads/week](https://img.shields.io/npm/dw/@heroku-cli/plugin-autocomplete.svg)](https://npmjs.org/package/@heroku-cli/plugin-autocomplete)
-[![License](https://img.shields.io/npm/l/@heroku-cli/plugin-autocomplete.svg)](https://github.com/heroku/heroku-cli-autocomplete/blob/master/package.json)
+[![sfdx](https://img.shields.io/badge/cli-sfdx-brightgreen.svg)](https://developer.salesforce.com/tools/sfdxcli)
+[![Version](https://img.shields.io/npm/v/sfdx-autocmplt.svg)](https://npmjs.org/package/sfdx-autocmplt)
+[![CircleCI](https://circleci.com/gh/jayree/sfdx-autocomplete-plugin.svg?style=shield)](https://circleci.com/gh/jayree/sfdx-autocomplete-plugin)
+[![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/jayree/sfdx-autocomplete-plugin?branch=master&svg=true)](https://ci.appveyor.com/project/jayree/sfdx-autocomplete-plugin/branch/master)
+[![Codecov](https://codecov.io/gh/jayree/sfdx-autocomplete-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/jayree/sfdx-autocomplete-plugin)
+[![Downloads/week](https://img.shields.io/npm/dw/sfdx-autocmplt.svg)](https://npmjs.org/package/sfdx-autocmplt)
+[![License](https://img.shields.io/npm/l/sfdx-autocmplt.svg)](https://github.com/jayree/sfdx-autocomplete-plugin/blob/master/package.json)
 
 <!-- toc -->
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
 ```sh-session
-$ heroku update
-$ heroku plugins:install autocomplete
-$ heroku autocomplete
+$ sfdx plugins:install sfdx-autocmplt
+$ sfdx autocomplete:COMMAND
+running command...
+$ sfdx plugins
+sfdx-autocmplt 1.2.0
+$ sfdx help autocomplete:COMMAND
+USAGE
+  $ sfdx autocomplete:COMMAND
+...
 ```
 <!-- usagestop -->
+
 # Commands
 <!-- commands -->
-* [`heroku autocomplete [SHELL]`](#heroku-autocomplete-shell)
+* [`sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal]`](#sfdx-autocomplete--r---json---loglevel-tracedebuginfowarnerrorfatal)
 
-## `heroku autocomplete [SHELL]`
+## `sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal]`
 
 display autocomplete installation instructions
 
 ```
 USAGE
-  $ heroku autocomplete [SHELL]
+  $ sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal]
 
 ARGUMENTS
   SHELL  shell type
 
 OPTIONS
-  -s, --skip-instructions  don't show installation instructions
+  -r, --refresh-cache                             refresh cache only (ignores displaying instructions)
+  --json                                          format output as json
+  --loglevel=(trace|debug|info|warn|error|fatal)  [default: warn] logging level for this command invocation
 
 EXAMPLES
-  $ heroku autocomplete
-
-  $ heroku autocomplete bash
-
-  $ heroku autocomplete zsh
+  $ sfdx autocomplete
+  $ sfdx autocomplete bash
+  $ sfdx autocomplete zsh
+  $ sfdx autocomplete --refresh-cache
 ```
 
-_See code: [src/commands/autocomplete/index.ts](https://github.com/heroku/heroku-cli-autocomplete/blob/master/src/commands/autocomplete/index.ts)_
+_See code: [src/commands/autocomplete/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v1.2.0/src/commands/autocomplete/index.ts)_
 <!-- commandsstop -->

@@ -1,54 +1,58 @@
-import {flags} from '@heroku-cli/command'
-import {Config} from '@oclif/config'
-import {expect} from 'chai'
-import * as path from 'path'
+import { Config } from '@oclif/config';
+import { flags } from '@salesforce/command';
+import { expect } from 'chai';
+import * as path from 'path';
 
-import {AutocompleteBase} from '../src/base'
+import { AutocompleteBase } from '../src/base';
 
 // autocomplete will throw error on windows
-const {default: runtest} = require('./helpers/runtest')
+// tslint:disable-next-line: no-var-requires
+const { default: runtest } = require('./helpers/runtest');
 
 class AutocompleteTest extends AutocompleteBase {
-  static id = 'test:foo'
-  static flags = {
-    app: flags.app(),
-    bar: flags.boolean(),
-  }
-  async run() {}
+  public static id = 'test:foo';
+  protected static flagsConfig = {
+    bar: flags.boolean({
+      description: 'bar'
+    })
+  };
+  public async run() {}
 }
 
-const root = path.resolve(__dirname, '../package.json')
-const config = new Config({root})
+const root = path.resolve(__dirname, '../../package.json');
+const config = new Config({ root });
 
-const cmd = new AutocompleteTest([], config)
+const cmd = new AutocompleteTest([], config);
 
 runtest('AutocompleteBase', () => {
   before(async () => {
-    await config.load()
-  })
+    await config.load();
+  });
 
   it('#errorIfWindows', async () => {
     try {
-      new AutocompleteTest([], config).errorIfWindows()
+      new AutocompleteTest([], config).errorIfWindows();
     } catch (e) {
-      expect(e.message).to.eq('Autocomplete is not currently supported in Windows')
+      expect(e.message).to.eq('Autocomplete is not currently supported in Windows');
     }
-  })
+  });
 
   it('#autocompleteCacheDir', async () => {
-    expect(cmd.autocompleteCacheDir).to.eq(path.join(config.cacheDir, 'autocomplete'))
-  })
+    expect(cmd.autocompleteCacheDir).to.eq(path.join(config.cacheDir, 'autocomplete'));
+  });
 
   it('#completionsCacheDir', async () => {
-    expect(cmd.completionsCacheDir).to.eq(path.join(config.cacheDir, 'autocomplete', 'completions'))
-  })
+    expect(cmd.completionsCacheDir).to.eq(path.join(config.cacheDir, 'autocomplete', 'completions'));
+  });
 
   it('#acLogfilePath', async () => {
-    expect(cmd.acLogfilePath).to.eq(path.join(config.cacheDir, 'autocomplete.log'))
-  })
+    expect(cmd.acLogfilePath).to.eq(path.join(config.cacheDir, 'autocomplete.log'));
+  });
 
   it('#findCompletion', async () => {
-    expect((cmd as any).findCompletion(AutocompleteTest.id, 'app')).to.be.ok
-    expect((cmd as any).findCompletion(AutocompleteTest.id, 'bar')).to.not.be.ok
-  })
-})
+    // tslint:disable-next-line: no-any
+    expect((cmd as any).findCompletion(AutocompleteTest.id, 'targetusername')).to.be.ok;
+    // tslint:disable-next-line: no-any
+    expect((cmd as any).findCompletion(AutocompleteTest.id, 'bar')).to.not.be.ok;
+  });
+});
