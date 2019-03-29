@@ -107,8 +107,7 @@ export const targetUserNameCompletion: flags.ICompletion = {
       );
       return aliases.filter(alias => !aliasesToDelete.includes(alias));
     } catch (error) {
-      // return [];
-      throw error;
+      return [];
     }
   }
 };

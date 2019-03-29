@@ -6,5 +6,5 @@
     "outDir": "./lib",
     "rootDirs": ["./src"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "test/**/*"]
 }
