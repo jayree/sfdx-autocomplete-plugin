@@ -1,29 +1,27 @@
-import * as fs from 'fs-extra';
-import * as moment from 'moment';
+import * as fs from 'fs-extra'
 
-// tslint:disable-next-line: no-any
 export async function updateCache(cachePath: string, cache: any) {
-  await fs.ensureFile(cachePath);
-  await fs.writeJSON(cachePath, cache);
+  await fs.ensureFile(cachePath)
+  await fs.writeJSON(cachePath, cache)
 }
 
 function _isStale(cachePath: string, cacheDuration: number): boolean {
-  return _mtime(cachePath).isBefore(moment().subtract(cacheDuration, 'seconds'));
+  const past = new Date()
+  past.setSeconds(past.getSeconds() - cacheDuration)
+  return past.getTime() > _mtime(cachePath).getTime()
 }
 
-// tslint:disable-next-line: no-any
-function _mtime(f: any) {
-  return moment(fs.statSync(f).mtime);
+function _mtime(f: any): Date {
+  return fs.statSync(f).mtime
 }
 
-// tslint:disable-next-line: no-any
-export async function fetchCache(cachePath: string, cacheDuration: number, options: any): Promise<any> {
-  const cachePresent = fs.existsSync(cachePath);
+export async function fetchCache(cachePath: string, cacheDuration: number, options: any): Promise<Array<string>> {
+  let cachePresent = fs.existsSync(cachePath)
   if (cachePresent && !_isStale(cachePath, cacheDuration)) {
-    return fs.readJSON(cachePath);
+    return fs.readJSON(cachePath)
   }
-  const cache = await options.cacheFn();
+  const cache = await options.cacheFn()
   // TODO: move this to a fork
-  await updateCache(cachePath, cache);
-  return cache;
+  await updateCache(cachePath, cache)
+  return cache
 }

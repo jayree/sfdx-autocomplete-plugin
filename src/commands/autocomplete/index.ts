@@ -1,59 +1,51 @@
-import { flags } from '@salesforce/command';
-import chalk from 'chalk';
-import * as path from 'path';
-import { targetUserNameCompletion } from '../../completions';
+import {flags} from '@heroku-cli/command'
+import {AppCompletion, PipelineCompletion, SpaceCompletion, TeamCompletion} from '@heroku-cli/command/lib/completions'
+import chalk from 'chalk'
+import {cli} from 'cli-ux'
+import * as path from 'path'
 
-import { AutocompleteBase } from '../../base';
-import { updateCache } from '../../cache';
+import {AutocompleteBase} from '../../base'
+import {updateCache} from '../../cache'
 
-import Create from './create';
+import Create from './create'
 
 export default class Index extends AutocompleteBase {
-  public static description = 'display autocomplete installation instructions';
+  static description = 'display autocomplete installation instructions'
 
-  public static args = [{ name: 'shell', description: 'shell type', required: false }];
+  static args = [{name: 'shell', description: 'shell type', required: false}]
 
-  public static examples = [
-    '$ <%= config.bin %> autocomplete',
-    '$ <%= config.bin %> autocomplete bash',
-    '$ <%= config.bin %> autocomplete zsh',
-    '$ <%= config.bin %> autocomplete --refresh-cache'
-  ];
+  static flags = {
+    'refresh-cache': flags.boolean({description: 'refresh cache only (ignores displaying instructions)', char: 'r'}),
+  }
 
-  protected static flagsConfig = {
-    'refresh-cache': flags.boolean({
-      description: 'Refresh cache (ignores displaying instructions)',
-      char: 'r'
-    })
-  };
+  static examples = [
+    '$ heroku autocomplete',
+    '$ heroku autocomplete bash',
+    '$ heroku autocomplete zsh',
+    '$ heroku autocomplete --refresh-cache'
+  ]
 
-  public async run() {
-    const shell = this.args.shell /* istanbul ignore next */ || this.config.shell;
+  async run() {
+    const {args, flags} = this.parse(Index)
+    const shell = args.shell || this.config.shell
+    this.errorIfNotSupportedShell(shell)
 
-    this.errorIfNotSupportedShell(shell);
+    cli.action.start(`${chalk.bold('Building the autocomplete cache')}`)
+    await Create.run([], this.config)
+    await this.updateCache(AppCompletion, 'app')
+    await this.updateCache(PipelineCompletion, 'pipeline')
+    await this.updateCache(SpaceCompletion, 'space')
+    await this.updateCache(TeamCompletion, 'team')
+    cli.action.stop()
 
-    const isInTest = typeof global.it === 'function';
+    if (!flags['refresh-cache']) {
+      const bin = this.config.bin
+      const bashNote = 'If your terminal starts as a login shell you may need to print the init script into ~/.bash_profile or ~/.profile.'
+      const zshNote = `After sourcing, you can run \`${chalk.cyan('$ compaudit -D')}\` to ensure no permissions conflicts are present`
+      const note = shell === 'zsh' ? zshNote : bashNote
+      const tabStr = shell === 'bash' ? '<TAB><TAB>' : '<TAB>'
 
-    /* istanbul ignore next */
-    if (!isInTest) this.ux.startSpinner(`${chalk.bold('Building the autocomplete cache')}`);
-    await Create.run([], this.config);
-    await updateCache(path.join(this.autocompleteCacheDir, 'plugins'), this.config.plugins);
-    await this.updateCache(targetUserNameCompletion, 'targetusername');
-    /* istanbul ignore next */
-    if (!isInTest) this.ux.stopSpinner();
-
-    /* istanbul ignore else*/
-    if (!this.flags['refresh-cache']) {
-      const bin = this.cliBin;
-      const tabStr = shell === 'bash' ? '<TAB><TAB>' : '<TAB>';
-      const note =
-        shell === 'zsh'
-          ? `After sourcing, you can run \`${chalk.cyan(
-              '$ compaudit -D'
-            )}\` to ensure no permissions conflicts are present`
-          : 'If your terminal starts as a login shell you may need to print the init script into ~/.bash_profile or ~/.profile.';
-
-      this.ux.log(`
+      this.log(`
 ${chalk.bold(`Setup Instructions for ${bin.toUpperCase()} CLI Autocomplete ---`)}
 
 1) Add the autocomplete env var to your ${shell} profile and source it
@@ -63,16 +55,19 @@ NOTE: ${note}
 
 2) Test it out, e.g.:
 ${chalk.cyan(`$ ${bin} ${tabStr}`)}                 # Command completion
-${chalk.cyan(`$ ${bin} command --${tabStr}`)}       # Flag completion
+${chalk.cyan(`$ ${bin} apps:info --${tabStr}`)}     # Flag completion
+${chalk.cyan(`$ ${bin} apps:info --app=${tabStr}`)} # Flag option completion
+
+Visit the autocomplete Dev Center doc at https://devcenter.heroku.com/articles/heroku-cli-autocomplete
 
 Enjoy!
-`);
+`)
     }
   }
-  // tslint:disable-next-line: no-any
+
   private async updateCache(completion: any, cacheKey: string) {
-    const cachePath = path.join(this.completionsCacheDir, cacheKey);
-    const options = await completion.options({ config: this.config });
-    await updateCache(cachePath, options);
+    const cachePath = path.join(this.completionsCacheDir, cacheKey)
+    const options = await completion.options({config: this.config})
+    await updateCache(cachePath, options)
   }
 }
