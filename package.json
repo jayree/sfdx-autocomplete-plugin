@@ -5,22 +5,22 @@
   "author": "jayree @jayree",
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "dependencies": {
-    "@oclif/command": "^1.5.10",
-    "@oclif/config": "^1.12.8",
+    "@oclif/command": "^1.5.12",
+    "@oclif/config": "^1.12.11",
     "@oclif/errors": "^1.2.2",
-    "@salesforce/command": "^1.2.0",
+    "@salesforce/command": "1.4.2",
     "chalk": "^2.4.2",
     "fs-extra": "^7.0.1"
   },
   "devDependencies": {
-    "@oclif/dev-cli": "^1.21.2",
+    "@oclif/dev-cli": "^1.22.0",
     "@oclif/plugin-help": "^2.1.6",
     "@oclif/semantic-release": "^3.1.1",
-    "@salesforce/dev-scripts": "^0.3.12",
+    "@salesforce/dev-scripts": "^0.3.13",
     "@types/fs-extra": "^5.0.5",
     "codecov": "^3.2.0",
     "husky": "^1.3.1",
-    "patch-package": "^6.0.4",
+    "patch-package": "^6.1.0",
     "tslib": "^1.9.3",
     "tslint": "^5",
     "tslint-config-prettier": "^1.18.0",
@@ -29,7 +29,7 @@
     "typescript-tslint-plugin": "^0.3.1"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8.4.0"
   },
   "files": [
     "/lib/src",
