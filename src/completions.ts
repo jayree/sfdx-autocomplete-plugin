@@ -1,9 +1,9 @@
 import { flags } from '@oclif/command';
+import { core } from '@salesforce/command';
 // import * as Config from '@oclif/config';
 // import flatten = require('lodash.flatten');
-import { core } from '@salesforce/command';
-import * as fs from 'fs-extra';
-import * as path from 'path';
+import { Aliases, AuthInfo } from '@salesforce/core';
+import * as _ from 'lodash';
 
 export const oneDay = 60 * 60 * 24;
 
@@ -85,27 +85,30 @@ export const targetUserNameCompletion: flags.ICompletion = {
   cacheDuration: oneDay,
   options: async ctx => {
     try {
-      const aliases = Object.keys(
-        (await fs.readJSON(path.join(ctx.config.home, core.Global.STATE_FOLDER, core.Aliases.getFileName())))[
-          core.AliasGroup.ORGS
-        ]
-      );
+      const authFiles = await AuthInfo.listAllAuthFiles();
+      const orgs = authFiles.map(authfile => authfile.replace('.json', ''));
+      const aliasesOrUsernames = [];
+      const aliases = await Aliases.create({});
+      for (const org of orgs) {
+        const aliasKeys = aliases.getKeysByValue(org);
+        const value = _.get(aliasKeys, 0) || org;
+        aliasesOrUsernames.push(value);
+      }
 
-      const aliasesToDelete = [];
-
+      const aliasesOrUsernamesToDelete = [];
       await Promise.all(
-        aliases.map(async a => {
+        aliasesOrUsernames.map(async a => {
           try {
             const org = await core.Org.create({
               aliasOrUsername: a
             });
             await org.refreshAuth();
           } catch (error /* istanbul ignore next */) {
-            aliasesToDelete.push(a);
+            aliasesOrUsernamesToDelete.push(a);
           }
         })
       );
-      return aliases.filter(alias => !aliasesToDelete.includes(alias));
+      return aliasesOrUsernames.filter(alias => !aliasesOrUsernamesToDelete.includes(alias));
     } catch (error) {
       return [];
     }
