@@ -167,7 +167,7 @@ export default class Create extends AutocompleteBase {
         if (hasCompletion) {
           cachecompl = ': :_sfdx_compadd_flag_options';
         }
-        if (this.wantsLocalFiles(flag)) {
+        if (this.wantsLocalFiles(flag) && command.flags[flag].type === 'option') {
           cachecompl = ': :_files';
         }
         const help = isBoolean ? '(switch) ' : hasCompletion ? '(autocomplete) ' : '';
@@ -247,16 +247,25 @@ bindkey "^I" expand-or-complete-with-dots`;
 
   private wantsLocalFiles(flag: string): boolean {
     return [
-      'file',
-      'procfile',
+      'apexcodefile',
+      'config',
       'configfile',
-      'unpackaged',
-      'deploydir',
-      'manifest',
-      'sourcepath',
-      'outputdir',
-      'rootdir',
       'csvfile',
+      'definitionfile',
+      'deploydir',
+      'file',
+      'jwtkeyfile',
+      'manifest',
+      'outputdir',
+      'privatekeypath',
+      'resultfile',
+      'retrievetargetdir',
+      'rootdir',
+      'sfdxurlfile',
+      'sobjecttreefiles',
+      'sourcefile',
+      'sourcepath',
+      'unpackaged',
       'zipfile'
     ].includes(flag);
   }
