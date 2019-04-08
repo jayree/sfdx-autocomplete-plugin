@@ -1,5 +1,4 @@
 import { Command } from '@oclif/config';
-// import * as fs from 'fs-extra';
 // import { flags } from '@salesforce/command';
 import * as path from 'path';
 
@@ -9,7 +8,9 @@ import { fetchCache } from '../../cache';
 export default class Options extends AutocompleteBase {
   public static hidden = true;
   public static description = 'display arg or flag completion options (used internally by completion fuctions)';
-
+  /*   public static flags = {
+    app: flags.app({ required: false, hidden: true })
+  }; */
   public static args = [{ name: 'completion', strict: false }];
 
   public parsedArgs: { [name: string]: string } = {};
@@ -29,22 +30,13 @@ export default class Options extends AutocompleteBase {
 
     // ex: heroku autocomplete:options 'heroku addons:destroy -a myapp myaddon'
     try {
-      /* istanbul ignore next */
-      this.config.plugins = await fetchCache(path.join(this.autocompleteCacheDir, 'plugins'), 60 * 60 * 24, {
-        cacheFn: async () => {
-          await this.ensureCommands();
-          return this.config.plugins;
-        }
-      });
-
       const commandStateVars = await this.processCommandLine();
       const completion = this.determineCompletion(commandStateVars);
       const options = await this.fetchOptions(completion);
-      /* istanbul ignore else*/
       if (options) this.log(options);
-    } catch (err) /* istanbul ignore next*/ {
+    } catch (err) {
       // write to ac log
-      this.logger.error(err.message);
+      this.writeLogFile(err.message);
     }
   }
 
@@ -52,21 +44,25 @@ export default class Options extends AutocompleteBase {
     // find command id
     const commandLineToComplete = this.argv[0].split(' ');
     const id = commandLineToComplete[1];
-
     // find Command
     const C = this.config.findCommand(id);
     let klass;
     if (C) {
-      // klass = C.load();
-      klass = C;
+      klass = C.load();
       // process Command state from command line data
       const slicedArgv = commandLineToComplete.slice(2);
       const [argsIndex, curPositionIsFlag, curPositionIsFlagValue] = this.determineCmdState(
         slicedArgv,
         klass as Command
       );
-
-      return { id, klass, argsIndex, curPositionIsFlag, curPositionIsFlagValue, slicedArgv };
+      return {
+        id,
+        klass,
+        argsIndex,
+        curPositionIsFlag,
+        curPositionIsFlagValue,
+        slicedArgv
+      };
     } else {
       this.throwError(`Command ${id} not found`);
     }
@@ -86,24 +82,20 @@ export default class Options extends AutocompleteBase {
       const slicedArgvCount = slicedArgv.length;
       const lastArgvArg = slicedArgv[slicedArgvCount - 1];
       const previousArgvArg = slicedArgv[slicedArgvCount - 2];
-      /* istanbul ignore next*/
       const argvFlag = curPositionIsFlagValue ? previousArgvArg : lastArgvArg;
       const { name, flag } = this.findFlagFromWildArg(argvFlag, klass);
       if (!flag) this.throwError(`${argvFlag} is not a valid flag for ${id}`);
-      /* istanbul ignore next*/
       cacheKey = name || flag.name;
       cacheCompletion = flag.completion;
     } else {
-      /* istanbul ignore next*/
       const cmdArgs = klass.args || [];
       // variable arg (strict: false)
-      /* istanbul ignore else*/
       if (!klass.strict) {
-        /* istanbul ignore next*/
         cacheKey = cmdArgs[0] && cmdArgs[0].name.toLowerCase();
-        cacheCompletion = this.findCompletion(cacheKey, id);
-        /* istanbul ignore else*/
-        if (!cacheCompletion) this.throwError(`Cannot complete variable arg position for ${id}`);
+        cacheCompletion = this.findCompletion(id, cacheKey);
+        if (!cacheCompletion) {
+          this.throwError(`Cannot complete variable arg position for ${id}`);
+        }
       } else if (argsIndex > cmdArgs.length - 1) {
         this.throwError(`Cannot complete arg position ${argsIndex} for ${id}`);
       } else {
@@ -113,11 +105,9 @@ export default class Options extends AutocompleteBase {
     }
 
     // try to auto-populate the completion object
-    /* istanbul ignore else*/
     if (!cacheCompletion) {
-      cacheCompletion = this.findCompletion(cacheKey, id);
+      cacheCompletion = this.findCompletion(id, cacheKey);
     }
-
     return { cacheKey, cacheCompletion };
   }
 
@@ -125,50 +115,55 @@ export default class Options extends AutocompleteBase {
   private async fetchOptions(cache: any) {
     const { cacheCompletion, cacheKey } = cache;
     // build/retrieve & return options cache
-    /* istanbul ignore else*/
     if (cacheCompletion && cacheCompletion.options) {
       const ctx = {
         args: this.parsedArgs,
         // special case for app & team env vars
-        flags: this.parsedFlags,
+        flags: this.parsedFlagsWithEnvVars,
         argv: this.argv,
         config: this.config
       };
       // use cacheKey function or fallback to arg/flag name
-      /* istanbul ignore next*/
       const ckey = cacheCompletion.cacheKey ? await cacheCompletion.cacheKey(ctx) : null;
-
-      /* istanbul ignore next*/
       const key: string = ckey || cacheKey || 'unknown_key_error';
-
       const flagCachePath = path.join(this.completionsCacheDir, key);
+
       // build/retrieve cache
       const duration = cacheCompletion.cacheDuration || 60 * 60 * 24; // 1 day
       const opts = { cacheFn: () => cacheCompletion.options(ctx) };
-
       const options = await fetchCache(flagCachePath, duration, opts);
 
       // return options cache
-      /* istanbul ignore next*/
       return (options || []).join('\n');
     }
+  }
+
+  private get parsedFlagsWithEnvVars() {
+    const { flags } = this.parse(Options);
+    return {
+      app: process.env.SFDX_APP || flags.app,
+      team: process.env.SFDX_TEAM || process.env.SFDX_ORG,
+      ...this.parsedFlags
+    };
   }
 
   private throwError(msg: string) {
     throw new Error(msg);
   }
 
-  // tslint:disable-next-line: no-any
-  private findFlagFromWildArg(wild: string, klass: Command): { flag: any; name: any } {
+  private findFlagFromWildArg(
+    wild: string,
+    klass: Command
+    // tslint:disable-next-line: no-any
+  ): { flag: any; name: any } {
     let name = wild.replace(/^-+/, '');
     name = name.replace(/=(.+)?$/, '');
+
     const unknown = { flag: undefined, name: undefined };
-    /* istanbul ignore next*/
     if (!klass.flags) return unknown;
     const cFlags = klass.flags;
 
     let flag = cFlags[name];
-
     if (flag) return { name, flag };
 
     name = Object.keys(cFlags).find((k: string) => cFlags[k].char === name) || 'undefinedcommand';
@@ -212,7 +207,9 @@ export default class Options extends AutocompleteBase {
         // the shell's autocomplete handles partial value matching
 
         // add parsedFlag
-        if (wildSplit.length === 2 && name) this.parsedFlags[name] = wildSplit[1];
+        if (wildSplit.length === 2 && name) {
+          this.parsedFlags[name] = wildSplit[1];
+        }
 
         // we're a flag who is satisfied
         argIsFlagValue = false;
@@ -227,7 +224,6 @@ export default class Options extends AutocompleteBase {
         // we're a flag value
 
         // add parsedFlag
-        /* istanbul ignore else*/
         if (flagName) this.parsedFlags[flagName] = wild;
 
         argIsFlagValue = true;

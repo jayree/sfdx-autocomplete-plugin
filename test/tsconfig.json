@@ -1,6 +1,9 @@
 {
   "extends": "../tsconfig",
   "compilerOptions": {
-    "noEmit": true
-  }
+    "declaration": false,
+    "sourceMap": true,
+    "allowJs": true
+  },
+  "include": ["./**/*", "../src/**/*"]
 }

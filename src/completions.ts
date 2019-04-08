@@ -1,28 +1,63 @@
-import { IConfig } from '@oclif/config';
+import { flags } from '@oclif/command';
 import { core } from '@salesforce/command';
-import * as fs from 'fs-extra';
-import * as path from 'path';
+// import * as Config from '@oclif/config';
+// import flatten = require('lodash.flatten');
+import { Aliases, AuthInfo } from '@salesforce/core';
+import * as _ from 'lodash';
 
 export const oneDay = 60 * 60 * 24;
 
-export declare type ICompletionContext = {
-  args?: {
-    [name: string]: string;
-  };
-  flags?: {
-    [name: string]: string;
-  };
-  argv?: string[];
-  config: IConfig;
-};
-export declare type ICompletion = {
-  skipCache?: boolean;
-  cacheDuration?: number;
-  cacheKey?(ctx: ICompletionContext): Promise<string>;
-  options(ctx: ICompletionContext): Promise<string[]>;
-};
+export class CompletionLookup {
+  private get key(): string {
+    return this.argAlias() || this.keyAlias() || this.descriptionAlias() || this.name;
+  }
 
-export const loglevelCompletion: ICompletion = {
+  private readonly blacklistMap: { [key: string]: string[] } = {
+    app: ['apps:create'],
+    space: ['spaces:create']
+  };
+
+  private readonly keyAliasMap: { [key: string]: { [key: string]: string } } = {
+    key: {
+      'config:get': 'config'
+    }
+  };
+
+  private readonly commandArgsMap: {
+    [key: string]: { [key: string]: string };
+  } = {
+    key: {
+      'config:set': 'configSet'
+    }
+  };
+
+  constructor(private readonly cmdId: string, private readonly name: string, private readonly description?: string) {}
+
+  public run(): flags.ICompletion | undefined {
+    if (this.blacklisted()) return;
+    return CompletionMapping[this.key];
+  }
+
+  private argAlias(): string | undefined {
+    return this.commandArgsMap[this.name] && this.commandArgsMap[this.name][this.cmdId];
+  }
+
+  private keyAlias(): string | undefined {
+    return this.keyAliasMap[this.name] && this.keyAliasMap[this.name][this.cmdId];
+  }
+
+  private descriptionAlias(): string | undefined {
+    const d = this.description!;
+    if (d.match(/^dyno size/)) return 'dynosize';
+    if (d.match(/^process type/)) return 'processtype';
+  }
+
+  private blacklisted(): boolean {
+    return this.blacklistMap[this.name] && this.blacklistMap[this.name].includes(this.cmdId);
+  }
+}
+
+export const loglevelCompletion: flags.ICompletion = {
   skipCache: true,
 
   options: async () => {
@@ -30,7 +65,7 @@ export const loglevelCompletion: ICompletion = {
   }
 };
 
-export const resultformatCompletion: ICompletion = {
+export const resultformatCompletion: flags.ICompletion = {
   skipCache: true,
 
   options: async () => {
@@ -38,7 +73,7 @@ export const resultformatCompletion: ICompletion = {
   }
 };
 
-export const instanceurlCompletion: ICompletion = {
+export const instanceurlCompletion: flags.ICompletion = {
   skipCache: true,
 
   options: async () => {
@@ -46,38 +81,42 @@ export const instanceurlCompletion: ICompletion = {
   }
 };
 
-export const targetUserNameCompletion: ICompletion = {
+export const targetUserNameCompletion: flags.ICompletion = {
   cacheDuration: oneDay,
-  options: async () => {
+  options: async ctx => {
     try {
-      const aliases = Object.keys(
-        (await fs.readJSON(path.join(global.config.home, core.Global.STATE_FOLDER, core.Aliases.getFileName())))[
-          core.AliasGroup.ORGS
-        ]
-      );
+      const authFiles = await AuthInfo.listAllAuthFiles();
+      const orgs = authFiles.map(authfile => authfile.replace('.json', ''));
+      const aliasesOrUsernames = [];
+      const aliases = await Aliases.create({});
+      for (const org of orgs) {
+        const aliasKeys = aliases.getKeysByValue(org);
+        const value = _.get(aliasKeys, 0) || org;
+        aliasesOrUsernames.push(value);
+      }
 
-      const aliasesToDelete = [];
-
+      const aliasesOrUsernamesToDelete = [];
       await Promise.all(
-        aliases.map(async a => {
+        aliasesOrUsernames.map(async a => {
           try {
             const org = await core.Org.create({
               aliasOrUsername: a
             });
             await org.refreshAuth();
           } catch (error /* istanbul ignore next */) {
-            aliasesToDelete.push(a);
+            aliasesOrUsernamesToDelete.push(a);
           }
         })
       );
-      return aliases.filter(alias => !aliasesToDelete.includes(alias));
+      return aliasesOrUsernames.filter(alias => !aliasesOrUsernamesToDelete.includes(alias));
     } catch (error) {
       return [];
     }
   }
 };
 
-export const completionMapping: { [key: string]: ICompletion } = {
+// tslint:disable-next-line: variable-name
+export const CompletionMapping: { [key: string]: flags.ICompletion } = {
   targetusername: targetUserNameCompletion,
   loglevel: loglevelCompletion,
   instanceurl: instanceurlCompletion,

@@ -1,10 +1,5 @@
 {
-  "check-coverage": true,
-  "lines": 88,
-  "statements": 87,
-  "functions": 89,
-  "branches": 74,
   "reporter": ["lcov", "text"],
   "extension": [".ts"],
-  "exclude": ["**/*.d.ts", "**/*.test.js"]
+  "exclude": ["**/*.d.ts", "**/*.test.js","**/helpers/*.js"]
 }

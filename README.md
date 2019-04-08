@@ -36,23 +36,23 @@ USAGE
 
 # Commands
 <!-- commands -->
-* [`sfdx autocomplete [SHELL]`](#sfdx-autocomplete-shell)
+* [`sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal]`](#sfdx-autocomplete--r---json---loglevel-tracedebuginfowarnerrorfatal)
 
-## `sfdx autocomplete [SHELL]`
+## `sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal]`
 
 display autocomplete installation instructions
 
 ```
 USAGE
-  $ sfdx autocomplete [SHELL]
+  $ sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal]
 
 ARGUMENTS
   SHELL  shell type
 
 OPTIONS
-  -r, --refresh-cache                             Refresh cache (ignores displaying instructions)
+  -r, --refresh-cache                             refresh cache only (ignores displaying instructions)
   --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  --loglevel=(trace|debug|info|warn|error|fatal)  [default: warn] logging level for this command invocation
 
 EXAMPLES
   $ sfdx autocomplete
