@@ -1,13 +1,15 @@
 {
   "extends": "./node_modules/@salesforce/dev-config/tsconfig",
   "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "outDir": "./lib",
+    "rootDirs": ["./src"],
     "plugins": [
       {
         "name": "typescript-tslint-plugin"
       }
-    ],
-    "outDir": "lib",
-    "lib": ["dom", "es2017"]
+    ]
   },
   "include": ["src/**/*", "test/**/*"]
 }

@@ -50,7 +50,7 @@ ARGUMENTS
   SHELL  shell type
 
 OPTIONS
-  -r, --refresh-cache                             Refresh cache (ignores displaying instructions)
+  -r, --refresh-cache                             refresh cache only (ignores displaying instructions)
   --json                                          format output as json
   --loglevel=(trace|debug|info|warn|error|fatal)  [default: warn] logging level for this command invocation
 

@@ -1,51 +1,58 @@
 import { Config } from '@oclif/config';
-import { expect, test } from '@salesforce/command/lib/test';
+import { flags } from '@salesforce/command';
+import { expect } from 'chai';
 import * as path from 'path';
 
 import { AutocompleteBase } from '../src/base';
 
 // autocomplete will throw error on windows
-// const { default: runtest } = _runtest;
-// import { skipWindows } from './helpers/runtest';
+// tslint:disable-next-line: no-var-requires
+const { default: runtest } = require('./helpers/runtest');
 
 class AutocompleteTest extends AutocompleteBase {
+  public static id = 'test:foo';
+  protected static flagsConfig = {
+    bar: flags.boolean({
+      description: 'bar'
+    })
+  };
   public async run() {}
 }
 
-const root = path.resolve(__dirname, '../package.json');
+const root = path.resolve(__dirname, '../../package.json');
 const config = new Config({ root });
 
 const cmd = new AutocompleteTest([], config);
 
-// autocomplete will throw error on windows ci
-const skipwindows = process.platform === 'win32' ? describe.skip : describe;
-
-skipwindows('autocompleteBase', () => {
+runtest('AutocompleteBase', () => {
   before(async () => {
     await config.load();
-    global.config = new Config(config);
-    global.config.cacheDir = path.join(__dirname, '../../../../test/assets/cache');
-    global.config.bin = 'sfdx';
-    await cmd.run();
   });
 
-  test.it('#errorIfWindows', async () => {
+  it('#errorIfWindows', async () => {
     try {
-      cmd.errorIfWindows();
+      new AutocompleteTest([], config).errorIfWindows();
     } catch (e) {
       expect(e.message).to.eq('Autocomplete is not currently supported in Windows');
     }
   });
 
-  test.it('#errorIfNotSupportedShell', async () => {
-    try {
-      cmd.errorIfNotSupportedShell('fish');
-    } catch (e) {
-      expect(e.message).to.eq('fish is not a supported shell for autocomplete');
-    }
+  it('#autocompleteCacheDir', async () => {
+    expect(cmd.autocompleteCacheDir).to.eq(path.join(config.cacheDir, 'autocomplete'));
   });
 
-  test.it('#autocompleteCacheDir', async () => {
-    expect(cmd.autocompleteCacheDir).to.eq(path.join(cmd.sfdxCacheDir, 'autocomplete'));
+  it('#completionsCacheDir', async () => {
+    expect(cmd.completionsCacheDir).to.eq(path.join(config.cacheDir, 'autocomplete', 'completions'));
+  });
+
+  it('#acLogfilePath', async () => {
+    expect(cmd.acLogfilePath).to.eq(path.join(config.cacheDir, 'autocomplete.log'));
+  });
+
+  it('#findCompletion', async () => {
+    // tslint:disable-next-line: no-any
+    expect((cmd as any).findCompletion(AutocompleteTest.id, 'targetusername')).to.be.ok;
+    // tslint:disable-next-line: no-any
+    expect((cmd as any).findCompletion(AutocompleteTest.id, 'bar')).to.not.be.ok;
   });
 });

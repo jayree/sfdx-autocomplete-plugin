@@ -1,23 +1,10 @@
-import { Config } from '@oclif/config';
-import { expect, test } from '@salesforce/command/lib/test';
-import * as path from 'path';
+import { expect, test } from '@oclif/test';
 
-const root = path.resolve(__dirname, '../package.json');
-const config = new Config({ root });
+// autocomplete will throw error on windows
+// tslint:disable-next-line: no-var-requires
+const { default: runtest } = require('../../helpers/runtest');
 
-// autocomplete will throw error on windows ci
-const skipwindows = process.platform === 'win32' ? describe.skip : describe;
-
-skipwindows('autocomplete', () => {
-  before(async () => {
-    if (process.platform === 'win32') this.skip();
-    await config.load();
-    global.config = new Config(config);
-    global.config.cacheDir = path.join(__dirname, '../../../../test/assets/cache');
-    global.config.home = path.join(__dirname, '../../../../test/assets/home');
-    global.config.bin = 'sfdx';
-  });
-
+runtest('autocomplete:index', () => {
   test
     .stdout()
     .command(['autocomplete', 'bash'])
@@ -32,7 +19,8 @@ NOTE: If your terminal starts as a login shell you may need to print the init sc
 
 2) Test it out, e.g.:
 $ sfdx <TAB><TAB>                 # Command completion
-$ sfdx command --<TAB><TAB>       # Flag completion
+$ sfdx apps:info --<TAB><TAB>     # Flag completion
+$ sfdx apps:info --app=<TAB><TAB> # Flag option completion
 
 Enjoy!
 
@@ -53,7 +41,8 @@ NOTE: After sourcing, you can run \`$ compaudit -D\` to ensure no permissions co
 
 2) Test it out, e.g.:
 $ sfdx <TAB>                 # Command completion
-$ sfdx command --<TAB>       # Flag completion
+$ sfdx apps:info --<TAB>     # Flag completion
+$ sfdx apps:info --app=<TAB> # Flag option completion
 
 Enjoy!
 

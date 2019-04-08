@@ -1,5 +1,4 @@
 import * as fs from 'fs-extra';
-import * as moment from 'moment';
 
 // tslint:disable-next-line: no-any
 export async function updateCache(cachePath: string, cache: any) {
@@ -8,16 +7,22 @@ export async function updateCache(cachePath: string, cache: any) {
 }
 
 function _isStale(cachePath: string, cacheDuration: number): boolean {
-  return _mtime(cachePath).isBefore(moment().subtract(cacheDuration, 'seconds'));
+  const past = new Date();
+  past.setSeconds(past.getSeconds() - cacheDuration);
+  return past.getTime() > _mtime(cachePath).getTime();
 }
 
 // tslint:disable-next-line: no-any
-function _mtime(f: any) {
-  return moment(fs.statSync(f).mtime);
+function _mtime(f: any): Date {
+  return fs.statSync(f).mtime;
 }
 
-// tslint:disable-next-line: no-any
-export async function fetchCache(cachePath: string, cacheDuration: number, options: any): Promise<any> {
+export async function fetchCache(
+  cachePath: string,
+  cacheDuration: number,
+  // tslint:disable-next-line: no-any
+  options: any
+): Promise<string[]> {
   const cachePresent = fs.existsSync(cachePath);
   if (cachePresent && !_isStale(cachePath, cacheDuration)) {
     return fs.readJSON(cachePath);
