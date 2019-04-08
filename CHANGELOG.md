@@ -1,3 +1,22 @@
+# [2.0.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v1.2.0...v2.0.0) (2019-04-08)
+
+
+### Bug Fixes
+
+* added missing fileCompletion ([fcd539a](https://github.com/jayree/sfdx-autocomplete-plugin/commit/fcd539a))
+* updated dependencies ([d58253d](https://github.com/jayree/sfdx-autocomplete-plugin/commit/d58253d))
+* updated dependencies ([da1aad9](https://github.com/jayree/sfdx-autocomplete-plugin/commit/da1aad9))
+
+
+### Features
+
+* sfdx oclif support ([5a22766](https://github.com/jayree/sfdx-autocomplete-plugin/commit/5a22766))
+
+
+### BREAKING CHANGES
+
+* sfdx oclif support
+
 # [1.2.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v1.1.2...v1.2.0) (2019-02-27)
 
 ### Bug Fixes

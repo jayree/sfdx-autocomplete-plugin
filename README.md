@@ -26,7 +26,7 @@ $ sfdx plugins:install sfdx-autocmplt
 $ sfdx autocomplete:COMMAND
 running command...
 $ sfdx plugins
-sfdx-autocmplt 1.2.0
+sfdx-autocmplt 2.0.0
 $ sfdx help autocomplete:COMMAND
 USAGE
   $ sfdx autocomplete:COMMAND
@@ -61,5 +61,5 @@ EXAMPLES
   $ sfdx autocomplete --refresh-cache
 ```
 
-_See code: [src/commands/autocomplete/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v1.2.0/src/commands/autocomplete/index.ts)_
+_See code: [src/commands/autocomplete/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.0.0/src/commands/autocomplete/index.ts)_
 <!-- commandsstop -->
