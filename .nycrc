@@ -1,5 +1,5 @@
 {
   "reporter": ["lcov", "text"],
   "extension": [".ts"],
-  "exclude": ["**/*.d.ts", "**/*.test.js"]
+  "exclude": ["**/*.d.ts", "**/*.test.js","**/helpers/*.js"]
 }
