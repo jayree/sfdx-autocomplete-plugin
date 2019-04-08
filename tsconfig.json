@@ -4,7 +4,12 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "outDir": "./lib",
-    "rootDirs": ["./src"]
+    "rootDirs": ["./src"],
+    "plugins": [
+      {
+        "name": "typescript-tslint-plugin"
+      }
+    ]
   },
   "include": ["src/**/*", "test/**/*"]
 }
