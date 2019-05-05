@@ -36,23 +36,27 @@ USAGE
 
 # Commands
 <!-- commands -->
-* [`sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal]`](#sfdx-autocomplete--r---json---loglevel-tracedebuginfowarnerrorfatal)
+* [`sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-autocomplete--r---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal]`
+## `sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 display autocomplete installation instructions
 
 ```
 USAGE
-  $ sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal]
+  $ sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 ARGUMENTS
   SHELL  shell type
 
 OPTIONS
-  -r, --refresh-cache                             refresh cache only (ignores displaying instructions)
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  [default: warn] logging level for this command invocation
+  -r, --refresh-cache                                                               refresh cache only (ignores
+                                                                                    displaying instructions)
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   $ sfdx autocomplete
