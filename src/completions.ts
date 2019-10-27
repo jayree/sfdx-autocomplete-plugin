@@ -88,7 +88,7 @@ export const targetUserNameCompletion: flags.ICompletion = {
       const authFiles = await AuthInfo.listAllAuthFiles();
       const orgs = authFiles.map(authfile => authfile.replace('.json', ''));
       const aliasesOrUsernames = [];
-      const aliases = await Aliases.create({});
+      const aliases = await Aliases.create({} as core.ConfigGroup.Options);
       for (const org of orgs) {
         const aliasKeys = aliases.getKeysByValue(org);
         const value = _.get(aliasKeys, 0) || org;
