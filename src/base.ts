@@ -39,7 +39,7 @@ export abstract class AutocompleteBase extends SfdxCommand {
     const entry = `[${now}] ${msg}\n`;
     const fd = fs.openSync(this.acLogfilePath, 'a');
     // @ts-ignore
-    fs.write(fd, entry);
+    fs.writeSync(fd, entry);
   }
 
   protected findCompletion(cmdId: string, name: string, description = ''): flags.ICompletion | undefined {
