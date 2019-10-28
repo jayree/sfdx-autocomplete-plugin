@@ -1,5 +1,4 @@
-sfdx-autocomplete
-==========================
+# sfdx-autocomplete
 
 autocomplete plugin for sfdx (bash & zsh)  
 based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete) and
@@ -18,7 +17,7 @@ based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplet
 * [Commands](#commands)
 <!-- tocstop -->
 
-# Usage
+## Usage
 
 <!-- usage -->
 ```sh-session
@@ -34,11 +33,11 @@ USAGE
 ```
 <!-- usagestop -->
 
-# Commands
+## Commands
 <!-- commands -->
 * [`sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-autocomplete--r---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+### `sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 display autocomplete installation instructions
 
