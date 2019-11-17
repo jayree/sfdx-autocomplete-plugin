@@ -50,7 +50,7 @@ runtest('Create', () => {
       await plugin.load();
       plugin.manifest = await loadJSON(path.resolve(__dirname, '../../../../test/test.oclif.manifest.json'));
       plugin.commands = Object.entries(plugin.manifest.commands).map(([id, c]) => ({
-        ...c,
+        ...(c as object),
         load: () => plugin.findCommand(id, { must: true })
       }));
       klass = plugin.commands[1];
