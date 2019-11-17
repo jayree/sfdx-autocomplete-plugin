@@ -8,5 +8,5 @@ export default class Script extends AutocompleteBase {
         required: boolean;
     }[];
     run(): Promise<void>;
-    private readonly prefix;
+    private get prefix();
 }

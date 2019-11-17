@@ -16,7 +16,7 @@ export default class Options extends AutocompleteBase {
     private processCommandLine;
     private determineCompletion;
     private fetchOptions;
-    private readonly parsedFlagsWithEnvVars;
+    private get parsedFlagsWithEnvVars();
     private throwError;
     private findFlagFromWildArg;
     private determineCmdState;

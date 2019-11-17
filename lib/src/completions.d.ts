@@ -4,7 +4,7 @@ export declare class CompletionLookup {
     private readonly cmdId;
     private readonly name;
     private readonly description?;
-    private readonly key;
+    private get key();
     private readonly blacklistMap;
     private readonly keyAliasMap;
     private readonly commandArgsMap;
