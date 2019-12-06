@@ -19,19 +19,19 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
-    "@oclif/plugin-help": "^2.2.1",
+    "@oclif/plugin-help": "^2.2.2",
     "@oclif/semantic-release": "^3.1.1",
     "@oclif/test": "^1.2.5",
     "@salesforce/dev-scripts": "0.4.1",
     "@types/fs-extra": "^8.0.1",
     "codecov": "^3.6.1",
     "globby": "^10.0.1",
-    "husky": "^3.0.9",
+    "husky": "^3.1.0",
     "patch-package": "6.2.0",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "1.18.0",
     "tslint-microsoft-contrib": "^6.2.0",
-    "typescript": "3.7.2"
+    "typescript": "3.7.3"
   },
   "engines": {
     "node": ">=8.4.0"
