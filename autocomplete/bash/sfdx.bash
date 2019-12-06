@@ -56,4 +56,4 @@ _sfdx()
     return 0
 }
 
-complete -F _sfdx sfdx
+complete -o default -F _sfdx sfdx
