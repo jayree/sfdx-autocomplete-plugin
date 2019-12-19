@@ -26,10 +26,36 @@ export const completions: Hook<any> = async function({ type }: { type?: 'targetu
     await updateCache(cachePath, options);
   };
 
+  let suppresswarnings;
+
+  const suppresswarningsfile = path.join(this.config.cacheDir, 'sfdx-autocmplt', 'suppresswarnings');
+
+  try {
+    suppresswarnings = await fs.readJson(suppresswarningsfile);
+  } catch (err) {
+    suppresswarnings = {
+      SuppressUpdateWarning: false
+    };
+  }
+
   if (this.config.plugins.filter(p => p.name === '@oclif/plugin-autocomplete').length) {
-    cli.warn(
-      "'@oclif/plugin-autocomplete' plugin detected - Use the 'autocmplt' command instead of 'autocomplete' for improved auto-completion."
-    );
+    if (!suppresswarnings.SuppressUpdateWarning) {
+      cli.styledHeader('sfdx-autocmplt');
+      cli.warn(
+        `'@oclif/plugin-autocomplete' plugin detected!
+Use the 'autocmplt' command instead of 'autocomplete' for improved auto-completion.
+Run 'sfdx autocmplt --suppresswarnings' to suppress this warning.`
+      );
+    }
+  } else {
+    if (suppresswarnings.SuppressUpdateWarning) {
+      try {
+        await fs.ensureFile(suppresswarningsfile);
+        await fs.writeJson(suppresswarningsfile, {
+          SuppressUpdateWarning: false
+        });
+      } catch (error) {}
+    }
   }
 
   cli.action.start('Updating completions');

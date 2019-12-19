@@ -11,6 +11,7 @@ export default class Index extends AutocompleteBase {
     static examples: string[];
     protected static flagsConfig: {
         'refresh-cache': flags.Discriminated<flags.Boolean<boolean>>;
+        suppresswarnings: flags.Discriminated<flags.Boolean<boolean>>;
     };
     run(): Promise<void>;
     private updateCache;

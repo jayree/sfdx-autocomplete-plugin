@@ -1,6 +1,7 @@
 import { flags } from '@salesforce/command';
 import chalk from 'chalk';
 import { cli } from 'cli-ux';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import { targetUserNameCompletion } from '../../completions';
 
@@ -33,6 +34,10 @@ export default class Index extends AutocompleteBase {
     'refresh-cache': flags.boolean({
       description: 'refresh cache only (ignores displaying instructions)',
       char: 'r'
+    }),
+    suppresswarnings: flags.boolean({
+      description: 'suppress warnings',
+      hidden: true
     })
   };
 
@@ -70,6 +75,18 @@ ${chalk.cyan(`$ ${bin} apps:info --app=${tabStr}`)} # Flag option completion
 
 Enjoy!
 `);
+    }
+
+    if (this.flags.suppresswarnings) {
+      try {
+        const suppresswarningsfile = path.join(this.config.cacheDir, 'sfdx-autocmplt', 'suppresswarnings');
+        await fs.ensureFile(suppresswarningsfile);
+        await fs.writeJson(suppresswarningsfile, {
+          SuppressUpdateWarning: true
+        });
+      } catch (error) {
+        this.logger.error(error);
+      }
     }
   }
 

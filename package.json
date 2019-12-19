@@ -5,7 +5,6 @@
   "author": "jayree @jayree",
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "dependencies": {
-    "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.13.3",
     "@oclif/errors": "^1.2.2",
     "@salesforce/command": "^2.1.3",
