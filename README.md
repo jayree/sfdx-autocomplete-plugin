@@ -61,10 +61,10 @@ ALIASES
   $ sfdx autocomplete
 
 EXAMPLES
-  $ sfdx autocomplete
-  $ sfdx autocomplete bash
-  $ sfdx autocomplete zsh
-  $ sfdx autocomplete --refresh-cache
+  $ sfdx autocmplt
+  $ sfdx autocmplt bash
+  $ sfdx autocmplt zsh
+  $ sfdx autocmplt --refresh-cache
 ```
 
 _See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.0.5/src/commands/autocmplt/index.ts)_

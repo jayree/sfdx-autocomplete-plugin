@@ -24,10 +24,10 @@ export default class Index extends AutocompleteBase {
   ];
 
   public static examples = [
-    '$ sfdx autocomplete',
-    '$ sfdx autocomplete bash',
-    '$ sfdx autocomplete zsh',
-    '$ sfdx autocomplete --refresh-cache'
+    '$ sfdx autocmplt',
+    '$ sfdx autocmplt bash',
+    '$ sfdx autocmplt zsh',
+    '$ sfdx autocmplt --refresh-cache'
   ];
 
   protected static flagsConfig = {
