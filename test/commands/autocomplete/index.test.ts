@@ -4,16 +4,16 @@ import { expect, test } from '@oclif/test';
 // tslint:disable-next-line: no-var-requires
 const { default: runtest } = require('../../helpers/runtest');
 
-runtest('autocomplete:index', () => {
+runtest('autocmplt:index', () => {
   test
     .stdout()
-    .command(['autocomplete', 'bash'])
+    .command(['autocmplt', 'bash'])
     .it('provides bash instructions', ctx => {
       expect(ctx.stdout).to.contain(`
 Setup Instructions for SFDX CLI Autocomplete ---
 
 1) Add the autocomplete env var to your bash profile and source it
-$ printf \"$(sfdx autocomplete:script bash)\" >> ~/.bashrc; source ~/.bashrc
+$ printf \"$(sfdx autocmplt:script bash)\" >> ~/.bashrc; source ~/.bashrc
 
 NOTE: If your terminal starts as a login shell you may need to print the init script into ~/.bash_profile or ~/.profile.
 
@@ -29,13 +29,13 @@ Enjoy!
 
   test
     .stdout()
-    .command(['autocomplete', 'zsh'])
+    .command(['autocmplt', 'zsh'])
     .it('provides zsh instructions', ctx => {
       expect(ctx.stdout).to.contain(`
 Setup Instructions for SFDX CLI Autocomplete ---
 
 1) Add the autocomplete env var to your zsh profile and source it
-$ printf \"$(sfdx autocomplete:script zsh)\" >> ~/.zshrc; source ~/.zshrc
+$ printf \"$(sfdx autocmplt:script zsh)\" >> ~/.zshrc; source ~/.zshrc
 
 NOTE: After sourcing, you can run \`$ compaudit -D\` to ensure no permissions conflicts are present
 

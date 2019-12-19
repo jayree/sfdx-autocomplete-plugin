@@ -1,6 +1,7 @@
 import { flags } from '@salesforce/command';
 import { AutocompleteBase } from '../../base';
 export default class Index extends AutocompleteBase {
+    static aliases: string[];
     static description: string;
     static args: {
         name: string;

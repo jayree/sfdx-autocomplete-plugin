@@ -22,28 +22,28 @@ based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplet
 <!-- usage -->
 ```sh-session
 $ sfdx plugins:install sfdx-autocmplt
-$ sfdx autocomplete:COMMAND
+$ sfdx autocmplt:COMMAND
 running command...
 $ sfdx plugins
 sfdx-autocmplt 2.0.5
-$ sfdx help autocomplete:COMMAND
+$ sfdx help autocmplt:COMMAND
 USAGE
-  $ sfdx autocomplete:COMMAND
+  $ sfdx autocmplt:COMMAND
 ...
 ```
 <!-- usagestop -->
 
 ## Commands
 <!-- commands -->
-* [`sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-autocomplete--r---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx autocmplt [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-autocmplt--r---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-### `sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+### `sfdx autocmplt [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 display autocomplete installation instructions
 
 ```
 USAGE
-  $ sfdx autocomplete [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+  $ sfdx autocmplt [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 ARGUMENTS
   SHELL  shell type
@@ -57,6 +57,9 @@ OPTIONS
   --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
                                                                                     this command invocation
 
+ALIASES
+  $ sfdx autocomplete
+
 EXAMPLES
   $ sfdx autocomplete
   $ sfdx autocomplete bash
@@ -64,5 +67,5 @@ EXAMPLES
   $ sfdx autocomplete --refresh-cache
 ```
 
-_See code: [src/commands/autocomplete/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.0.5/src/commands/autocomplete/index.ts)_
+_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.0.5/src/commands/autocmplt/index.ts)_
 <!-- commandsstop -->

@@ -26,7 +26,7 @@ _sfdx () {
   ## end all commands
 
   _sfdx_compadd_args () {
-    compadd $(echo $([[ -n $REPORTTIME ]] && REPORTTIME=100; sfdx autocomplete:options "${words}"))
+    compadd $(echo $([[ -n $REPORTTIME ]] && REPORTTIME=100; sfdx autocmplt:options "${words}"))
   }
 
   _sfdx_compadd_flag_options () {

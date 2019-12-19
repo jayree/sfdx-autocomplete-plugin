@@ -1,13 +1,16 @@
 import { Command } from '@oclif/config';
 import * as fs from 'fs-extra';
+import * as _ from 'lodash';
 import * as path from 'path';
 
 import { AutocompleteBase } from '../../base';
 
 // tslint:disable-next-line: no-var-requires
-const debug = require('debug')('autocomplete:create');
+const debug = require('debug')('autocmplt:create');
 
 export default class Create extends AutocompleteBase {
+  public static aliases = ['autocomplete:create'];
+
   public static hidden = true;
   public static description = 'create autocomplete setup scripts and completion functions';
 
@@ -68,7 +71,16 @@ export default class Create extends AutocompleteBase {
     plugins.map(p => {
       p.commands.map(c => {
         if (c.hidden) return;
+        if (c.pluginName === '@oclif/plugin-autocomplete') return;
         try {
+          if (c.pluginName === 'sfdx-autocmplt' && this.usealias) {
+            for (const alias of c.aliases) {
+              const clone = _.cloneDeep(c);
+              clone.id = alias;
+              commands.push(clone);
+            }
+            return;
+          }
           commands.push(c);
         } catch (err) {
           debug(`Error creating completions for command ${c.id}`);

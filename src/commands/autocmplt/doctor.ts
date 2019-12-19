@@ -6,6 +6,8 @@ import * as path from 'path';
 import { AutocompleteBase } from '../../base';
 
 export default class Doctor extends AutocompleteBase {
+  public static aliases = ['autocomplete:doctor'];
+
   public static hidden = true;
   public static description = 'autocomplete diagnostic';
   public static args = [

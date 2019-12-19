@@ -24,7 +24,7 @@ if ! type _sfdx_ltrim_colon_completions >/dev/null 2>&1; then
 fi
 
 _sfdx_compreply_cli () {
-  opts=("$(sfdx autocomplete:options "$(echo "${COMP_WORDS[*]}")")")
+  opts=("$(sfdx autocmplt:options "$(echo "${COMP_WORDS[*]}")")")
   COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
 }
 

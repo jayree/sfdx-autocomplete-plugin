@@ -6,6 +6,8 @@ import { AutocompleteBase } from '../../base';
 import { fetchCache } from '../../cache';
 
 export default class Options extends AutocompleteBase {
+  public static aliases = ['autocomplete:options'];
+
   public static hidden = true;
   public static description = 'display arg or flag completion options (used internally by completion fuctions)';
   /*   public static flags = {

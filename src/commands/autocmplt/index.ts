@@ -10,6 +10,8 @@ import { updateCache } from '../../cache';
 import Create from './create';
 
 export default class Index extends AutocompleteBase {
+  public static aliases = ['autocomplete'];
+
   public static description = 'display autocomplete installation instructions';
 
   public static args = [
@@ -43,7 +45,7 @@ export default class Index extends AutocompleteBase {
     await this.updateCache(targetUserNameCompletion, 'targetusername');
     cli.action.stop();
 
-    if (!flags['refresh-cache']) {
+    if (!this.flags['refresh-cache']) {
       const bin = this.config.bin;
       const bashNote =
         'If your terminal starts as a login shell you may need to print the init script into ~/.bash_profile or ~/.profile.';
@@ -57,7 +59,7 @@ export default class Index extends AutocompleteBase {
 ${chalk.bold(`Setup Instructions for ${bin.toUpperCase()} CLI Autocomplete ---`)}
 
 1) Add the autocomplete env var to your ${shell} profile and source it
-${chalk.cyan(`$ printf "$(${bin} autocomplete:script ${shell})" >> ~/.${shell}rc; source ~/.${shell}rc`)}
+${chalk.cyan(`$ printf "$(${bin} autocmplt:script ${shell})" >> ~/.${shell}rc; source ~/.${shell}rc`)}
 
 NOTE: ${note}
 

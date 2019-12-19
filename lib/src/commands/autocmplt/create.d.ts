@@ -1,5 +1,6 @@
 import { AutocompleteBase } from '../../base';
 export default class Create extends AutocompleteBase {
+    static aliases: string[];
     static hidden: boolean;
     static description: string;
     private _commands?;
