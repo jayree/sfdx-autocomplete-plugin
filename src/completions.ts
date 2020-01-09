@@ -3,7 +3,7 @@ import { core } from '@salesforce/command';
 // import * as Config from '@oclif/config';
 // import flatten = require('lodash.flatten');
 import { Aliases, AuthInfo } from '@salesforce/core';
-import * as _ from 'lodash';
+import { get } from 'lodash';
 
 export const oneDay = 60 * 60 * 24;
 
@@ -13,23 +13,22 @@ export class CompletionLookup {
   }
 
   private readonly blacklistMap: { [key: string]: string[] } = {
-    app: ['apps:create'],
-    space: ['spaces:create']
+    // app: ['apps:create'],
+    // space: ['spaces:create']
   };
 
   private readonly keyAliasMap: { [key: string]: { [key: string]: string } } = {
-    key: {
-      'config:get': 'config'
+    resultformat: {
+      'force:apex:test:report': 'resultformatTap',
+      'force:apex:test:run': 'resultformatTap',
+      'force:lightning:test:run': 'resultformatTap',
+      'force:data:soql:query': 'resultformatCsv'
     }
   };
 
   private readonly commandArgsMap: {
     [key: string]: { [key: string]: string };
-  } = {
-    key: {
-      'config:set': 'configSet'
-    }
-  };
+  } = {};
 
   constructor(private readonly cmdId: string, private readonly name: string, private readonly description?: string) {}
 
@@ -48,8 +47,10 @@ export class CompletionLookup {
 
   private descriptionAlias(): string | undefined {
     const d = this.description!;
-    if (d.match(/^dyno size/)) return 'dynosize';
-    if (d.match(/^process type/)) return 'processtype';
+    // if (d.match(/^dyno size/)) return 'dynosize';
+    // if (d.match(/^process type/)) return 'processtype';
+    if (d) return '';
+    return '';
   }
 
   private blacklisted(): boolean {
@@ -65,7 +66,15 @@ export const loglevelCompletion: flags.ICompletion = {
   }
 };
 
-export const resultformatCompletion: flags.ICompletion = {
+export const resultformatTapCompletion: flags.ICompletion = {
+  skipCache: true,
+
+  options: async () => {
+    return ['human', 'tap', 'junit', 'json'];
+  }
+};
+
+export const resultformatCsvCompletion: flags.ICompletion = {
   skipCache: true,
 
   options: async () => {
@@ -83,7 +92,7 @@ export const instanceurlCompletion: flags.ICompletion = {
 
 export const targetUserNameCompletion: flags.ICompletion = {
   cacheDuration: oneDay,
-  options: async ctx => {
+  options: async () => {
     try {
       const authFiles = await AuthInfo.listAllAuthFiles();
       const orgs = authFiles.map(authfile => authfile.replace('.json', ''));
@@ -91,7 +100,7 @@ export const targetUserNameCompletion: flags.ICompletion = {
       const aliases = await Aliases.create({} as core.ConfigGroup.Options);
       for (const org of orgs) {
         const aliasKeys = aliases.getKeysByValue(org);
-        const value = _.get(aliasKeys, 0) || org;
+        const value = get(aliasKeys, 0) || org;
         aliasesOrUsernames.push(value);
       }
 
@@ -120,5 +129,6 @@ export const CompletionMapping: { [key: string]: flags.ICompletion } = {
   targetusername: targetUserNameCompletion,
   loglevel: loglevelCompletion,
   instanceurl: instanceurlCompletion,
-  resultformat: resultformatCompletion
+  resultformatTap: resultformatTapCompletion,
+  resultformatCsv: resultformatCsvCompletion
 };

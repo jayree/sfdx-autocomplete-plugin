@@ -32,8 +32,8 @@ runtest('CompletionLookup', () => {
     expect(c).to.not.be.ok;
   });
 
-  it('does not find blacklisted completion', async () => {
+  /*   it('does not find blacklisted completion', async () => {
     const c = new CompletionLookup('apps:create', 'app', 'app to use').run();
     expect(c).to.not.be.ok;
-  });
+  }); */
 });

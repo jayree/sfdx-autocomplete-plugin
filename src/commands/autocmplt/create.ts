@@ -1,6 +1,6 @@
 import { Command } from '@oclif/config';
 import * as fs from 'fs-extra';
-import * as _ from 'lodash';
+import { cloneDeep } from 'lodash';
 import * as path from 'path';
 
 import { AutocompleteBase } from '../../base';
@@ -75,7 +75,7 @@ export default class Create extends AutocompleteBase {
         try {
           if (c.pluginName === 'sfdx-autocmplt' && this.usealias) {
             for (const alias of c.aliases) {
-              const clone = _.cloneDeep(c);
+              const clone = cloneDeep(c);
               clone.id = alias;
               commands.push(clone);
             }

@@ -20,15 +20,18 @@ function _mtime(f: any): Date {
 export async function fetchCache(
   cachePath: string,
   cacheDuration: number,
+  skipCache: boolean,
   // tslint:disable-next-line: no-any
   options: any
 ): Promise<string[]> {
   const cachePresent = fs.existsSync(cachePath);
-  if (cachePresent && !_isStale(cachePath, cacheDuration)) {
+  if (cachePresent && !skipCache && !_isStale(cachePath, cacheDuration)) {
     return fs.readJSON(cachePath);
   }
   const cache = await options.cacheFn();
   // TODO: move this to a fork
-  await updateCache(cachePath, cache);
+  if (!skipCache) {
+    await updateCache(cachePath, cache);
+  }
   return cache;
 }

@@ -132,8 +132,9 @@ export default class Options extends AutocompleteBase {
 
       // build/retrieve cache
       const duration = cacheCompletion.cacheDuration || 60 * 60 * 24; // 1 day
+      const skip = cacheCompletion.skipCache || false;
       const opts = { cacheFn: () => cacheCompletion.options(ctx) };
-      const options = await fetchCache(flagCachePath, duration, opts);
+      const options = await fetchCache(flagCachePath, duration, skip, opts);
 
       // return options cache
       return (options || []).join('\n');
