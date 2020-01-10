@@ -16,7 +16,8 @@ export declare class CompletionLookup {
     private blacklisted;
 }
 export declare const loglevelCompletion: flags.ICompletion;
-export declare const resultformatCompletion: flags.ICompletion;
+export declare const resultformatTapCompletion: flags.ICompletion;
+export declare const resultformatCsvCompletion: flags.ICompletion;
 export declare const instanceurlCompletion: flags.ICompletion;
 export declare const targetUserNameCompletion: flags.ICompletion;
 export declare const CompletionMapping: {

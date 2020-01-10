@@ -6,6 +6,7 @@ export declare abstract class AutocompleteBase extends SfdxCommand {
     get autocompleteCacheDir(): string;
     get completionsCacheDir(): string;
     get acLogfilePath(): string;
+    get usealias(): boolean;
     writeLogFile(msg: string): void;
     protected findCompletion(cmdId: string, name: string, description?: string): flags.ICompletion | undefined;
 }

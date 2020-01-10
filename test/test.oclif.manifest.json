@@ -1,13 +1,13 @@
 {
   "version": "0.0.0",
   "commands": {
-    "autocomplete": {
-      "id": "autocomplete",
+    "autocmplt": {
+      "id": "autocmplt",
       "description": "display autocomplete instructions",
-      "pluginName": "plugin-autocomplete",
+      "pluginName": "plugin-autocmplt",
       "pluginType": "core",
       "aliases": [],
-      "examples": ["$ sfdx autocomplete", "$ sfdx autocomplete bash", "$ sfdx autocomplete zsh"],
+      "examples": ["$ sfdx autocmplt", "$ sfdx autocmplt bash", "$ sfdx autocmplt zsh"],
       "flags": {
         "skip-instructions": {
           "name": "skip-instructions",
@@ -24,10 +24,10 @@
         }
       ]
     },
-    "autocomplete:foo": {
-      "id": "autocomplete:foo",
+    "autocmplt:foo": {
+      "id": "autocmplt:foo",
       "description": "foo cmd for autocomplete testing",
-      "pluginName": "plugin-autocomplete",
+      "pluginName": "plugin-autocmplt",
       "pluginType": "core",
       "aliases": [],
       "flags": {

@@ -1,6 +1,7 @@
 import { flags } from '@salesforce/command';
 import chalk from 'chalk';
 import { cli } from 'cli-ux';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 import { targetUserNameCompletion } from '../../completions';
 
@@ -10,6 +11,8 @@ import { updateCache } from '../../cache';
 import Create from './create';
 
 export default class Index extends AutocompleteBase {
+  public static aliases = ['autocomplete'];
+
   public static description = 'display autocomplete installation instructions';
 
   public static args = [
@@ -21,16 +24,20 @@ export default class Index extends AutocompleteBase {
   ];
 
   public static examples = [
-    '$ sfdx autocomplete',
-    '$ sfdx autocomplete bash',
-    '$ sfdx autocomplete zsh',
-    '$ sfdx autocomplete --refresh-cache'
+    '$ sfdx autocmplt',
+    '$ sfdx autocmplt bash',
+    '$ sfdx autocmplt zsh',
+    '$ sfdx autocmplt --refresh-cache'
   ];
 
   protected static flagsConfig = {
     'refresh-cache': flags.boolean({
       description: 'refresh cache only (ignores displaying instructions)',
       char: 'r'
+    }),
+    suppresswarnings: flags.boolean({
+      description: 'suppress warnings',
+      hidden: true
     })
   };
 
@@ -43,7 +50,7 @@ export default class Index extends AutocompleteBase {
     await this.updateCache(targetUserNameCompletion, 'targetusername');
     cli.action.stop();
 
-    if (!flags['refresh-cache']) {
+    if (!this.flags['refresh-cache']) {
       const bin = this.config.bin;
       const bashNote =
         'If your terminal starts as a login shell you may need to print the init script into ~/.bash_profile or ~/.profile.';
@@ -57,7 +64,7 @@ export default class Index extends AutocompleteBase {
 ${chalk.bold(`Setup Instructions for ${bin.toUpperCase()} CLI Autocomplete ---`)}
 
 1) Add the autocomplete env var to your ${shell} profile and source it
-${chalk.cyan(`$ printf "$(${bin} autocomplete:script ${shell})" >> ~/.${shell}rc; source ~/.${shell}rc`)}
+${chalk.cyan(`$ printf "$(${bin} autocmplt:script ${shell})" >> ~/.${shell}rc; source ~/.${shell}rc`)}
 
 NOTE: ${note}
 
@@ -68,6 +75,18 @@ ${chalk.cyan(`$ ${bin} apps:info --app=${tabStr}`)} # Flag option completion
 
 Enjoy!
 `);
+    }
+
+    if (this.flags.suppresswarnings) {
+      try {
+        const suppresswarningsfile = path.join(this.config.cacheDir, 'sfdx-autocmplt', 'suppresswarnings');
+        await fs.ensureFile(suppresswarningsfile);
+        await fs.writeJson(suppresswarningsfile, {
+          SuppressUpdateWarning: true
+        });
+      } catch (error) {
+        this.logger.error(error);
+      }
     }
   }
 

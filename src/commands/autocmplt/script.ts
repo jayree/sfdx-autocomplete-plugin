@@ -3,6 +3,8 @@ import * as path from 'path';
 import { AutocompleteBase } from '../../base';
 
 export default class Script extends AutocompleteBase {
+  public static aliases = ['autocomplete:script'];
+
   public static description = 'display autocomplete setup script for shell';
   public static hidden = true;
   public static args = [{ name: 'shell', description: 'shell type', required: true }];

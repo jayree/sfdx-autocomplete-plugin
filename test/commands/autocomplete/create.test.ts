@@ -3,7 +3,7 @@ import { loadJSON } from '@oclif/config/lib/util';
 import { expect } from 'chai';
 import * as path from 'path';
 
-import Create from '../../../src/commands/autocomplete/create';
+import Create from '../../../src/commands/autocmplt/create';
 
 const root = path.resolve(__dirname, '../../../../package.json');
 const config = new Config({ root });
@@ -15,7 +15,7 @@ const { default: runtest } = require('../../helpers/runtest');
 const AC_PLUGIN_PATH = path.resolve(__dirname, '..', '..', '..', '..');
 
 const cacheBuildFlagsTest = {
-  id: 'autocomplete:create',
+  id: 'autocmplt:create',
   flags: {
     targetusername: {
       name: 'targetusername',
@@ -65,7 +65,7 @@ runtest('Create', () => {
     });
 
     it('#genCmdWithDescription', () => {
-      expect(cmd.genCmdWithDescription(klass)).to.eq('"autocomplete\\:foo":"foo cmd for autocomplete testing"');
+      expect(cmd.genCmdWithDescription(klass)).to.eq('"autocmplt\\:foo":"foo cmd for autocomplete testing"');
     });
 
     it('#genCmdPublicFlags', () => {
@@ -75,27 +75,25 @@ runtest('Create', () => {
     });
 
     it('#bashCommandsList', () => {
-      expect(cmd.bashCommandsList).to.eq(
-        'autocomplete --skip-instructions\nautocomplete:foo --targetusername --bar --json'
-      );
+      expect(cmd.bashCommandsList).to.eq('autocmplt --skip-instructions\nautocmplt:foo --targetusername --bar --json');
     });
 
     it('#zshCompletionSetters', () => {
       expect(cmd.zshCompletionSetters).to.eq(`
 _sfdx_set_all_commands_list () {
 _sfdx_all_commands_list=(
-"autocomplete":"display autocomplete instructions"
-"autocomplete\\:foo":"foo cmd for autocomplete testing"
+"autocmplt":"display autocomplete instructions"
+"autocmplt\\:foo":"foo cmd for autocomplete testing"
 )
 }
 
-_sfdx_set_autocomplete_flags () {
+_sfdx_set_autocmplt_flags () {
 _sfdx_flags=(
 "--skip-instructions[(switch) Do not show installation instructions]"
 )
 }
 
-_sfdx_set_autocomplete_foo_flags () {
+_sfdx_set_autocmplt_foo_flags () {
 _sfdx_flags=(
 "--targetusername=-[(autocomplete) targetusername to use]: :_sfdx_compadd_flag_options"
 "--bar=-[bar for testing]"
@@ -176,7 +174,7 @@ _sfdx_all_commands_list=(
     });
 
     it('#genZshCmdFlagsSetter', () => {
-      expect(cmd.genZshCmdFlagsSetter(cacheBuildFlagsTest)).to.eq(`_sfdx_set_autocomplete_create_flags () {
+      expect(cmd.genZshCmdFlagsSetter(cacheBuildFlagsTest)).to.eq(`_sfdx_set_autocmplt_create_flags () {
 _sfdx_flags=(
 "--targetusername=-[(autocomplete) targetusername to use]: :_sfdx_compadd_flag_options"
 "--visable[(switch) visable flag]"

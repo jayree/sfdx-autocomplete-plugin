@@ -3,7 +3,7 @@ import { flags, SfdxCommand } from '@salesforce/command';
 import { expect } from 'chai';
 import * as path from 'path';
 
-import Options from '../../../src/commands/autocomplete/options';
+import Options from '../../../src/commands/autocmplt/options';
 
 const root = path.resolve(__dirname, '../../../../package.json');
 const config = new Config({ root });

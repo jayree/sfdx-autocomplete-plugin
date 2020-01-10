@@ -5,7 +5,7 @@ import * as path from 'path';
 import { targetUserNameCompletion } from '../completions';
 
 import { updateCache } from '../cache';
-import acCreate from '../commands/autocomplete/create';
+import acCreate from '../commands/autocmplt/create';
 
 // tslint:disable-next-line: no-any
 export const completions: Hook<any> = async function({ type }: { type?: 'targetusername' }) {
@@ -25,6 +25,38 @@ export const completions: Hook<any> = async function({ type }: { type?: 'targetu
     const options = await completion.options({ config: this.config });
     await updateCache(cachePath, options);
   };
+
+  let suppresswarnings;
+
+  const suppresswarningsfile = path.join(this.config.cacheDir, 'sfdx-autocmplt', 'suppresswarnings');
+
+  try {
+    suppresswarnings = await fs.readJson(suppresswarningsfile);
+  } catch (err) {
+    suppresswarnings = {
+      SuppressUpdateWarning: false
+    };
+  }
+
+  if (this.config.plugins.filter(p => p.name === '@oclif/plugin-autocomplete').length) {
+    if (!suppresswarnings.SuppressUpdateWarning) {
+      cli.styledHeader('sfdx-autocmplt');
+      cli.warn(
+        `'@oclif/plugin-autocomplete' plugin detected!
+Use the 'autocmplt' command instead of 'autocomplete' for improved auto-completion.
+Run 'sfdx autocmplt --suppresswarnings' to suppress this warning.`
+      );
+    }
+  } else {
+    if (suppresswarnings.SuppressUpdateWarning) {
+      try {
+        await fs.ensureFile(suppresswarningsfile);
+        await fs.writeJson(suppresswarningsfile, {
+          SuppressUpdateWarning: false
+        });
+      } catch (error) {}
+    }
+  }
 
   cli.action.start('Updating completions');
   await rm();

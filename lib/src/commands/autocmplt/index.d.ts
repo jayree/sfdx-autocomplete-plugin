@@ -1,16 +1,18 @@
 import { flags } from '@salesforce/command';
 import { AutocompleteBase } from '../../base';
-export default class Doctor extends AutocompleteBase {
-    static hidden: boolean;
+export default class Index extends AutocompleteBase {
+    static aliases: string[];
     static description: string;
     static args: {
         name: string;
         description: string;
         required: boolean;
     }[];
+    static examples: string[];
     protected static flagsConfig: {
-        debug: flags.Discriminated<flags.Boolean<boolean>>;
+        'refresh-cache': flags.Discriminated<flags.Boolean<boolean>>;
+        suppresswarnings: flags.Discriminated<flags.Boolean<boolean>>;
     };
     run(): Promise<void>;
-    private printList;
+    private updateCache;
 }
