@@ -1,3 +1,18 @@
+# [2.1.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.0.5...v2.1.0) (2020-01-10)
+
+
+### Bug Fixes
+
+* rename zsh autocomplete script ([89e0607](https://github.com/jayree/sfdx-autocomplete-plugin/commit/89e060759c6c10550c5490a44f0b10b5bdc9dd42))
+* resultformat completion ([1caf8f4](https://github.com/jayree/sfdx-autocomplete-plugin/commit/1caf8f402eea306970ed34cd8232bcf5e51488a4))
+* update dependencies ([af65637](https://github.com/jayree/sfdx-autocomplete-plugin/commit/af656378f6b72a016fb0537a22cc591640fa81da))
+
+
+### Features
+
+* add suppresswarnings flag ([0dde15c](https://github.com/jayree/sfdx-autocomplete-plugin/commit/0dde15cfd88fda333494db6a799bff88e32318f1))
+* rename command to 'autocmplt' ([7d6f50e](https://github.com/jayree/sfdx-autocomplete-plugin/commit/7d6f50e6895d6646df920b04fe4981c657c7417c))
+
 ## [2.0.5](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.0.4...v2.0.5) (2019-12-06)
 
 
