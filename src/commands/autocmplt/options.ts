@@ -89,6 +89,17 @@ export default class Options extends AutocompleteBase {
       if (!flag) this.throwError(`${argvFlag} is not a valid flag for ${id}`);
       cacheKey = name || flag.name;
       cacheCompletion = flag.completion;
+      if (!cacheCompletion) {
+        if (flag.options) {
+          cacheCompletion = {
+            skipCache: true,
+
+            options: async () => {
+              return flag.options;
+            }
+          };
+        }
+      }
     } else {
       const cmdArgs = klass.args || [];
       // variable arg (strict: false)

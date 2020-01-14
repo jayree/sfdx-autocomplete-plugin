@@ -173,7 +173,8 @@ export default class Create extends AutocompleteBase {
           // tslint:disable-next-line: no-any
           ({ description: '' } as any);
         const isBoolean = f.type === 'boolean';
-        const hasCompletion = f.hasOwnProperty('completion') || this.findCompletion(id, flag, f.description);
+        const hasCompletion =
+          f.hasOwnProperty('completion') || f.hasOwnProperty('options') || this.findCompletion(id, flag, f.description);
         const name = isBoolean ? flag : `${flag}=-`;
         let cachecompl = '';
         if (hasCompletion) {
