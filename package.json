@@ -24,12 +24,12 @@
     "@salesforce/dev-scripts": "0.4.1",
     "@types/fs-extra": "^8.0.1",
     "codecov": "^3.6.1",
-    "husky": "^4.0.9",
+    "husky": "^4.0.10",
     "patch-package": "6.2.0",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "1.18.0",
     "tslint-microsoft-contrib": "^6.2.0",
-    "typescript": "3.7.4"
+    "typescript": "3.7.5"
   },
   "engines": {
     "node": ">=8.4.0"
