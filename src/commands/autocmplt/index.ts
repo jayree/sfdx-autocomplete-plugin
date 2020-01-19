@@ -27,6 +27,7 @@ export default class Index extends AutocompleteBase {
     '$ sfdx autocmplt',
     '$ sfdx autocmplt bash',
     '$ sfdx autocmplt zsh',
+    '$ sfdx autocmplt fish',
     '$ sfdx autocmplt --refresh-cache'
   ];
 
@@ -57,14 +58,20 @@ export default class Index extends AutocompleteBase {
       const zshNote = `After sourcing, you can run \`${chalk.cyan(
         '$ compaudit -D'
       )}\` to ensure no permissions conflicts are present`;
-      const note = shell === 'zsh' ? zshNote : bashNote;
+      const fishNote = 'This assumes your Fish configuration is stored at ~/.config/fish/config.fish';
+      const note = shell === 'zsh' ? zshNote : shell === 'bash' ? bashNote : fishNote;
       const tabStr = shell === 'bash' ? '<TAB><TAB>' : '<TAB>';
+      const addStr =
+        shell === 'fish'
+          ? `Update your shell to load the new completions
+${chalk.cyan('$ source ~/.config/fish/config.fish')}`
+          : `Add the autocomplete env var to your ${shell} profile and source it
+${chalk.cyan(`$ printf "$(${bin} autocmplt:script ${shell})" >> ~/.${shell}rc; source ~/.${shell}rc`)}`;
 
       this.log(`
 ${chalk.bold(`Setup Instructions for ${bin.toUpperCase()} CLI Autocomplete ---`)}
 
-1) Add the autocomplete env var to your ${shell} profile and source it
-${chalk.cyan(`$ printf "$(${bin} autocmplt:script ${shell})" >> ~/.${shell}rc; source ~/.${shell}rc`)}
+1) ${addStr}
 
 NOTE: ${note}
 
