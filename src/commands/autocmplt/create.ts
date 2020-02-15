@@ -1,4 +1,5 @@
 import { Command } from '@oclif/config';
+import * as child_process from 'child_process';
 import * as fs from 'fs-extra';
 import { cloneDeep } from 'lodash';
 import * as path from 'path';
@@ -32,10 +33,26 @@ export default class Create extends AutocompleteBase {
   }
 
   private async createFiles() {
-    await fs.writeFile(this.bashSetupScriptPath, this.bashSetupScript);
-    await fs.writeFile(this.zshSetupScriptPath, this.zshSetupScript);
-    await fs.writeFile(this.bashCommandsListPath, this.bashCommandsList);
-    await fs.writeFile(this.zshCompletionSettersPath, this.zshCompletionSetters);
+    if (this.config.shell === 'bash') {
+      await fs.writeFile(this.bashSetupScriptPath, this.bashSetupScript);
+      await fs.writeFile(this.bashCommandsListPath, this.bashCommandsList);
+    }
+    if (this.config.shell === 'zsh') {
+      await fs.writeFile(this.zshSetupScriptPath, this.zshSetupScript);
+      await fs.writeFile(this.zshCompletionSettersPath, this.zshCompletionSetters);
+    }
+    if (this.config.shell === 'fish') {
+      await fs.writeFile(this.fishSetupScriptPath, await this.fishSetupScript());
+      try {
+        await fs.access(this.fishCompletionFunctionPath);
+        if ((await fs.readlink(this.fishCompletionFunctionPath)) !== this.fishSetupScriptPath) {
+          await fs.unlink(this.fishCompletionFunctionPath);
+          await fs.symlink(this.fishSetupScriptPath, this.fishCompletionFunctionPath);
+        }
+      } catch (error) {
+        await fs.symlink(this.fishSetupScriptPath, this.fishCompletionFunctionPath);
+      }
+    }
   }
 
   private get bashSetupScriptPath(): string {
@@ -53,9 +70,76 @@ export default class Create extends AutocompleteBase {
     return path.join(this.autocompleteCacheDir, 'zsh_setup');
   }
 
+  private get fishSetupScriptPath(): string {
+    // <cacheDir>/autocomplete/sfdx.fish
+    return path.join(this.autocompleteCacheDir, 'sfdx.fish');
+  }
+
   private get zshCompletionSettersPath(): string {
     // <cacheDir>/autocomplete/commands_setters
     return path.join(this.autocompleteCacheDir, 'commands_setters');
+  }
+
+  private get fishCompletionFunctionPath(): string {
+    // dynamically load path to completions file
+    const dir = child_process
+      .execSync('pkg-config --variable completionsdir fish')
+      .toString()
+      .trimRight();
+    return `${dir}/sfdx.fish`;
+  }
+
+  private async fishSetupScript(): Promise<string> {
+    const cliBin = this.config.bin;
+    const completions: string[] = [];
+    completions.push(`
+function __fish_${cliBin}_needs_command
+  set cmd (commandline -opc)
+  if [ (count $cmd) -eq 1 ]
+    return 0
+  else
+    return 1
+  end
+end
+function  __fish_${cliBin}_using_command
+  set cmd (commandline -opc)
+  if [ (count $cmd) -gt 1 ]
+    if [ $argv[1] = $cmd[2] ]
+      return 0
+    end
+  end
+  return 1
+end`);
+
+    for (const command of this.commands) {
+      completions.push(
+        `complete -f -c ${cliBin} -n '__fish_${cliBin}_needs_command' -a ${command.id} -d "${
+          command.description.split('\n')[0]
+        }"`
+      );
+      // tslint:disable-next-line: no-any
+      const flags = (command.flags as any) || {};
+      const fl = Object.keys(flags).filter(flag => flags[flag] && !flags[flag].hidden);
+
+      for (const flag of fl) {
+        const f = flags[flag] || {};
+        const shortFlag = f.char ? `-s ${f.char}` : '';
+        const description = f.description ? `-d "${f.description}"` : '';
+        let options = f.options ? `-r -a "${f.options.join(' ')}"` : '';
+        if (options.length === 0) {
+          const cacheKey = f.name;
+          const cacheCompletion = this.findCompletion(command.id, cacheKey);
+          if (cacheCompletion) {
+            options = await this.fetchOptions({ cacheCompletion, cacheKey });
+            options = `-r -a "${options.split('\n').join(' ')}"`;
+          }
+        }
+        completions.push(
+          `complete -f -c ${cliBin} -n ' __fish_${cliBin}_using_command ${command.id}' -l ${flag} ${shortFlag} ${options} ${description}`
+        );
+      }
+    }
+    return completions.join('\n');
   }
 
   private get skipEllipsis(): boolean {
@@ -73,15 +157,12 @@ export default class Create extends AutocompleteBase {
         if (c.hidden) return;
         if (c.pluginName === '@oclif/plugin-autocomplete') return;
         try {
-          if (c.pluginName === 'sfdx-autocmplt' && this.usealias) {
-            for (const alias of c.aliases) {
-              const clone = cloneDeep(c);
-              clone.id = alias;
-              commands.push(clone);
-            }
-            return;
-          }
           commands.push(c);
+          for (const alias of c.aliases) {
+            const clone = cloneDeep(c);
+            clone.id = alias;
+            commands.push(clone);
+          }
         } catch (err) {
           debug(`Error creating completions for command ${c.id}`);
           debug(err.message);

@@ -1,8 +1,7 @@
 # sfdx-autocomplete
 
 autocomplete plugin for sfdx (bash & zsh)  
-based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete) and
-[heroku/heroku-cli-autocomplete](https://github.com/heroku/heroku-cli-autocomplete)
+based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete), [heroku/heroku-cli-autocomplete](https://github.com/heroku/heroku-cli-autocomplete) and [functionalStoic/plugin-autocomplete](https://github.com/functionalStoicplugin-autocomplete/tree/fish-autocomplete-test) for fish support
 
 [![sfdx](https://img.shields.io/badge/cli-sfdx-brightgreen.svg)](https://developer.salesforce.com/tools/sfdxcli)
 [![Version](https://img.shields.io/npm/v/sfdx-autocmplt.svg)](https://npmjs.org/package/sfdx-autocmplt)
@@ -57,13 +56,11 @@ OPTIONS
   --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
                                                                                     this command invocation
 
-ALIASES
-  $ sfdx autocomplete
-
 EXAMPLES
   $ sfdx autocmplt
   $ sfdx autocmplt bash
   $ sfdx autocmplt zsh
+  $ sfdx autocmplt fish
   $ sfdx autocmplt --refresh-cache
 ```
 
