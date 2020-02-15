@@ -11,8 +11,6 @@ import { updateCache } from '../../cache';
 import Create from './create';
 
 export default class Index extends AutocompleteBase {
-  public static aliases = ['autocomplete'];
-
   public static description = 'display autocomplete installation instructions';
 
   public static args = [

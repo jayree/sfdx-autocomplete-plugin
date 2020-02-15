@@ -157,15 +157,12 @@ end`);
         if (c.hidden) return;
         if (c.pluginName === '@oclif/plugin-autocomplete') return;
         try {
-          if (c.pluginName === 'sfdx-autocmplt' && this.usealias) {
-            for (const alias of c.aliases) {
-              const clone = cloneDeep(c);
-              clone.id = alias;
-              commands.push(clone);
-            }
-            return;
-          }
           commands.push(c);
+          for (const alias of c.aliases) {
+            const clone = cloneDeep(c);
+            clone.id = alias;
+            commands.push(clone);
+          }
         } catch (err) {
           debug(`Error creating completions for command ${c.id}`);
           debug(err.message);

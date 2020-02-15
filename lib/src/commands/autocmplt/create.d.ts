@@ -10,7 +10,10 @@ export default class Create extends AutocompleteBase {
     private get bashSetupScriptPath();
     private get bashCommandsListPath();
     private get zshSetupScriptPath();
+    private get fishSetupScriptPath();
     private get zshCompletionSettersPath();
+    private get fishCompletionFunctionPath();
+    private fishSetupScript;
     private get skipEllipsis();
     private get commands();
     private get bashCommandsList();

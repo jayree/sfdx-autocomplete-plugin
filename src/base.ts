@@ -38,10 +38,6 @@ export abstract class AutocompleteBase extends SfdxCommand {
     return path.join(this.config.cacheDir, 'autocomplete.log');
   }
 
-  public get usealias(): boolean {
-    return this.config.plugins.filter(p => p.name === '@oclif/plugin-autocomplete').length ? false : true;
-  }
-
   public writeLogFile(msg: string) {
     const now = new Date();
     const entry = `[${now}] ${msg}\n`;
