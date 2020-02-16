@@ -1,3 +1,16 @@
+# [2.2.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.1.0...v2.2.0) (2020-02-16)
+
+
+### Bug Fixes
+
+* autocomplete for flag options ([83832b7](https://github.com/jayree/sfdx-autocomplete-plugin/commit/83832b7f2b785f145323d9962748abe79c9adf5e))
+
+
+### Features
+
+* fish support ([39bb81c](https://github.com/jayree/sfdx-autocomplete-plugin/commit/39bb81c0fb4f97511c407f85a6d3613d43cd4737))
+* support alias completion ([4a1aec2](https://github.com/jayree/sfdx-autocomplete-plugin/commit/4a1aec2703a0f3c729c192d3a8623a64a975edf4))
+
 # [2.1.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.0.5...v2.1.0) (2020-01-10)
 
 
