@@ -1,9 +1,7 @@
 import { Command } from '@oclif/config';
 // import { flags } from '@salesforce/command';
-import * as path from 'path';
 
 import { AutocompleteBase } from '../../base';
-import { fetchCache } from '../../cache';
 
 export default class Options extends AutocompleteBase {
   public static aliases = ['autocomplete:options'];
@@ -14,9 +12,6 @@ export default class Options extends AutocompleteBase {
     app: flags.app({ required: false, hidden: true })
   }; */
   public static args = [{ name: 'completion', strict: false }];
-
-  public parsedArgs: { [name: string]: string } = {};
-  public parsedFlags: { [name: string]: string } = {};
 
   // helpful dictionary
   //
@@ -89,6 +84,17 @@ export default class Options extends AutocompleteBase {
       if (!flag) this.throwError(`${argvFlag} is not a valid flag for ${id}`);
       cacheKey = name || flag.name;
       cacheCompletion = flag.completion;
+      if (!cacheCompletion) {
+        if (flag.options) {
+          cacheCompletion = {
+            skipCache: true,
+
+            options: async () => {
+              return flag.options;
+            }
+          };
+        }
+      }
     } else {
       const cmdArgs = klass.args || [];
       // variable arg (strict: false)
@@ -111,43 +117,6 @@ export default class Options extends AutocompleteBase {
       cacheCompletion = this.findCompletion(id, cacheKey);
     }
     return { cacheKey, cacheCompletion };
-  }
-
-  // tslint:disable-next-line: no-any
-  private async fetchOptions(cache: any) {
-    const { cacheCompletion, cacheKey } = cache;
-    // build/retrieve & return options cache
-    if (cacheCompletion && cacheCompletion.options) {
-      const ctx = {
-        args: this.parsedArgs,
-        // special case for app & team env vars
-        flags: this.parsedFlagsWithEnvVars,
-        argv: this.argv,
-        config: this.config
-      };
-      // use cacheKey function or fallback to arg/flag name
-      const ckey = cacheCompletion.cacheKey ? await cacheCompletion.cacheKey(ctx) : null;
-      const key: string = ckey || cacheKey || 'unknown_key_error';
-      const flagCachePath = path.join(this.completionsCacheDir, key);
-
-      // build/retrieve cache
-      const duration = cacheCompletion.cacheDuration || 60 * 60 * 24; // 1 day
-      const skip = cacheCompletion.skipCache || false;
-      const opts = { cacheFn: () => cacheCompletion.options(ctx) };
-      const options = await fetchCache(flagCachePath, duration, skip, opts);
-
-      // return options cache
-      return (options || []).join('\n');
-    }
-  }
-
-  private get parsedFlagsWithEnvVars() {
-    const { flags } = this.parse(Options);
-    return {
-      app: process.env.SFDX_APP || flags.app,
-      team: process.env.SFDX_TEAM || process.env.SFDX_ORG,
-      ...this.parsedFlags
-    };
   }
 
   private throwError(msg: string) {

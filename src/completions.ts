@@ -18,12 +18,12 @@ export class CompletionLookup {
   };
 
   private readonly keyAliasMap: { [key: string]: { [key: string]: string } } = {
-    resultformat: {
+    /*     resultformat: {
       'force:apex:test:report': 'resultformatTap',
       'force:apex:test:run': 'resultformatTap',
       'force:lightning:test:run': 'resultformatTap',
       'force:data:soql:query': 'resultformatCsv'
-    }
+    } */
   };
 
   private readonly commandArgsMap: {
@@ -57,30 +57,6 @@ export class CompletionLookup {
     return this.blacklistMap[this.name] && this.blacklistMap[this.name].includes(this.cmdId);
   }
 }
-
-export const loglevelCompletion: flags.ICompletion = {
-  skipCache: true,
-
-  options: async () => {
-    return ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
-  }
-};
-
-export const resultformatTapCompletion: flags.ICompletion = {
-  skipCache: true,
-
-  options: async () => {
-    return ['human', 'tap', 'junit', 'json'];
-  }
-};
-
-export const resultformatCsvCompletion: flags.ICompletion = {
-  skipCache: true,
-
-  options: async () => {
-    return ['human', 'csv', 'json'];
-  }
-};
 
 export const instanceurlCompletion: flags.ICompletion = {
   skipCache: true,
@@ -127,8 +103,5 @@ export const targetUserNameCompletion: flags.ICompletion = {
 // tslint:disable-next-line: variable-name
 export const CompletionMapping: { [key: string]: flags.ICompletion } = {
   targetusername: targetUserNameCompletion,
-  loglevel: loglevelCompletion,
-  instanceurl: instanceurlCompletion,
-  resultformatTap: resultformatTapCompletion,
-  resultformatCsv: resultformatCsvCompletion
+  instanceurl: instanceurlCompletion
 };

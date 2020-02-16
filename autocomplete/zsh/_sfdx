@@ -13,22 +13,28 @@ _sfdx () {
 
   ## all commands
   _sfdx_complete_commands () {
-   touch "$SFDX_AC_ANALYTICS_DIR"/command
-   local -a _sfdx_all_commands_list
-   if type _sfdx_set_all_commands_list >/dev/null 2>&1; then
-     _sfdx_set_all_commands_list
-     _describe -t all-commands "all commands" _sfdx_all_commands_list
-     return
-   fi
-   # fallback to grep'ing cmds from cache
-   compadd $(grep -oe '^[a-zA-Z0-9:_-]\+' $SFDX_AC_COMMANDS_PATH)
+    touch "$SFDX_AC_ANALYTICS_DIR"/command
+    local -a _sfdx_all_commands_list
+    if type _sfdx_set_all_commands_list >/dev/null 2>&1; then
+      _sfdx_set_all_commands_list
+      _describe -t all-commands "all commands" _sfdx_all_commands_list
+      return
+    fi
+    # fallback to grep'ing cmds from cache
+    compadd $(grep -oe '^[a-zA-Z0-9:_-]\+' $SFDX_AC_COMMANDS_PATH)
   }
   ## end all commands
 
   _sfdx_compadd_args () {
+    # _options=("${(@f)$(sfdx autocmplt:options "${words}")}")
+    # if [[ -n $_options ]]; then
+    # compadd $(echo $([[ -n $REPORTTIME ]] && REPORTTIME=100; echo $_options))
+    # else
+    #   _path_files
+    # fi
     compadd $(echo $([[ -n $REPORTTIME ]] && REPORTTIME=100; sfdx autocmplt:options "${words}"))
   }
-
+  
   _sfdx_compadd_flag_options () {
     touch "$SFDX_AC_ANALYTICS_DIR"/value
     _sfdx_compadd_args
@@ -47,7 +53,7 @@ _sfdx () {
   fi
 
   _arguments  '1: :_sfdx_complete_commands' \
-              $_sfdx_flags
+  $_sfdx_flags
 }
 
 _sfdx

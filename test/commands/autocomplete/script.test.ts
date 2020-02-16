@@ -25,9 +25,12 @@ SFDX_AC_ZSH_SETUP_PATH=${ctx.config.cacheDir}/autocomplete/zsh_setup && test -f 
     });
 
   test
-    .stderr()
+    .stdout()
     .command(['autocmplt:script', 'fish'])
-    .it('errors on unsupported shell', ctx => {
-      expect(ctx.stderr).to.contain('fish is not a supported shell for autocomplete');
+    .it('outputs fish profile config', ctx => {
+      expect(ctx.stdout).to.contain(`
+# sfdx autocomplete setup
+SFDX_AC_FISH_SETUP_PATH=${ctx.config.cacheDir}/autocomplete/fish_setup && test -f $SFDX_AC_FISH_SETUP_PATH && source $SFDX_AC_FISH_SETUP_PATH;
+`);
     });
 });
