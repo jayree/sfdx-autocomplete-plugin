@@ -122,6 +122,7 @@ SFDX_AC_BASH_COMPFUNC_PATH=${AC_PLUGIN_PATH}/autocomplete/bash/sfdx.bash && test
     });
 
     it('#zshSetupScript', () => {
+      process.env.SFDX_AC_ZSH_SKIP_ELLIPSIS = '0';
       const shellSetup = cmd.zshSetupScript;
       expect(shellSetup).to.eq(`expand-or-complete-with-dots() {
   echo -n "..."
