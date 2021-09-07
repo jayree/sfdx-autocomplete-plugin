@@ -107,5 +107,11 @@
     "pretest": "sf-compile-test",
     "test": "sf-test",
     "version": "oclif-dev manifest && oclif-dev readme"
+  },
+  "release": {
+    "branches": [
+      "main",
+      "next"
+    ]
   }
 }
