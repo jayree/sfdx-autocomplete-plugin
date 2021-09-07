@@ -1,8 +1,7 @@
 import { flags } from '@oclif/command';
-import { core } from '@salesforce/command';
 // import * as Config from '@oclif/config';
 // import flatten = require('lodash.flatten');
-import { Aliases, AuthInfo } from '@salesforce/core';
+import { Aliases, AuthInfo, ConfigGroup, Org } from '@salesforce/core';
 import { get } from 'lodash';
 
 export const oneDay = 60 * 60 * 24;
@@ -30,6 +29,7 @@ export class CompletionLookup {
     [key: string]: { [key: string]: string };
   } = {};
 
+  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   constructor(private readonly cmdId: string, private readonly name: string, private readonly description?: string) {}
 
   public run(): flags.ICompletion | undefined {
@@ -46,7 +46,7 @@ export class CompletionLookup {
   }
 
   private descriptionAlias(): string | undefined {
-    const d = this.description!;
+    const d = this.description;
     // if (d.match(/^dyno size/)) return 'dynosize';
     // if (d.match(/^process type/)) return 'processtype';
     if (d) return '';
@@ -61,9 +61,10 @@ export class CompletionLookup {
 export const instanceurlCompletion: flags.ICompletion = {
   skipCache: true,
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   options: async () => {
     return ['https://test.salesforce.com', 'https://login.salesforce.com'];
-  }
+  },
 };
 
 export const targetUserNameCompletion: flags.ICompletion = {
@@ -71,9 +72,9 @@ export const targetUserNameCompletion: flags.ICompletion = {
   options: async () => {
     try {
       const authFiles = await AuthInfo.listAllAuthFiles();
-      const orgs = authFiles.map(authfile => authfile.replace('.json', ''));
+      const orgs = authFiles.map((authfile) => authfile.replace('.json', ''));
       const aliasesOrUsernames = [];
-      const aliases = await Aliases.create({} as core.ConfigGroup.Options);
+      const aliases = await Aliases.create({} as ConfigGroup.Options);
       for (const org of orgs) {
         const aliasKeys = aliases.getKeysByValue(org);
         const value = get(aliasKeys, 0) || org;
@@ -82,10 +83,10 @@ export const targetUserNameCompletion: flags.ICompletion = {
 
       const aliasesOrUsernamesToDelete = [];
       await Promise.all(
-        aliasesOrUsernames.map(async a => {
+        aliasesOrUsernames.map(async (a) => {
           try {
-            const org = await core.Org.create({
-              aliasOrUsername: a
+            const org = await Org.create({
+              aliasOrUsername: a,
             });
             await org.refreshAuth();
           } catch (error /* istanbul ignore next */) {
@@ -93,15 +94,15 @@ export const targetUserNameCompletion: flags.ICompletion = {
           }
         })
       );
-      return aliasesOrUsernames.filter(alias => !aliasesOrUsernamesToDelete.includes(alias));
+      return aliasesOrUsernames.filter((alias) => !aliasesOrUsernamesToDelete.includes(alias));
     } catch (error) {
       return [];
     }
-  }
+  },
 };
 
 // tslint:disable-next-line: variable-name
 export const CompletionMapping: { [key: string]: flags.ICompletion } = {
   targetusername: targetUserNameCompletion,
-  instanceurl: instanceurlCompletion
+  instanceurl: instanceurlCompletion,
 };

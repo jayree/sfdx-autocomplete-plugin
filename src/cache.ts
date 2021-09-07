@@ -6,6 +6,7 @@ export async function updateCache(cachePath: string, cache: any) {
   await fs.writeJSON(cachePath, cache);
 }
 
+// eslint-disable-next-line no-underscore-dangle
 function _isStale(cachePath: string, cacheDuration: number): boolean {
   const past = new Date();
   past.setSeconds(past.getSeconds() - cacheDuration);
@@ -13,6 +14,7 @@ function _isStale(cachePath: string, cacheDuration: number): boolean {
 }
 
 // tslint:disable-next-line: no-any
+// eslint-disable-next-line no-underscore-dangle
 function _mtime(f: any): Date {
   return fs.statSync(f).mtime;
 }

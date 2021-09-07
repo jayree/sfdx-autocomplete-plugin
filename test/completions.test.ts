@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { CompletionLookup, CompletionMapping } from '../src/completions';
 
 // autocomplete will throw error on windows
-// tslint:disable-next-line: no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { default: runtest } = require('./helpers/runtest');
 
 runtest('CompletionLookup', () => {

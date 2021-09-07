@@ -1,18 +1,18 @@
+import * as path from 'path';
 import { Config, Plugin } from '@oclif/config';
 import { loadJSON } from '@oclif/config/lib/util';
 import { expect } from 'chai';
-import * as path from 'path';
 
 import Create from '../../../src/commands/autocmplt/create';
 
-const root = path.resolve(__dirname, '../../../../package.json');
+const root = path.resolve(__dirname, '../../../package.json');
 const config = new Config({ root });
 
 // autocomplete will throw error on windows
-// tslint:disable-next-line: no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { default: runtest } = require('../../helpers/runtest');
 
-const AC_PLUGIN_PATH = path.resolve(__dirname, '..', '..', '..', '..');
+const AC_PLUGIN_PATH = path.resolve(__dirname, '..', '..', '..');
 
 const cacheBuildFlagsTest = {
   id: 'autocmplt:create',
@@ -20,17 +20,17 @@ const cacheBuildFlagsTest = {
     targetusername: {
       name: 'targetusername',
       type: 'option',
-      description: 'targetusername to use'
+      description: 'targetusername to use',
     },
     visable: { name: 'visable', type: 'boolean', description: 'visable flag' },
     hidden: {
       name: 'hidden',
       type: 'boolean',
       description: 'hidden flag',
-      hidden: true
-    }
+      hidden: true,
+    },
   },
-  args: []
+  args: [],
 };
 
 runtest('Create', () => {
@@ -48,10 +48,10 @@ runtest('Create', () => {
       plugin = new Plugin({ root });
       cmd.config.plugins = [plugin];
       await plugin.load();
-      plugin.manifest = await loadJSON(path.resolve(__dirname, '../../../../test/test.oclif.manifest.json'));
+      plugin.manifest = await loadJSON(path.resolve(__dirname, '../../../test/test.oclif.manifest.json'));
       plugin.commands = Object.entries(plugin.manifest.commands).map(([id, c]) => ({
-        ...(c as object),
-        load: () => plugin.findCommand(id, { must: true })
+        ...(c as Record<string, unknown>),
+        load: () => plugin.findCommand(id, { must: true }),
       }));
       klass = plugin.commands[1];
     });

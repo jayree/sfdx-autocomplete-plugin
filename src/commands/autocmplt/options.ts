@@ -37,6 +37,7 @@ export default class Options extends AutocompleteBase {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   private async processCommandLine() {
     // find command id
     const commandLineToComplete = this.argv[0].split(' ');
@@ -58,7 +59,7 @@ export default class Options extends AutocompleteBase {
         argsIndex,
         curPositionIsFlag,
         curPositionIsFlagValue,
-        slicedArgv
+        slicedArgv,
       };
     } else {
       this.throwError(`Command ${id} not found`);
@@ -89,9 +90,10 @@ export default class Options extends AutocompleteBase {
           cacheCompletion = {
             skipCache: true,
 
+            // eslint-disable-next-line @typescript-eslint/require-await
             options: async () => {
               return flag.options;
-            }
+            },
           };
         }
       }
@@ -152,7 +154,8 @@ export default class Options extends AutocompleteBase {
     let argsIndex = -1;
     let flagName: string;
 
-    argv.filter(wild => {
+    argv.filter((wild) => {
+      // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
       if (wild.match(/^-(-)?/)) {
         // we're a flag
         argIsFlag = true;

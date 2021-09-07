@@ -1,8 +1,8 @@
+import * as path from 'path';
 import { flags } from '@salesforce/command';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
 import * as fs from 'fs-extra';
-import * as path from 'path';
 import { targetUserNameCompletion } from '../../completions';
 
 import { AutocompleteBase } from '../../base';
@@ -17,8 +17,8 @@ export default class Index extends AutocompleteBase {
     {
       name: 'shell',
       description: 'shell type',
-      required: false
-    }
+      required: false,
+    },
   ];
 
   public static examples = [
@@ -26,18 +26,18 @@ export default class Index extends AutocompleteBase {
     '$ sfdx autocmplt bash',
     '$ sfdx autocmplt zsh',
     '$ sfdx autocmplt fish',
-    '$ sfdx autocmplt --refresh-cache'
+    '$ sfdx autocmplt --refresh-cache',
   ];
 
   protected static flagsConfig = {
     'refresh-cache': flags.boolean({
       description: 'refresh cache only (ignores displaying instructions)',
-      char: 'r'
+      char: 'r',
     }),
     suppresswarnings: flags.boolean({
       description: 'suppress warnings',
-      hidden: true
-    })
+      hidden: true,
+    }),
   };
 
   public async run() {
@@ -87,7 +87,7 @@ Enjoy!
         const suppresswarningsfile = path.join(this.config.cacheDir, 'sfdx-autocmplt', 'suppresswarnings');
         await fs.ensureFile(suppresswarningsfile);
         await fs.writeJson(suppresswarningsfile, {
-          SuppressUpdateWarning: true
+          SuppressUpdateWarning: true,
         });
       } catch (error) {
         this.logger.error(error);
@@ -99,7 +99,7 @@ Enjoy!
   private async updateCache(completion: any, cacheKey: string) {
     const cachePath = path.join(this.completionsCacheDir, cacheKey);
     const options = await completion.options({
-      config: this.config
+      config: this.config,
     });
     await updateCache(cachePath, options);
   }

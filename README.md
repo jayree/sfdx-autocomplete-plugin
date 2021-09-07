@@ -34,9 +34,9 @@ USAGE
 
 ## Commands
 <!-- commands -->
-* [`sfdx autocmplt [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-autocmplt--r---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx autocmplt`](#sfdx-autocmplt)
 
-### `sfdx autocmplt [-r] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+### `sfdx autocmplt`
 
 display autocomplete installation instructions
 
@@ -64,5 +64,5 @@ EXAMPLES
   $ sfdx autocmplt --refresh-cache
 ```
 
-_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.2.0/src/commands/autocmplt/index.ts)_
+_See code: [commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.2.0/commands/autocmplt/index.ts)_
 <!-- commandsstop -->

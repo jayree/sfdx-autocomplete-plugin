@@ -1,25 +1,25 @@
+import * as path from 'path';
 import { Config } from '@oclif/config';
 import { flags } from '@salesforce/command';
 import { expect } from 'chai';
-import * as path from 'path';
 
 import { AutocompleteBase } from '../src/base';
 
 // autocomplete will throw error on windows
-// tslint:disable-next-line: no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { default: runtest } = require('./helpers/runtest');
 
 class AutocompleteTest extends AutocompleteBase {
   public static id = 'test:foo';
   protected static flagsConfig = {
     bar: flags.boolean({
-      description: 'bar'
-    })
+      description: 'bar',
+    }),
   };
   public async run() {}
 }
 
-const root = path.resolve(__dirname, '../../package.json');
+const root = path.resolve(__dirname, '../package.json');
 const config = new Config({ root });
 
 const cmd = new AutocompleteTest([], config);
