@@ -1,3 +1,15 @@
+# [2.3.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.2.0...v2.3.0) (2021-09-07)
+
+
+### Bug Fixes
+
+* update dependencies ([a38c315](https://github.com/jayree/sfdx-autocomplete-plugin/commit/a38c3152f6ad9b862f33160299a44d3d685d60af))
+
+
+### Features
+
+* hook runs now beforeExit ([300b253](https://github.com/jayree/sfdx-autocomplete-plugin/commit/300b253cfc76b6ac01a2cbbe3c3bf7c9f53ca153))
+
 # [2.2.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.1.0...v2.2.0) (2020-02-16)
 
 
