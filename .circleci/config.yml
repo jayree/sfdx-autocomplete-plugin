@@ -47,32 +47,26 @@ jobs:
       - run: *install
       - run: *build
       - run: *test
-      - run: *coverage
       - save_cache: *save-cache
-  node-10:
+  node-14:
     <<: *node-test
     docker:
-      - image: node:10
+      - image: node:14.15.4
   release:
     <<: *defaults
     steps:
       - checkout
       - restore_cache: *restore-cache
       - run: *gh-config
-      - run: yarn global add semantic-release@15
-      - run: yarn global add @oclif/semantic-release@3
+      - run: npm install -global semantic-release@17
+      - run: npm install -global https://github.com/jayree/semantic-release
       - run: *install
-      - run: *build
       - run: semantic-release -e @oclif/semantic-release
-      - run: git status
       - save_cache: *save-cache
   merge:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: *restore-cache
-      - run: *install
-      - run: *build
       - run: *gh-config
       - run:
           name: Merging
@@ -80,7 +74,7 @@ jobs:
             git fetch
             git checkout develop
             git pull origin develop
-            git merge origin/master
+            git merge origin/main
             git push origin develop
       - save_cache: *save-cache
 
@@ -89,15 +83,15 @@ workflows:
   sfdx-autocomplete:
     jobs:
       - node-latest
-      - node-10
+      - node-14
       - release:
           filters:
-            branches: { only: master }
+            branches: { only: main }
           requires:
             - node-latest
-            - node-10
+            - node-14
       - merge:
           filters:
-            branches: { only: master }
+            branches: { only: main }
           requires:
             - release

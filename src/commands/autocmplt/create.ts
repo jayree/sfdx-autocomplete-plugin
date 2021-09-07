@@ -1,12 +1,13 @@
-import { Command } from '@oclif/config';
+// eslint-disable-next-line camelcase
 import * as child_process from 'child_process';
+import * as path from 'path';
+import { Command } from '@oclif/config';
 import * as fs from 'fs-extra';
 import { cloneDeep } from 'lodash';
-import * as path from 'path';
 
 import { AutocompleteBase } from '../../base';
 
-// tslint:disable-next-line: no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const debug = require('debug')('autocmplt:create');
 
 export default class Create extends AutocompleteBase {
@@ -82,10 +83,8 @@ export default class Create extends AutocompleteBase {
 
   private get fishCompletionFunctionPath(): string {
     // dynamically load path to completions file
-    const dir = child_process
-      .execSync('pkg-config --variable completionsdir fish')
-      .toString()
-      .trimRight();
+    // eslint-disable-next-line camelcase
+    const dir = child_process.execSync('pkg-config --variable completionsdir fish').toString().trimRight();
     return `${dir}/sfdx.fish`;
   }
 
@@ -119,7 +118,7 @@ end`);
       );
       // tslint:disable-next-line: no-any
       const flags = (command.flags as any) || {};
-      const fl = Object.keys(flags).filter(flag => flags[flag] && !flags[flag].hidden);
+      const fl = Object.keys(flags).filter((flag) => flags[flag] && !flags[flag].hidden);
 
       for (const flag of fl) {
         const f = flags[flag] || {};
@@ -147,13 +146,14 @@ end`);
   }
 
   private get commands(): Command[] {
+    // eslint-disable-next-line no-underscore-dangle
     if (this._commands) return this._commands;
 
     const plugins = this.config.plugins;
     const commands: Command[] = [];
 
-    plugins.map(p => {
-      p.commands.map(c => {
+    plugins.map((p) => {
+      p.commands.map((c) => {
         if (c.hidden) return;
         if (c.pluginName === '@oclif/plugin-autocomplete') return;
         try {
@@ -171,13 +171,15 @@ end`);
       });
     });
 
+    // eslint-disable-next-line no-underscore-dangle
     this._commands = commands;
+    // eslint-disable-next-line no-underscore-dangle
     return this._commands;
   }
 
   private get bashCommandsList(): string {
     return this.commands
-      .map(c => {
+      .map((c) => {
         try {
           const publicFlags = this.genCmdPublicFlags(c).trim();
           return `${c.id} ${publicFlags}`;
@@ -198,7 +200,7 @@ end`);
   }
 
   private get zshCommandsSetter(): string {
-    const cmdsWithDescriptions = this.commands.map(c => {
+    const cmdsWithDescriptions = this.commands.map((c) => {
       try {
         return this.genCmdWithDescription(c);
       } catch (err) {
@@ -214,7 +216,7 @@ end`);
 
   private get zshCommandsFlagsSetters(): string {
     return this.commands
-      .map(c => {
+      .map((c) => {
         try {
           return this.genZshCmdFlagsSetter(c);
         } catch (err) {
@@ -230,8 +232,8 @@ end`);
   private genCmdPublicFlags(command: Command): string {
     const flags = command.flags || {};
     return Object.keys(flags)
-      .filter(flag => !flags[flag].hidden)
-      .map(flag => `--${flag}`)
+      .filter((flag) => !flags[flag].hidden)
+      .map((flag) => `--${flag}`)
       .join(' ');
   }
 
@@ -247,14 +249,15 @@ end`);
   private genZshCmdFlagsSetter(command: Command): string {
     const id = command.id;
     const flagscompletions = Object.keys(command.flags || {})
-      .filter(flag => command.flags && !command.flags[flag].hidden)
-      .map(flag => {
+      .filter((flag) => command.flags && !command.flags[flag].hidden)
+      .map((flag) => {
         const f =
           (command.flags && command.flags[flag]) ||
           // tslint:disable-next-line: no-any
           ({ description: '' } as any);
         const isBoolean = f.type === 'boolean';
         const hasCompletion =
+          // eslint-disable-next-line no-prototype-builtins
           f.hasOwnProperty('completion') || f.hasOwnProperty('options') || this.findCompletion(id, flag, f.description);
         const name = isBoolean ? flag : `${flag}=-`;
         let cachecompl = '';
@@ -307,7 +310,6 @@ SFDX_AC_BASH_COMPFUNC_PATH=${path.join(
       '..',
       '..',
       '..',
-      '..',
       'autocomplete',
       'bash',
       'sfdx.bash'
@@ -321,7 +323,7 @@ ${this.envAnalyticsDir}
 ${this.envCommandsPath}
 SFDX_AC_ZSH_SETTERS_PATH=\${SFDX_AC_COMMANDS_PATH}_setters && test -f $SFDX_AC_ZSH_SETTERS_PATH && source $SFDX_AC_ZSH_SETTERS_PATH;
 fpath=(
-${path.join(__dirname, '..', '..', '..', '..', 'autocomplete', 'zsh')}
+${path.join(__dirname, '..', '..', '..', 'autocomplete', 'zsh')}
 $fpath
 );
 autoload -Uz compinit;
@@ -360,7 +362,7 @@ bindkey "^I" expand-or-complete-with-dots`;
       'sourcefile',
       'sourcepath',
       'unpackaged',
-      'zipfile'
+      'zipfile',
     ].includes(flag);
   }
 }

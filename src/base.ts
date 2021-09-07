@@ -1,7 +1,7 @@
+import * as path from 'path';
 import { flags } from '@oclif/command';
 import { SfdxCommand } from '@salesforce/command';
 import * as fs from 'fs-extra';
-import * as path from 'path';
 
 import { fetchCache } from './cache';
 import { CompletionLookup } from './completions';
@@ -40,9 +40,9 @@ export abstract class AutocompleteBase extends SfdxCommand {
 
   public writeLogFile(msg: string) {
     const now = new Date();
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     const entry = `[${now}] ${msg}\n`;
     const fd = fs.openSync(this.acLogfilePath, 'a');
-    // @ts-ignore
     fs.writeSync(fd, entry);
   }
 
@@ -55,7 +55,7 @@ export abstract class AutocompleteBase extends SfdxCommand {
         args: this.parsedArgs,
         flags: this.parsedFlags,
         argv: this.argv,
-        config: this.config
+        config: this.config,
       };
       // use cacheKey function or fallback to arg/flag name
       const ckey = cacheCompletion.cacheKey ? await cacheCompletion.cacheKey(ctx) : null;

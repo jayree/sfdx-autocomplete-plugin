@@ -1,7 +1,7 @@
+import * as path from 'path';
 import { flags } from '@salesforce/command';
 import { ux } from 'cli-ux';
 import * as fs from 'fs-extra';
-import * as path from 'path';
 
 import { AutocompleteBase } from '../../base';
 
@@ -14,15 +14,16 @@ export default class Doctor extends AutocompleteBase {
     {
       name: 'shell',
       description: 'shell type',
-      required: false
-    }
+      required: false,
+    },
   ];
   protected static flagsConfig = {
     debug: flags.boolean({
-      description: 'list completable commands'
-    })
+      description: 'list completable commands',
+    }),
   };
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async run() {
     const shell = this.args.shell || this.config.shell;
     this.errorIfNotSupportedShell(shell);
@@ -32,14 +33,15 @@ export default class Doctor extends AutocompleteBase {
     // cli version
     data.push({
       name: 'cli version',
-      value: this.config.version
+      value: this.config.version,
     });
 
     // plugin version
-    const pjson = require(path.resolve(__dirname, '..', '..', '..', '..', 'package.json'));
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const pjson = require(path.resolve(__dirname, '..', '..', '..', 'package.json'));
     data.push({
       name: 'plugin version',
-      value: pjson.version
+      value: pjson.version,
     });
 
     // check shell shim source env var
@@ -50,7 +52,7 @@ export default class Doctor extends AutocompleteBase {
     const shimVlaue = regex.exec(shellProfile.toString()) ? 'present' : 'missing';
     data.push({
       name: `~/${shell === 'zsh' ? '.zshrc' : '.bashrc'} shimmed`,
-      value: shimVlaue
+      value: shimVlaue,
     });
 
     // check shell shim
@@ -58,7 +60,7 @@ export default class Doctor extends AutocompleteBase {
     const shellCompletionValue = fs.existsSync(shellCompletion) ? 'present' : 'missing';
     data.push({
       name: `${shell} shim file`,
-      value: shellCompletionValue
+      value: shellCompletionValue,
     });
 
     // check shell command cache
@@ -66,7 +68,7 @@ export default class Doctor extends AutocompleteBase {
     const shellCmdCacheValue = fs.existsSync(shellCmdCache) ? 'present' : 'missing';
     data.push({
       name: `${shell} commands cache`,
-      value: shellCmdCacheValue
+      value: shellCmdCacheValue,
     });
 
     // check app completion cache
@@ -81,14 +83,14 @@ export default class Doctor extends AutocompleteBase {
 
     data.push({
       name: 'targetusernames completion cache',
-      value: targetusernamesCacheValue
+      value: targetusernamesCacheValue,
     });
 
     ux.table(
       data,
       {
         name: {},
-        value: {}
+        value: {},
       },
       { 'no-header': true }
     );
@@ -101,8 +103,8 @@ export default class Doctor extends AutocompleteBase {
     const header = 'Completable Commands';
     this.log(header);
     this.log('='.repeat(header.length));
-    this.config.plugins.map(p => {
-      p.commands.map(c => {
+    this.config.plugins.map((p) => {
+      p.commands.map((c) => {
         try {
           if (c.hidden) {
             this.log(`${c.id} (hidden)`);
@@ -113,6 +115,7 @@ export default class Doctor extends AutocompleteBase {
               if (flag.type === 'option') {
                 out += '=';
               }
+              // eslint-disable-next-line no-prototype-builtins
               if (flag.hasOwnProperty('completion') || this.findCompletion(c.id, f, flag.description)) {
                 out += '(c)';
               }
@@ -120,6 +123,7 @@ export default class Doctor extends AutocompleteBase {
               return out;
             });
             if (results.length) {
+              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
               this.log(`${c.id} -> ${results}`);
             }
           }

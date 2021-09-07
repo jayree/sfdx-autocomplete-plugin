@@ -9,6 +9,7 @@ export default class Script extends AutocompleteBase {
   public static hidden = true;
   public static args = [{ name: 'shell', description: 'shell type', required: true }];
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async run() {
     const shell = this.args.shell;
     this.errorIfNotSupportedShell(shell);
