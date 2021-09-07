@@ -1,14 +1,14 @@
+import * as path from 'path';
 import { Hook } from '@oclif/config';
 import cli from 'cli-ux';
 import * as fs from 'fs-extra';
-import * as path from 'path';
 import { targetUserNameCompletion } from '../completions';
 
 import { updateCache } from '../cache';
 import acCreate from '../commands/autocmplt/create';
 
 // tslint:disable-next-line: no-any
-export const completions: Hook<any> = async function({ type }: { type?: 'targetusername' }) {
+export const completions: Hook<any> = async function ({ type }: { type?: 'targetusername' }) {
   // autocomplete is now in core, skip windows
   if (this.config.windows) return;
   const completionsDir = path.join(this.config.cacheDir, 'autocomplete', 'completions');
@@ -34,11 +34,11 @@ export const completions: Hook<any> = async function({ type }: { type?: 'targetu
     suppresswarnings = await fs.readJson(suppresswarningsfile);
   } catch (err) {
     suppresswarnings = {
-      SuppressUpdateWarning: false
+      SuppressUpdateWarning: false,
     };
   }
 
-  if (this.config.plugins.filter(p => p.name === '@oclif/plugin-autocomplete').length) {
+  if (this.config.plugins.filter((p) => p.name === '@oclif/plugin-autocomplete').length) {
     if (!suppresswarnings.SuppressUpdateWarning) {
       cli.styledHeader('sfdx-autocmplt');
       cli.warn(
@@ -52,20 +52,23 @@ Run 'sfdx autocmplt --suppresswarnings' to suppress this warning.`
       try {
         await fs.ensureFile(suppresswarningsfile);
         await fs.writeJson(suppresswarningsfile, {
-          SuppressUpdateWarning: false
+          SuppressUpdateWarning: false,
         });
+        // eslint-disable-next-line no-empty
       } catch (error) {}
     }
   }
 
-  cli.action.start('Updating completions');
-  await rm();
-  await acCreate.run([], this.config);
+  process.once('beforeExit', () => {
+    cli.action.start('sfdx-autocmplt: Updating completions');
+    void rm();
+    void acCreate.run([], this.config);
 
-  try {
-    await update(targetUserNameCompletion, 'targetusername');
-  } catch (err) {
-    this.debug(err.message);
-  }
-  cli.action.stop();
+    try {
+      void update(targetUserNameCompletion, 'targetusername');
+    } catch (err) {
+      this.debug(err.message);
+    }
+    cli.action.stop();
+  });
 };
