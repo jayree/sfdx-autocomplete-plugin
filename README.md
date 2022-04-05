@@ -1,13 +1,11 @@
-# sfdx-autocomplete
+# sfdx-plugin-autocmplt
 
 autocomplete plugin for sfdx (bash & zsh)  
 based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete), [heroku/heroku-cli-autocomplete](https://github.com/heroku/heroku-cli-autocomplete) and [functionalStoic/plugin-autocomplete](https://github.com/functionalStoicplugin-autocomplete/tree/fish-autocomplete-test) for fish support
 
 [![sfdx](https://img.shields.io/badge/cli-sfdx-brightgreen.svg)](https://developer.salesforce.com/tools/sfdxcli)
 [![Version](https://img.shields.io/npm/v/sfdx-autocmplt.svg)](https://npmjs.org/package/sfdx-autocmplt)
-[![CircleCI](https://circleci.com/gh/jayree/sfdx-autocomplete-plugin.svg?style=shield)](https://circleci.com/gh/jayree/sfdx-autocomplete-plugin)
-[![Appveyor CI](https://ci.appveyor.com/api/projects/status/github/jayree/sfdx-autocomplete-plugin?branch=master&svg=true)](https://ci.appveyor.com/project/jayree/sfdx-autocomplete-plugin/branch/master)
-[![Codecov](https://codecov.io/gh/jayree/sfdx-autocomplete-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/jayree/sfdx-autocomplete-plugin)
+[![test-and-release](https://github.com/jayree/sfdx-autocomplete-plugin/actions/workflows/release.yml/badge.svg)](https://github.com/jayree/sfdx-autocomplete-plugin/actions/workflows/release.yml)
 [![Downloads/week](https://img.shields.io/npm/dw/sfdx-autocmplt.svg)](https://npmjs.org/package/sfdx-autocmplt)
 [![License](https://img.shields.io/npm/l/sfdx-autocmplt.svg)](https://github.com/jayree/sfdx-autocomplete-plugin/blob/master/package.json)
 
