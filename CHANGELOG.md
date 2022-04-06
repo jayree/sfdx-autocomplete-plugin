@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.3.0...v2.3.1) (2022-04-06)
+
+
+### Bug Fixes
+
+* upgrade to oclif/core ([e6436dc](https://github.com/jayree/sfdx-autocomplete-plugin/commit/e6436dcbf309a5be898b5e0dde95b80865c7cc2e))
+
 # [2.3.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.2.0...v2.3.0) (2021-09-07)
 
 
