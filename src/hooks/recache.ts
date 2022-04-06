@@ -1,6 +1,6 @@
 import * as path from 'path';
-import { Hook } from '@oclif/config';
-import cli from 'cli-ux';
+import { Hook } from '@oclif/core';
+import { CliUx } from '@oclif/core';
 import * as fs from 'fs-extra';
 import { targetUserNameCompletion } from '../completions';
 
@@ -8,16 +8,14 @@ import { updateCache } from '../cache';
 import acCreate from '../commands/autocmplt/create';
 
 // tslint:disable-next-line: no-any
-export const completions: Hook<any> = async function ({ type }: { type?: 'targetusername' }) {
+export const completions: Hook<any> = async function () {
   // autocomplete is now in core, skip windows
   if (this.config.windows) return;
   const completionsDir = path.join(this.config.cacheDir, 'autocomplete', 'completions');
   const rm = () => fs.emptyDir(completionsDir);
   const rmKey = (cacheKey: string) => fs.remove(path.join(completionsDir, cacheKey));
 
-  if (type === 'targetusername') {
-    return rmKey('targetusername');
-  }
+  await rmKey('targetusername');
 
   // tslint:disable-next-line: no-any
   const update = async (completion: any, cacheKey: string) => {
@@ -40,8 +38,8 @@ export const completions: Hook<any> = async function ({ type }: { type?: 'target
 
   if (this.config.plugins.filter((p) => p.name === '@oclif/plugin-autocomplete').length) {
     if (!suppresswarnings.SuppressUpdateWarning) {
-      cli.styledHeader('sfdx-autocmplt');
-      cli.warn(
+      CliUx.ux.styledHeader('sfdx-autocmplt');
+      CliUx.ux.warn(
         `'@oclif/plugin-autocomplete' plugin detected!
 Use the 'autocmplt' command instead of 'autocomplete' for improved auto-completion.
 Run 'sfdx autocmplt --suppresswarnings' to suppress this warning.`
@@ -60,7 +58,7 @@ Run 'sfdx autocmplt --suppresswarnings' to suppress this warning.`
   }
 
   process.once('beforeExit', () => {
-    cli.action.start('sfdx-autocmplt: Updating completions');
+    CliUx.ux.action.start('sfdx-autocmplt: Updating completions');
     void rm();
     void acCreate.run([], this.config);
 
@@ -69,6 +67,6 @@ Run 'sfdx autocmplt --suppresswarnings' to suppress this warning.`
     } catch (err) {
       this.debug(err.message);
     }
-    cli.action.stop();
+    CliUx.ux.action.stop();
   });
 };

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Config } from '@oclif/config';
+import { Config } from '@oclif/core';
 import { flags, SfdxCommand } from '@salesforce/command';
 import { expect } from 'chai';
 

@@ -1,6 +1,6 @@
 import * as path from 'path';
-import { Config, Plugin } from '@oclif/config';
-import { loadJSON } from '@oclif/config/lib/util';
+import { Config, Plugin } from '@oclif/core';
+import { loadJSON } from '@oclif/core/lib/config/util';
 import { expect } from 'chai';
 
 import Create from '../../../src/commands/autocmplt/create';
@@ -49,7 +49,7 @@ runtest('Create', () => {
       cmd.config.plugins = [plugin];
       await plugin.load();
       plugin.manifest = await loadJSON(path.resolve(__dirname, '../../../test/test.oclif.manifest.json'));
-      plugin.commands = Object.entries(plugin.manifest.commands).map(([id, c]) => ({
+      plugin.commands = Object.entries(plugin.manifest.commands as { [s: string]: unknown }).map(([id, c]) => ({
         ...(c as Record<string, unknown>),
         load: () => plugin.findCommand(id, { must: true }),
       }));

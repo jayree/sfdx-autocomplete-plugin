@@ -8,6 +8,6 @@ export default class Script extends AutocompleteBase {
         description: string;
         required: boolean;
     }[];
-    run(): Promise<void>;
     private get prefix();
+    run(): Promise<void>;
 }

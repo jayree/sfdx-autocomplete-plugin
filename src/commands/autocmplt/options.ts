@@ -1,8 +1,11 @@
-import { Command } from '@oclif/config';
-// import { flags } from '@salesforce/command';
-
 import { AutocompleteBase } from '../../base';
 
+type CommandCompletion = {
+  id: string;
+  description: string;
+  flags: any;
+  args: any;
+};
 export default class Options extends AutocompleteBase {
   public static aliases = ['autocomplete:options'];
 
@@ -33,7 +36,7 @@ export default class Options extends AutocompleteBase {
       if (options) this.log(options);
     } catch (err) {
       // write to ac log
-      this.writeLogFile(err.message);
+      this.writeLogFile(err.message as string);
     }
   }
 
@@ -51,7 +54,7 @@ export default class Options extends AutocompleteBase {
       const slicedArgv = commandLineToComplete.slice(2);
       const [argsIndex, curPositionIsFlag, curPositionIsFlagValue] = this.determineCmdState(
         slicedArgv,
-        klass as Command
+        klass as CommandCompletion
       );
       return {
         id,
@@ -71,7 +74,7 @@ export default class Options extends AutocompleteBase {
     const { id, klass, argsIndex, curPositionIsFlag, curPositionIsFlagValue, slicedArgv } = commandStateVars;
     // setup empty cache completion vars to assign
     // tslint:disable-next-line: no-any
-    let cacheKey: any;
+    let cacheKey: string;
     // tslint:disable-next-line: no-any
     let cacheCompletion: any;
 
@@ -80,8 +83,8 @@ export default class Options extends AutocompleteBase {
       const slicedArgvCount = slicedArgv.length;
       const lastArgvArg = slicedArgv[slicedArgvCount - 1];
       const previousArgvArg = slicedArgv[slicedArgvCount - 2];
-      const argvFlag = curPositionIsFlagValue ? previousArgvArg : lastArgvArg;
-      const { name, flag } = this.findFlagFromWildArg(argvFlag, klass);
+      const argvFlag: string = curPositionIsFlagValue ? previousArgvArg : lastArgvArg;
+      const { name, flag } = this.findFlagFromWildArg(argvFlag, klass as CommandCompletion);
       if (!flag) this.throwError(`${argvFlag} is not a valid flag for ${id}`);
       cacheKey = name || flag.name;
       cacheCompletion = flag.completion;
@@ -102,7 +105,7 @@ export default class Options extends AutocompleteBase {
       // variable arg (strict: false)
       if (!klass.strict) {
         cacheKey = cmdArgs[0] && cmdArgs[0].name.toLowerCase();
-        cacheCompletion = this.findCompletion(id, cacheKey);
+        cacheCompletion = this.findCompletion(id as string, cacheKey);
         if (!cacheCompletion) {
           this.throwError(`Cannot complete variable arg position for ${id}`);
         }
@@ -116,7 +119,7 @@ export default class Options extends AutocompleteBase {
 
     // try to auto-populate the completion object
     if (!cacheCompletion) {
-      cacheCompletion = this.findCompletion(id, cacheKey);
+      cacheCompletion = this.findCompletion(id as string, cacheKey);
     }
     return { cacheKey, cacheCompletion };
   }
@@ -127,7 +130,7 @@ export default class Options extends AutocompleteBase {
 
   private findFlagFromWildArg(
     wild: string,
-    klass: Command
+    klass: CommandCompletion
     // tslint:disable-next-line: no-any
   ): { flag: any; name: any } {
     let name = wild.replace(/^-+/, '');
@@ -135,7 +138,7 @@ export default class Options extends AutocompleteBase {
 
     const unknown = { flag: undefined, name: undefined };
     if (!klass.flags) return unknown;
-    const cFlags = klass.flags;
+    const cFlags: Record<string, { char: string }> = klass.flags;
 
     let flag = cFlags[name];
     if (flag) return { name, flag };
@@ -146,7 +149,7 @@ export default class Options extends AutocompleteBase {
     return unknown;
   }
 
-  private determineCmdState(argv: string[], klass: Command): [number, boolean, boolean] {
+  private determineCmdState(argv: string[], klass: CommandCompletion): [number, boolean, boolean] {
     const args = klass.args || [];
     let needFlagValueSatisfied = false;
     let argIsFlag = false;

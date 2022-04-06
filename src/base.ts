@@ -10,6 +10,18 @@ export abstract class AutocompleteBase extends SfdxCommand {
   public parsedArgs: { [name: string]: string } = {};
   public parsedFlags: { [name: string]: string } = {};
 
+  public get autocompleteCacheDir(): string {
+    return path.join(this.config.cacheDir, 'autocomplete');
+  }
+
+  public get completionsCacheDir(): string {
+    return path.join(this.config.cacheDir, 'autocomplete', 'completions');
+  }
+
+  public get acLogfilePath(): string {
+    return path.join(this.config.cacheDir, 'autocomplete.log');
+  }
+
   public errorIfWindows() {
     if (this.config.windows) {
       throw new Error('Autocomplete is not currently supported in Windows');
@@ -24,18 +36,6 @@ export abstract class AutocompleteBase extends SfdxCommand {
     if (!['bash', 'zsh', 'fish'].includes(shell)) {
       throw new Error(`${shell} is not a supported shell for autocomplete`);
     }
-  }
-
-  public get autocompleteCacheDir(): string {
-    return path.join(this.config.cacheDir, 'autocomplete');
-  }
-
-  public get completionsCacheDir(): string {
-    return path.join(this.config.cacheDir, 'autocomplete', 'completions');
-  }
-
-  public get acLogfilePath(): string {
-    return path.join(this.config.cacheDir, 'autocomplete.log');
   }
 
   public writeLogFile(msg: string) {
@@ -63,8 +63,8 @@ export abstract class AutocompleteBase extends SfdxCommand {
       const flagCachePath = path.join(this.completionsCacheDir, key);
 
       // build/retrieve cache
-      const duration = cacheCompletion.cacheDuration || 60 * 60 * 24; // 1 day
-      const skip = cacheCompletion.skipCache || false;
+      const duration: number = cacheCompletion.cacheDuration || 60 * 60 * 24; // 1 day
+      const skip: boolean = cacheCompletion.skipCache || false;
       const opts = { cacheFn: () => cacheCompletion.options(ctx) };
       const options = await fetchCache(flagCachePath, duration, skip, opts);
 

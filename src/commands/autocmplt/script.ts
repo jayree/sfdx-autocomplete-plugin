@@ -9,9 +9,13 @@ export default class Script extends AutocompleteBase {
   public static hidden = true;
   public static args = [{ name: 'shell', description: 'shell type', required: true }];
 
+  private get prefix(): string {
+    return `\n# ${this.config.bin} autocomplete setup\n`;
+  }
+
   // eslint-disable-next-line @typescript-eslint/require-await
   public async run() {
-    const shell = this.args.shell;
+    const shell: string = this.args.shell;
     this.errorIfNotSupportedShell(shell);
 
     const shellUpcase = shell.toUpperCase();
@@ -21,9 +25,5 @@ export default class Script extends AutocompleteBase {
         `${shell}_setup`
       )} && test -f $SFDX_AC_${shellUpcase}_SETUP_PATH && source $SFDX_AC_${shellUpcase}_SETUP_PATH;`
     );
-  }
-
-  private get prefix(): string {
-    return `\n# ${this.config.bin} autocomplete setup\n`;
   }
 }

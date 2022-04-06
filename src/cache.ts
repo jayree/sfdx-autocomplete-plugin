@@ -13,9 +13,8 @@ function _isStale(cachePath: string, cacheDuration: number): boolean {
   return past.getTime() > _mtime(cachePath).getTime();
 }
 
-// tslint:disable-next-line: no-any
 // eslint-disable-next-line no-underscore-dangle
-function _mtime(f: any): Date {
+function _mtime(f: string): Date {
   return fs.statSync(f).mtime;
 }
 

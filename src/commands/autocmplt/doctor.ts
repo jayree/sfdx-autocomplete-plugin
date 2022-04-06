@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { flags } from '@salesforce/command';
-import { ux } from 'cli-ux';
+import { CliUx } from '@oclif/core';
 import * as fs from 'fs-extra';
 
 import { AutocompleteBase } from '../../base';
@@ -25,7 +25,7 @@ export default class Doctor extends AutocompleteBase {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   public async run() {
-    const shell = this.args.shell || this.config.shell;
+    const shell: string = this.args.shell || this.config.shell;
     this.errorIfNotSupportedShell(shell);
 
     const data = [];
@@ -86,7 +86,7 @@ export default class Doctor extends AutocompleteBase {
       value: targetusernamesCacheValue,
     });
 
-    ux.table(
+    CliUx.ux.table(
       data,
       {
         name: {},

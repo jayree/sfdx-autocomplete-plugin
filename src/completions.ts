@@ -1,16 +1,9 @@
 import { flags } from '@oclif/command';
-// import * as Config from '@oclif/config';
-// import flatten = require('lodash.flatten');
-import { Aliases, AuthInfo, ConfigGroup, Org } from '@salesforce/core';
-import { get } from 'lodash';
+import { GlobalInfo } from '@salesforce/core';
 
 export const oneDay = 60 * 60 * 24;
 
 export class CompletionLookup {
-  private get key(): string {
-    return this.argAlias() || this.keyAlias() || this.descriptionAlias() || this.name;
-  }
-
   private readonly blacklistMap: { [key: string]: string[] } = {
     // app: ['apps:create'],
     // space: ['spaces:create']
@@ -31,6 +24,10 @@ export class CompletionLookup {
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
   constructor(private readonly cmdId: string, private readonly name: string, private readonly description?: string) {}
+
+  private get key(): string {
+    return this.argAlias() || this.keyAlias() || this.descriptionAlias() || this.name;
+  }
 
   public run(): flags.ICompletion | undefined {
     if (this.blacklisted()) return;
@@ -71,30 +68,8 @@ export const targetUserNameCompletion: flags.ICompletion = {
   cacheDuration: oneDay,
   options: async () => {
     try {
-      const authFiles = await AuthInfo.listAllAuthFiles();
-      const orgs = authFiles.map((authfile) => authfile.replace('.json', ''));
-      const aliasesOrUsernames = [];
-      const aliases = await Aliases.create({} as ConfigGroup.Options);
-      for (const org of orgs) {
-        const aliasKeys = aliases.getKeysByValue(org);
-        const value = get(aliasKeys, 0) || org;
-        aliasesOrUsernames.push(value);
-      }
-
-      const aliasesOrUsernamesToDelete = [];
-      await Promise.all(
-        aliasesOrUsernames.map(async (a) => {
-          try {
-            const org = await Org.create({
-              aliasOrUsername: a,
-            });
-            await org.refreshAuth();
-          } catch (error /* istanbul ignore next */) {
-            aliasesOrUsernamesToDelete.push(a);
-          }
-        })
-      );
-      return aliasesOrUsernames.filter((alias) => !aliasesOrUsernamesToDelete.includes(alias));
+      const info = await GlobalInfo.create();
+      return [...Object.keys(info.aliases.getAll()), ...new Set(Object.values(info.aliases.getAll()))];
     } catch (error) {
       return [];
     }

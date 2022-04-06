@@ -4,11 +4,11 @@ export declare class CompletionLookup {
     private readonly cmdId;
     private readonly name;
     private readonly description?;
-    private get key();
     private readonly blacklistMap;
     private readonly keyAliasMap;
     private readonly commandArgsMap;
     constructor(cmdId: string, name: string, description?: string);
+    private get key();
     run(): flags.ICompletion | undefined;
     private argAlias;
     private keyAlias;

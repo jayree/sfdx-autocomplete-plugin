@@ -7,11 +7,11 @@ export declare abstract class AutocompleteBase extends SfdxCommand {
     parsedFlags: {
         [name: string]: string;
     };
-    errorIfWindows(): void;
-    errorIfNotSupportedShell(shell: string): void;
     get autocompleteCacheDir(): string;
     get completionsCacheDir(): string;
     get acLogfilePath(): string;
+    errorIfWindows(): void;
+    errorIfNotSupportedShell(shell: string): void;
     writeLogFile(msg: string): void;
     protected fetchOptions(cache: any): Promise<string>;
     protected findCompletion(cmdId: string, name: string, description?: string): flags.ICompletion | undefined;
