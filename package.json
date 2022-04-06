@@ -10,7 +10,7 @@
     "@salesforce/command": "^4.0.5",
     "@salesforce/core": "^2.27.2",
     "chalk": "^4.1.2",
-    "cli-ux": "^5.6.3",
+    "cli-ux": "^6.0.9",
     "debug": "^4.3.2",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",
