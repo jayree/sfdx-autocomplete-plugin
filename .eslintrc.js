@@ -1,6 +1,6 @@
 module.exports = {
   plugins: ['eslint-plugin-header'],
-  extends: ['eslint-config-salesforce-typescript', 'eslint-config-salesforce-license'],
+  extends: ['eslint-config-salesforce-typescript'],
   rules: {
     '@typescript-eslint/restrict-template-expressions': [
       'error',

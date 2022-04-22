@@ -1,0 +1,32 @@
+[
+  {
+    "command": "autocmplt",
+    "plugin": "sfdx-autocmplt",
+    "flags": ["json", "loglevel", "refresh-cache", "suppresswarnings"],
+    "alias": []
+  },
+  {
+    "command": "autocmplt:create",
+    "plugin": "sfdx-autocmplt",
+    "flags": ["json", "loglevel"],
+    "alias": ["autocomplete:create"]
+  },
+  {
+    "command": "autocmplt:doctor",
+    "plugin": "sfdx-autocmplt",
+    "flags": ["debug", "json", "loglevel"],
+    "alias": ["autocomplete:doctor"]
+  },
+  {
+    "command": "autocmplt:options",
+    "plugin": "sfdx-autocmplt",
+    "flags": ["json", "loglevel"],
+    "alias": ["autocomplete:options"]
+  },
+  {
+    "command": "autocmplt:script",
+    "plugin": "sfdx-autocmplt",
+    "flags": ["json", "loglevel"],
+    "alias": ["autocomplete:script"]
+  }
+]
