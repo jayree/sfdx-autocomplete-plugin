@@ -1149,9 +1149,9 @@
     chalk "^2.4.2"
 
 "@salesforce/core@^3.13.0", "@salesforce/core@^3.7.9":
-  version "3.13.1"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-3.13.1.tgz#0a4e5844f3d4ae1c559fe0dab5e449e564239ce0"
-  integrity sha512-UBLBkJBxHv4PoU4Ke6NTyk/pEPxqs2u0h9Pkwhwns0Ao6MWENWKobj5qZfVItoBXWADWEbRxa/ahb0X/9y07Cw==
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-3.16.0.tgz#e74220b98f20d0bb84dcd31c8e905c712bae61b2"
+  integrity sha512-ULwviOiOrDlJKW08ONQs8Qcw+FzsBBWLh9xxTpt/Zo1jng4vKb5FO+WaooK14tNq2KSMIS7pK3xyVxi5Y5RkEA==
   dependencies:
     "@salesforce/bunyan" "^2.0.0"
     "@salesforce/kit" "^1.5.34"
@@ -1160,6 +1160,7 @@
     "@types/graceful-fs" "^4.1.5"
     "@types/mkdirp" "^1.0.2"
     "@types/semver" "^7.3.9"
+    ajv "^8.11.0"
     archiver "^5.3.0"
     change-case "^4.1.2"
     debug "^3.2.7"
@@ -1167,7 +1168,6 @@
     form-data "^4.0.0"
     graceful-fs "^4.2.9"
     js2xmlparser "^4.0.1"
-    jsen "0.6.6"
     jsforce "2.0.0-beta.7"
     jsonwebtoken "8.5.1"
     mkdirp "1.0.4"
@@ -1608,7 +1608,7 @@ ajv@^6.10.0, ajv@^6.12.4, ajv@^6.12.6:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ajv@^8.0.1:
+ajv@^8.0.1, ajv@^8.11.0:
   version "8.11.0"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.11.0.tgz#977e91dd96ca669f54a11e23e378e33b884a565f"
   integrity sha512-wGgprdCvMalC0BztXvitD2hC04YffAvtsUn93JbGXYLAtCUO4xd17mCCZQxUOItiBwZvJScWo8NIvQMQ71rdpg==
@@ -4514,11 +4514,6 @@ jsdoc-type-pratt-parser@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/jsdoc-type-pratt-parser/-/jsdoc-type-pratt-parser-3.0.1.tgz#ccbc7a4180bc8748af64d2cc431aaa92f88175bb"
   integrity sha512-vqMCdAFVIiFhVgBYE/X8naf3L/7qiJsaYWTfUJZZZ124dR3OUz9HrmaMUGpYIYAN4VSuodf6gIZY0e8ktPw9cg==
-
-jsen@0.6.6:
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/jsen/-/jsen-0.6.6.tgz#0240c18cf11350ac021456f48a7eb13bd67e0420"
-  integrity sha1-AkDBjPETUKwCFFb0in6xO9Z+BCA=
 
 jsesc@^2.5.1:
   version "2.5.2"
