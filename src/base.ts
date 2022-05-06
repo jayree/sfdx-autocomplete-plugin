@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { flags } from '@oclif/command';
+import { Completion } from '@oclif/core/lib/interfaces';
 import { SfdxCommand } from '@salesforce/command';
 import * as fs from 'fs-extra';
 
@@ -73,7 +73,7 @@ export abstract class AutocompleteBase extends SfdxCommand {
     }
   }
 
-  protected findCompletion(cmdId: string, name: string, description = ''): flags.ICompletion | undefined {
+  protected findCompletion(cmdId: string, name: string, description = ''): Completion | undefined {
     return new CompletionLookup(cmdId, name, description).run();
   }
 }
