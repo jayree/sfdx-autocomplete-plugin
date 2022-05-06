@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command';
+import { Completion } from '@oclif/core/lib/interfaces';
 import { SfdxCommand } from '@salesforce/command';
 export declare abstract class AutocompleteBase extends SfdxCommand {
     parsedArgs: {
@@ -14,5 +14,5 @@ export declare abstract class AutocompleteBase extends SfdxCommand {
     errorIfNotSupportedShell(shell: string): void;
     writeLogFile(msg: string): void;
     protected fetchOptions(cache: any): Promise<string>;
-    protected findCompletion(cmdId: string, name: string, description?: string): flags.ICompletion | undefined;
+    protected findCompletion(cmdId: string, name: string, description?: string): Completion | undefined;
 }

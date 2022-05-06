@@ -1,7 +1,6 @@
 import * as path from 'path';
 import { flags } from '@salesforce/command';
 import * as chalk from 'chalk';
-import { CliUx } from '@oclif/core';
 import * as fs from 'fs-extra';
 import { targetUserNameCompletion } from '../../completions';
 
@@ -44,10 +43,10 @@ export default class Index extends AutocompleteBase {
     const shell: string = this.args.shell || this.config.shell;
     this.errorIfNotSupportedShell(shell);
 
-    CliUx.ux.action.start(`${chalk.bold('Building the autocomplete cache')}`);
+    this.ux.startSpinner(`${chalk.bold('Building the autocomplete cache')}`);
     await Create.run([], this.config);
     await this.updateCache(targetUserNameCompletion, 'targetusername');
-    CliUx.ux.action.stop();
+    this.ux.stopSpinner();
 
     if (!this.flags['refresh-cache']) {
       const bin = this.config.bin;

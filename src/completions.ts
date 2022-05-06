@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command';
+import { Completion } from '@oclif/core/lib/interfaces';
 import { GlobalInfo } from '@salesforce/core';
 
 export const oneDay = 60 * 60 * 24;
@@ -29,7 +29,7 @@ export class CompletionLookup {
     return this.argAlias() || this.keyAlias() || this.descriptionAlias() || this.name;
   }
 
-  public run(): flags.ICompletion | undefined {
+  public run(): Completion | undefined {
     if (this.blacklisted()) return;
     return CompletionMapping[this.key];
   }
@@ -55,7 +55,7 @@ export class CompletionLookup {
   }
 }
 
-export const instanceurlCompletion: flags.ICompletion = {
+export const instanceurlCompletion: Completion = {
   skipCache: true,
 
   // eslint-disable-next-line @typescript-eslint/require-await
@@ -64,7 +64,7 @@ export const instanceurlCompletion: flags.ICompletion = {
   },
 };
 
-export const targetUserNameCompletion: flags.ICompletion = {
+export const targetUserNameCompletion: Completion = {
   cacheDuration: oneDay,
   options: async () => {
     try {
@@ -77,7 +77,7 @@ export const targetUserNameCompletion: flags.ICompletion = {
 };
 
 // tslint:disable-next-line: variable-name
-export const CompletionMapping: { [key: string]: flags.ICompletion } = {
+export const CompletionMapping: { [key: string]: Completion } = {
   targetusername: targetUserNameCompletion,
   instanceurl: instanceurlCompletion,
 };

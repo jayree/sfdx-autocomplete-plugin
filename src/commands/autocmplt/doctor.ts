@@ -1,6 +1,5 @@
 import * as path from 'path';
 import { flags } from '@salesforce/command';
-import { CliUx } from '@oclif/core';
 import * as fs from 'fs-extra';
 
 import { AutocompleteBase } from '../../base';
@@ -85,8 +84,7 @@ export default class Doctor extends AutocompleteBase {
       name: 'targetusernames completion cache',
       value: targetusernamesCacheValue,
     });
-
-    CliUx.ux.table(
+    this.ux.table(
       data,
       {
         name: {},
