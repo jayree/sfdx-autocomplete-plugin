@@ -194,7 +194,7 @@ bindkey "^I" expand-or-complete-with-dots`;
               id: c.id,
               description: sanitizeDescription(c.description || ''),
               flags: c.flags,
-            });
+            }) as CommandCompletion;
             clone.id = alias;
             commands.push(clone);
           }

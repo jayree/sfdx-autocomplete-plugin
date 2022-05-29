@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command';
+import { Completion } from '@oclif/core/lib/interfaces';
 export declare const oneDay: number;
 export declare class CompletionLookup {
     private readonly cmdId;
@@ -9,14 +9,14 @@ export declare class CompletionLookup {
     private readonly commandArgsMap;
     constructor(cmdId: string, name: string, description?: string);
     private get key();
-    run(): flags.ICompletion | undefined;
+    run(): Completion | undefined;
     private argAlias;
     private keyAlias;
     private descriptionAlias;
     private blacklisted;
 }
-export declare const instanceurlCompletion: flags.ICompletion;
-export declare const targetUserNameCompletion: flags.ICompletion;
+export declare const instanceurlCompletion: Completion;
+export declare const targetUserNameCompletion: Completion;
 export declare const CompletionMapping: {
-    [key: string]: flags.ICompletion;
+    [key: string]: Completion;
 };

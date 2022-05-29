@@ -25,5 +25,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm install -global semantic-release https://github.com/jayree/semantic-release
+          npm install -global semantic-release https://github.com/jayree/semantic-release/raw/master/oclif-semantic-release-v3.1.5.tgz
           semantic-release -e @oclif/semantic-release
