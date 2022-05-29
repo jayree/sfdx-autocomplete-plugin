@@ -1,3 +1,10 @@
+## [2.3.3](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.3.2...v2.3.3) (2022-05-29)
+
+
+### Bug Fixes
+
+* update dependencies ([57ad512](https://github.com/jayree/sfdx-autocomplete-plugin/commit/57ad5121ec547dafdad68b0d34e68b4b4dd6ed30))
+
 ## [2.3.2](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.3.1...v2.3.2) (2022-04-22)
 
 
