@@ -1172,9 +1172,9 @@
     chalk "^2.4.2"
 
 "@salesforce/core@^3.19.1", "@salesforce/core@^3.20.1":
-  version "3.21.1"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-3.21.1.tgz#3e51454d6e5f5fbf523e0372378210b8cf85f60f"
-  integrity sha512-TdOhTeXrfUhRsqqwQKQsA410uBvHsRQiD66wtC0lmUGHRBNxUYEmK6+zbMvVLyPLo6Db4GOPuZ/3DV839fIVBg==
+  version "3.21.4"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-3.21.4.tgz#162827f0ac9a0be4244443cbdefd159687b62b5a"
+  integrity sha512-JPaABNGXU4g2IcudIWBUT/8Gh0PHOSbv8pQbhm7qsQENtczet1H0lnTJb7MSKpRFnZXEMPkOZMEiyH0/Q1aasw==
   dependencies:
     "@salesforce/bunyan" "^2.0.0"
     "@salesforce/kit" "^1.5.41"
@@ -1191,7 +1191,7 @@
     form-data "^4.0.0"
     graceful-fs "^4.2.9"
     js2xmlparser "^4.0.1"
-    jsforce "2.0.0-beta.10"
+    jsforce "2.0.0-beta.13"
     jsonwebtoken "8.5.1"
     mkdirp "1.0.4"
     ts-retry-promise "^0.6.0"
@@ -4589,10 +4589,10 @@ jsesc@^2.5.1:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
 
-jsforce@2.0.0-beta.10:
-  version "2.0.0-beta.10"
-  resolved "https://registry.yarnpkg.com/jsforce/-/jsforce-2.0.0-beta.10.tgz#c33fee5dd01c96d121235cffb8fee1458a35423e"
-  integrity sha512-AFigJHQocj8t36Eu+9XffoKoC2FO4/uMDMg08TfTXgvIp53lzvnQJoQrhEnwnKReof4tO2d+7j+d1QyiOa2yGg==
+jsforce@2.0.0-beta.13:
+  version "2.0.0-beta.13"
+  resolved "https://registry.yarnpkg.com/jsforce/-/jsforce-2.0.0-beta.13.tgz#e0d03b3e173288ec3451b67299a9c85d126ccdd5"
+  integrity sha512-gs6Ac5OTOz81zN3KO4AFC1onzwrcDACZxjDPicLLzuf0XvTf2RLZmtFPuIXi386mXc7fzRD/KbnxTIRR8Nyy6A==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@babel/runtime-corejs3" "^7.12.5"
