@@ -1,8 +1,14 @@
-import * as path from 'path';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import path from 'path';
 import { flags } from '@salesforce/command';
-import * as fs from 'fs-extra';
+import fs from 'fs-extra';
 
-import { AutocompleteBase } from '../../base';
+import { AutocompleteBase } from '../../base.js';
 
 export default class Doctor extends AutocompleteBase {
   public static aliases = ['autocomplete:doctor'];
@@ -22,7 +28,6 @@ export default class Doctor extends AutocompleteBase {
     }),
   };
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   public async run() {
     const shell: string = this.args.shell || this.config.shell;
     this.errorIfNotSupportedShell(shell);
@@ -37,7 +42,7 @@ export default class Doctor extends AutocompleteBase {
 
     // plugin version
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const pjson = require(path.resolve(__dirname, '..', '..', '..', 'package.json'));
+    const pjson = await fs.readJson(path.resolve(new URL('./', import.meta.url).pathname, '..', '..', '..', 'package.json'));
     data.push({
       name: 'plugin version',
       value: pjson.version,

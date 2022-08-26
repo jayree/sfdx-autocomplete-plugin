@@ -1,18 +1,20 @@
-import * as path from 'path';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import path from 'path';
 import { Config, Plugin } from '@oclif/core';
-import { loadJSON } from '@oclif/core/lib/config/util';
+import { loadJSON } from '@oclif/core/lib/config/util.js';
 import { expect } from 'chai';
 
-import Create from '../../../src/commands/autocmplt/create';
+import Create from '../../../src/commands/autocmplt/create.js';
 
-const root = path.resolve(__dirname, '../../../package.json');
+const root = path.resolve(new URL('./', import.meta.url).pathname, '../../../package.json');
 const config = new Config({ root });
 
-// autocomplete will throw error on windows
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { default: runtest } = require('../../helpers/runtest');
-
-const AC_PLUGIN_PATH = path.resolve(__dirname, '..', '..', '..');
+const AC_PLUGIN_PATH = path.resolve(new URL('./', import.meta.url).pathname, '..', '..', '..');
 
 const cacheBuildFlagsTest = {
   id: 'autocmplt:create',
@@ -33,7 +35,7 @@ const cacheBuildFlagsTest = {
   args: [],
 };
 
-runtest('Create', () => {
+describe('Create', () => {
   // Unit test private methods for extra coverage
   describe('private methods', () => {
     // tslint:disable-next-line: no-any
@@ -48,7 +50,9 @@ runtest('Create', () => {
       plugin = new Plugin({ root });
       cmd.config.plugins = [plugin];
       await plugin.load();
-      plugin.manifest = await loadJSON(path.resolve(__dirname, '../../../test/test.oclif.manifest.json'));
+      plugin.manifest = await loadJSON(
+        path.resolve(new URL('./', import.meta.url).pathname, '../../../test/test.oclif.manifest.json')
+      );
       plugin.commands = Object.entries(plugin.manifest.commands as { [s: string]: unknown }).map(([id, c]) => ({
         ...(c as Record<string, unknown>),
         load: () => plugin.findCommand(id, { must: true }),

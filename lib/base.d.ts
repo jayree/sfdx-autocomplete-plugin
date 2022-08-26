@@ -1,4 +1,4 @@
-import { Completion } from '@oclif/core/lib/interfaces';
+import { Completion } from '@oclif/core/lib/interfaces/index.js';
 import { SfdxCommand } from '@salesforce/command';
 export declare abstract class AutocompleteBase extends SfdxCommand {
     parsedArgs: {

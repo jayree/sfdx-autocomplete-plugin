@@ -1,5 +1,11 @@
-import { Completion } from '@oclif/core/lib/interfaces';
-import { GlobalInfo } from '@salesforce/core';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import { Completion } from '@oclif/core/lib/interfaces/index.js';
+import { StateAggregator } from '@salesforce/core';
 
 export const oneDay = 60 * 60 * 24;
 
@@ -35,11 +41,11 @@ export class CompletionLookup {
   }
 
   private argAlias(): string | undefined {
-    return this.commandArgsMap[this.name] && this.commandArgsMap[this.name][this.cmdId];
+    return this.commandArgsMap[this.name]?.[this.cmdId];
   }
 
   private keyAlias(): string | undefined {
-    return this.keyAliasMap[this.name] && this.keyAliasMap[this.name][this.cmdId];
+    return this.keyAliasMap[this.name]?.[this.cmdId];
   }
 
   private descriptionAlias(): string | undefined {
@@ -51,7 +57,7 @@ export class CompletionLookup {
   }
 
   private blacklisted(): boolean {
-    return this.blacklistMap[this.name] && this.blacklistMap[this.name].includes(this.cmdId);
+    return this.blacklistMap[this.name]?.includes(this.cmdId);
   }
 }
 
@@ -59,16 +65,14 @@ export const instanceurlCompletion: Completion = {
   skipCache: true,
 
   // eslint-disable-next-line @typescript-eslint/require-await
-  options: async () => {
-    return ['https://test.salesforce.com', 'https://login.salesforce.com'];
-  },
+  options: async () => ['https://test.salesforce.com', 'https://login.salesforce.com'],
 };
 
 export const targetUserNameCompletion: Completion = {
   cacheDuration: oneDay,
   options: async () => {
     try {
-      const info = await GlobalInfo.create();
+      const info = await StateAggregator.create();
       return [...Object.keys(info.aliases.getAll()), ...new Set(Object.values(info.aliases.getAll()))];
     } catch (error) {
       return [];

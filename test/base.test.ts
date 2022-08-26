@@ -1,13 +1,15 @@
-import * as path from 'path';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import path from 'path';
 import { Config } from '@oclif/core';
 import { flags } from '@salesforce/command';
 import { expect } from 'chai';
 
-import { AutocompleteBase } from '../src/base';
-
-// autocomplete will throw error on windows
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { default: runtest } = require('./helpers/runtest');
+import { AutocompleteBase } from '../src/base.js';
 
 class AutocompleteTest extends AutocompleteBase {
   public static id = 'test:foo';
@@ -16,15 +18,16 @@ class AutocompleteTest extends AutocompleteBase {
       description: 'bar',
     }),
   };
+  // eslint-disable-next-line class-methods-use-this
   public async run() {}
 }
 
-const root = path.resolve(__dirname, '../package.json');
+const root = path.resolve(new URL('./', import.meta.url).pathname, '../package.json');
 const config = new Config({ root });
 
 const cmd = new AutocompleteTest([], config);
 
-runtest('AutocompleteBase', () => {
+describe('AutocompleteBase', () => {
   before(async () => {
     await config.load();
   });

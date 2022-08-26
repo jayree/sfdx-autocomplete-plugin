@@ -1,4 +1,4 @@
-import { Completion } from '@oclif/core/lib/interfaces';
+import { Completion } from '@oclif/core/lib/interfaces/index.js';
 export declare const oneDay: number;
 export declare class CompletionLookup {
     private readonly cmdId;

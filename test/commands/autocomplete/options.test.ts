@@ -1,11 +1,17 @@
-import * as path from 'path';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import path from 'path';
 import { Config } from '@oclif/core';
 import { flags, SfdxCommand } from '@salesforce/command';
 import { expect } from 'chai';
 
-import Options from '../../../src/commands/autocmplt/options';
+import Options from '../../../src/commands/autocmplt/options.js';
 
-const root = path.resolve(__dirname, '../../../package.json');
+const root = path.resolve(new URL('./', import.meta.url).pathname, '../../../package.json');
 const config = new Config({ root });
 
 class TestCommand extends SfdxCommand {
@@ -20,6 +26,7 @@ class TestCommand extends SfdxCommand {
   };
   protected static topic = 'foo';
   protected static command = 'bar';
+  // eslint-disable-next-line class-methods-use-this
   public async run() {}
 }
 

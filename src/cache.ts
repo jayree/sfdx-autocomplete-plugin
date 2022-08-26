@@ -1,4 +1,10 @@
-import * as fs from 'fs-extra';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import fs from 'fs-extra';
 
 // tslint:disable-next-line: no-any
 export async function updateCache(cachePath: string, cache: any) {

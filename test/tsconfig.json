@@ -1,4 +1,9 @@
 {
   "extends": "@salesforce/dev-config/tsconfig-test",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "ES2020",
+    "skipLibCheck": true
+  },
   "include": ["./**/*.ts"]
 }

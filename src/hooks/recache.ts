@@ -1,11 +1,17 @@
-import * as path from 'path';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import path from 'path';
 import { Hook } from '@oclif/core';
 import { CliUx } from '@oclif/core';
-import * as fs from 'fs-extra';
-import { targetUserNameCompletion } from '../completions';
+import fs from 'fs-extra';
+import { targetUserNameCompletion } from '../completions.js';
 
-import { updateCache } from '../cache';
-import acCreate from '../commands/autocmplt/create';
+import { updateCache } from '../cache.js';
+import acCreate from '../commands/autocmplt/create.js';
 
 // tslint:disable-next-line: no-any
 export const completions: Hook<any> = async function () {
@@ -45,16 +51,14 @@ Use the 'autocmplt' command instead of 'autocomplete' for improved auto-completi
 Run 'sfdx autocmplt --suppresswarnings' to suppress this warning.`
       );
     }
-  } else {
-    if (suppresswarnings.SuppressUpdateWarning) {
-      try {
-        await fs.ensureFile(suppresswarningsfile);
-        await fs.writeJson(suppresswarningsfile, {
-          SuppressUpdateWarning: false,
-        });
-        // eslint-disable-next-line no-empty
-      } catch (error) {}
-    }
+  } else if (suppresswarnings.SuppressUpdateWarning) {
+    try {
+      await fs.ensureFile(suppresswarningsfile);
+      await fs.writeJson(suppresswarningsfile, {
+        SuppressUpdateWarning: false,
+      });
+      // eslint-disable-next-line no-empty
+    } catch (error) {}
   }
 
   process.once('beforeExit', () => {

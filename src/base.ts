@@ -1,10 +1,16 @@
-import * as path from 'path';
-import { Completion } from '@oclif/core/lib/interfaces';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import path from 'path';
+import { Completion } from '@oclif/core/lib/interfaces/index.js';
 import { SfdxCommand } from '@salesforce/command';
-import * as fs from 'fs-extra';
+import fs from 'fs-extra';
 
-import { fetchCache } from './cache';
-import { CompletionLookup } from './completions';
+import { fetchCache } from './cache.js';
+import { CompletionLookup } from './completions.js';
 
 export abstract class AutocompleteBase extends SfdxCommand {
   public parsedArgs: { [name: string]: string } = {};
@@ -50,7 +56,7 @@ export abstract class AutocompleteBase extends SfdxCommand {
   protected async fetchOptions(cache: any) {
     const { cacheCompletion, cacheKey } = cache;
     // build/retrieve & return options cache
-    if (cacheCompletion && cacheCompletion.options) {
+    if (cacheCompletion?.options) {
       const ctx = {
         args: this.parsedArgs,
         flags: this.parsedFlags,
@@ -73,6 +79,7 @@ export abstract class AutocompleteBase extends SfdxCommand {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   protected findCompletion(cmdId: string, name: string, description = ''): Completion | undefined {
     return new CompletionLookup(cmdId, name, description).run();
   }

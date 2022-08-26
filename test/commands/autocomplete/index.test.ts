@@ -1,10 +1,13 @@
-import { expect, test } from '@oclif/test';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import { createRequire } from 'module';
+const { expect, test } = createRequire(import.meta.url)('@oclif/test');
 
-// autocomplete will throw error on windows
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { default: runtest } = require('../../helpers/runtest');
-
-runtest('autocmplt:index', () => {
+describe('autocmplt:index', () => {
   test
     .stdout()
     .command(['autocmplt', 'bash'])

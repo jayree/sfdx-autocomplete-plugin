@@ -1,12 +1,14 @@
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 import { expect } from 'chai';
 
-import { CompletionLookup, CompletionMapping } from '../src/completions';
+import { CompletionLookup, CompletionMapping } from '../src/completions.js';
 
-// autocomplete will throw error on windows
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { default: runtest } = require('./helpers/runtest');
-
-runtest('CompletionLookup', () => {
+describe('CompletionLookup', () => {
   it('finds completion', async () => {
     const c = new CompletionLookup('cmdId', 'app', 'app to use').run();
     expect(c).to.eq(CompletionMapping.app);

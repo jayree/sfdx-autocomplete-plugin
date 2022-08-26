@@ -1,4 +1,4 @@
-import { AutocompleteBase } from '../../base';
+import { AutocompleteBase } from '../../base.js';
 export default class Script extends AutocompleteBase {
     static aliases: string[];
     static description: string;

@@ -1,4 +1,10 @@
-import { AutocompleteBase } from '../../base';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import { AutocompleteBase } from '../../base.js';
 
 type CommandCompletion = {
   id: string;
@@ -40,7 +46,6 @@ export default class Options extends AutocompleteBase {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   private async processCommandLine() {
     // find command id
     const commandLineToComplete = this.argv[0].split(' ');
@@ -49,7 +54,7 @@ export default class Options extends AutocompleteBase {
     const C = this.config.findCommand(id);
     let klass;
     if (C) {
-      klass = C.load();
+      klass = await C.load();
       // process Command state from command line data
       const slicedArgv = commandLineToComplete.slice(2);
       const [argsIndex, curPositionIsFlag, curPositionIsFlagValue] = this.determineCmdState(
@@ -94,9 +99,7 @@ export default class Options extends AutocompleteBase {
             skipCache: true,
 
             // eslint-disable-next-line @typescript-eslint/require-await
-            options: async () => {
-              return flag.options;
-            },
+            options: async () => flag.options,
           };
         }
       }
@@ -104,7 +107,7 @@ export default class Options extends AutocompleteBase {
       const cmdArgs = klass.args || [];
       // variable arg (strict: false)
       if (!klass.strict) {
-        cacheKey = cmdArgs[0] && cmdArgs[0].name.toLowerCase();
+        cacheKey = cmdArgs[0]?.name.toLowerCase();
         cacheCompletion = this.findCompletion(id as string, cacheKey);
         if (!cacheCompletion) {
           this.throwError(`Cannot complete variable arg position for ${id}`);
@@ -124,10 +127,12 @@ export default class Options extends AutocompleteBase {
     return { cacheKey, cacheCompletion };
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private throwError(msg: string) {
     throw new Error(msg);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private findFlagFromWildArg(
     wild: string,
     klass: CommandCompletion
@@ -144,7 +149,7 @@ export default class Options extends AutocompleteBase {
     if (flag) return { name, flag };
 
     name = Object.keys(cFlags).find((k: string) => cFlags[k].char === name) || 'undefinedcommand';
-    flag = cFlags && cFlags[name];
+    flag = cFlags?.[name];
     if (flag) return { name, flag };
     return unknown;
   }

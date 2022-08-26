@@ -1,13 +1,19 @@
-import * as path from 'path';
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
+import path from 'path';
 import { flags } from '@salesforce/command';
-import * as chalk from 'chalk';
-import * as fs from 'fs-extra';
-import { targetUserNameCompletion } from '../../completions';
+import chalk from 'chalk';
+import fs from 'fs-extra';
+import { targetUserNameCompletion } from '../../completions.js';
 
-import { AutocompleteBase } from '../../base';
-import { updateCache } from '../../cache';
+import { AutocompleteBase } from '../../base.js';
+import { updateCache } from '../../cache.js';
 
-import Create from './create';
+import Create from './create.js';
 
 export default class Index extends AutocompleteBase {
   public static description = 'display autocomplete installation instructions';

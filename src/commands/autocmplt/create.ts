@@ -1,11 +1,18 @@
+/*
+ * Copyright (c) 2022, jayree
+ * All rights reserved.
+ * Licensed under the BSD 3-Clause license.
+ * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+ */
 // eslint-disable-next-line camelcase
-import * as child_process from 'child_process';
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import { cloneDeep } from 'lodash';
+import child_process from 'child_process';
+import path from 'path';
+import fs from 'fs-extra';
+import lodash from 'lodash';
 import { Interfaces } from '@oclif/core';
+import Debug from 'debug';
 
-import { AutocompleteBase } from '../../base';
+import { AutocompleteBase } from '../../base.js';
 
 type CommandCompletion = {
   id: string;
@@ -27,7 +34,7 @@ function sanitizeDescription(description?: string): string {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const debug = require('debug')('autocmplt:create');
+const debug = Debug('autocmplt:create');
 
 export default class Create extends AutocompleteBase {
   public static aliases = ['autocomplete:create'];
@@ -62,6 +69,7 @@ export default class Create extends AutocompleteBase {
     return path.join(this.autocompleteCacheDir, 'commands_setters');
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private get fishCompletionFunctionPath(): string {
     // dynamically load path to completions file
     // eslint-disable-next-line camelcase
@@ -69,6 +77,7 @@ export default class Create extends AutocompleteBase {
     return `${dir}/sfdx.fish`;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private get skipEllipsis(): boolean {
     return process.env.SFDX_AC_ZSH_SKIP_ELLIPSIS === '1';
   }
@@ -85,7 +94,7 @@ export default class Create extends AutocompleteBase {
     return `${this.envAnalyticsDir}
 ${this.envCommandsPath}
 SFDX_AC_BASH_COMPFUNC_PATH=${path.join(
-      __dirname,
+      new URL('./', import.meta.url).pathname,
       '..',
       '..',
       '..',
@@ -102,7 +111,7 @@ ${this.envAnalyticsDir}
 ${this.envCommandsPath}
 SFDX_AC_ZSH_SETTERS_PATH=\${SFDX_AC_COMMANDS_PATH}_setters && test -f $SFDX_AC_ZSH_SETTERS_PATH && source $SFDX_AC_ZSH_SETTERS_PATH;
 fpath=(
-${path.join(__dirname, '..', '..', '..', 'autocomplete', 'zsh')}
+${path.join(new URL('./', import.meta.url).pathname, '..', '..', '..', 'autocomplete', 'zsh')}
 $fpath
 );
 autoload -Uz compinit;
@@ -110,6 +119,7 @@ compinit;
 `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private get completionDotsFunc(): string {
     return `expand-or-complete-with-dots() {
   echo -n "..."
@@ -190,7 +200,7 @@ bindkey "^I" expand-or-complete-with-dots`;
             flags: c.flags,
           });
           for (const alias of c.aliases) {
-            const clone = cloneDeep({
+            const clone = lodash.cloneDeep({
               id: c.id,
               description: sanitizeDescription(c.description || ''),
               flags: c.flags,
@@ -272,7 +282,7 @@ function  __fish_${cliBin}_using_command
   return 1
 end`);
 
-    for (const command of this.commands) {
+    for await (const command of this.commands) {
       completions.push(
         `complete -f -c ${cliBin} -n '__fish_${cliBin}_needs_command' -a ${command.id} -d "${
           command.description.split('\n')[0]
@@ -282,7 +292,7 @@ end`);
       const flags: Record<string, Interfaces.Command.Flag> = command.flags || {};
       const fl = Object.keys(flags).filter((flag) => flags[flag] && !flags[flag].hidden);
 
-      for (const flag of fl) {
+      for await (const flag of fl) {
         const f: Interfaces.Command.Flag = flags[flag];
         const shortFlag = f.char ? `-s ${f.char}` : '';
         const description = f.description ? `-d "${f.description}"` : '';
@@ -303,6 +313,7 @@ end`);
     return completions.join('\n');
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private genCmdPublicFlags(command: CommandCompletion): string {
     const flags: Record<string, Interfaces.Command.Flag> = command.flags || {};
     return Object.keys(flags)
@@ -311,6 +322,7 @@ end`);
       .join(' ');
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private genCmdWithDescription(command: CommandCompletion): string {
     let description = '';
     if (command.description) {
@@ -326,7 +338,7 @@ end`);
       .filter((flag) => command.flags && !command.flags[flag].hidden)
       .map((flag) => {
         const f: Interfaces.Command.Flag =
-          (command.flags && command.flags[flag]) ||
+          command.flags?.[flag] ||
           // tslint:disable-next-line: no-any
           ({ description: '' } as any);
         const isBoolean = f.type === 'boolean';
@@ -358,6 +370,7 @@ ${flagscompletions}
     return `# no flags for ${id}`;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private genZshAllCmdsListSetter(cmdsWithDesc: string[]): string {
     return `
 _sfdx_set_all_commands_list () {
@@ -368,6 +381,7 @@ ${cmdsWithDesc.join('\n')}
 `;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private wantsLocalFiles(flag: string): boolean {
     return [
       'apexcodefile',

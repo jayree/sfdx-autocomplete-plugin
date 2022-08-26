@@ -1,5 +1,5 @@
 import { flags } from '@salesforce/command';
-import { AutocompleteBase } from '../../base';
+import { AutocompleteBase } from '../../base.js';
 export default class Doctor extends AutocompleteBase {
     static aliases: string[];
     static hidden: boolean;
