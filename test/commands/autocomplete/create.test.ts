@@ -14,8 +14,6 @@ import Create from '../../../src/commands/autocmplt/create.js';
 const root = path.resolve(new URL('./', import.meta.url).pathname, '../../../package.json');
 const config = new Config({ root });
 
-const AC_PLUGIN_PATH = path.resolve(new URL('./', import.meta.url).pathname, '..', '..', '..');
-
 const cacheBuildFlagsTest = {
   id: 'autocmplt:create',
   flags: {
@@ -75,7 +73,7 @@ describe('Create', () => {
     it('#genCmdPublicFlags', () => {
       expect(cmd.genCmdPublicFlags(cacheBuildFlagsTest)).to.eq('--targetusername --visable');
       expect(cmd.genCmdPublicFlags(cacheBuildFlagsTest)).to.not.match(/--hidden/);
-      expect(cmd.genCmdPublicFlags(Create)).to.eq('--json --loglevel');
+      expect(cmd.genCmdPublicFlags(Create)).to.eq('');
     });
 
     it('#bashCommandsList', () => {
@@ -84,22 +82,22 @@ describe('Create', () => {
 
     it('#zshCompletionSetters', () => {
       expect(cmd.zshCompletionSetters).to.eq(`
-_sfdx_set_all_commands_list () {
-_sfdx_all_commands_list=(
+_${cmd.config.bin}_set_all_commands_list () {
+_all_commands_list=(
 "autocmplt":"display autocomplete instructions"
 "autocmplt\\:foo":"foo cmd for autocomplete testing"
 )
 }
 
-_sfdx_set_autocmplt_flags () {
-_sfdx_flags=(
+_set_autocmplt_flags () {
+_flags=(
 "--skip-instructions[(switch) Do not show installation instructions]"
 )
 }
 
-_sfdx_set_autocmplt_foo_flags () {
-_sfdx_flags=(
-"--targetusername=-[(autocomplete) targetusername to use]: :_sfdx_compadd_flag_options"
+_set_autocmplt_foo_flags () {
+_flags=(
+"--targetusername=-[(autocomplete) targetusername to use]: :_compadd_flag_options"
 "--bar=-[bar for testing]"
 "--json[(switch) output in json format]"
 )
@@ -121,7 +119,7 @@ bindkey "^I" expand-or-complete-with-dots`);
       const shellSetup = cmd.bashSetupScript;
       expect(shellSetup).to.eq(`SFDX_AC_ANALYTICS_DIR=${cmd.config.cacheDir}/autocomplete/completion_analytics;
 SFDX_AC_COMMANDS_PATH=${cmd.config.cacheDir}/autocomplete/commands;
-SFDX_AC_BASH_COMPFUNC_PATH=${AC_PLUGIN_PATH}/autocomplete/bash/sfdx.bash && test -f $SFDX_AC_BASH_COMPFUNC_PATH && source $SFDX_AC_BASH_COMPFUNC_PATH;
+SFDX_AC_BASH_COMPFUNC_PATH=${config.cacheDir}/autocomplete/functions/bash/sfdx.bash && test -f $SFDX_AC_BASH_COMPFUNC_PATH && source $SFDX_AC_BASH_COMPFUNC_PATH;
 `);
     });
 
@@ -139,7 +137,7 @@ SFDX_AC_ANALYTICS_DIR=${cmd.config.cacheDir}/autocomplete/completion_analytics;
 SFDX_AC_COMMANDS_PATH=${cmd.config.cacheDir}/autocomplete/commands;
 SFDX_AC_ZSH_SETTERS_PATH=\${SFDX_AC_COMMANDS_PATH}_setters && test -f $SFDX_AC_ZSH_SETTERS_PATH && source $SFDX_AC_ZSH_SETTERS_PATH;
 fpath=(
-${AC_PLUGIN_PATH}/autocomplete/zsh
+${config.cacheDir}/autocomplete/functions/zsh
 $fpath
 );
 autoload -Uz compinit;
@@ -157,7 +155,7 @@ SFDX_AC_ANALYTICS_DIR=${cmd.config.cacheDir}/autocomplete/completion_analytics;
 SFDX_AC_COMMANDS_PATH=${cmd.config.cacheDir}/autocomplete/commands;
 SFDX_AC_ZSH_SETTERS_PATH=\${SFDX_AC_COMMANDS_PATH}_setters && test -f $SFDX_AC_ZSH_SETTERS_PATH && source $SFDX_AC_ZSH_SETTERS_PATH;
 fpath=(
-${AC_PLUGIN_PATH}/autocomplete/zsh
+${config.cacheDir}/autocomplete/functions/zsh
 $fpath
 );
 autoload -Uz compinit;
@@ -169,8 +167,8 @@ compinit;
     it('#genZshAllCmdsListSetter', () => {
       const cmdsWithDesc = ['"foo\\:alpha":"foo:alpha description"', '"foo\\:beta":"foo:beta description"'];
       expect(cmd.genZshAllCmdsListSetter(cmdsWithDesc)).to.eq(`
-_sfdx_set_all_commands_list () {
-_sfdx_all_commands_list=(
+_${cmd.config.bin}_set_all_commands_list () {
+_all_commands_list=(
 "foo\\:alpha":"foo:alpha description"
 "foo\\:beta":"foo:beta description"
 )
@@ -179,9 +177,9 @@ _sfdx_all_commands_list=(
     });
 
     it('#genZshCmdFlagsSetter', () => {
-      expect(cmd.genZshCmdFlagsSetter(cacheBuildFlagsTest)).to.eq(`_sfdx_set_autocmplt_create_flags () {
-_sfdx_flags=(
-"--targetusername=-[(autocomplete) targetusername to use]: :_sfdx_compadd_flag_options"
+      expect(cmd.genZshCmdFlagsSetter(cacheBuildFlagsTest)).to.eq(`_set_autocmplt_create_flags () {
+_flags=(
+"--targetusername=-[(autocomplete) targetusername to use]: :_compadd_flag_options"
 "--visable[(switch) visable flag]"
 )
 }

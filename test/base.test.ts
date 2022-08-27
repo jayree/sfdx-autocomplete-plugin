@@ -5,16 +5,15 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import path from 'path';
-import { Config } from '@oclif/core';
-import { flags } from '@salesforce/command';
+import { Config, Flags } from '@oclif/core';
 import { expect } from 'chai';
 
 import { AutocompleteBase } from '../src/base.js';
 
 class AutocompleteTest extends AutocompleteBase {
   public static id = 'test:foo';
-  protected static flagsConfig = {
-    bar: flags.boolean({
+  public static flags = {
+    bar: Flags.boolean({
       description: 'bar',
     }),
   };

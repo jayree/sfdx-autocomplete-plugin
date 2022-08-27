@@ -1,4 +1,3 @@
-import { flags } from '@salesforce/command';
 import { AutocompleteBase } from '../../base.js';
 export default class Index extends AutocompleteBase {
     static description: string;
@@ -7,10 +6,9 @@ export default class Index extends AutocompleteBase {
         description: string;
         required: boolean;
     }[];
-    static examples: string[];
-    protected static flagsConfig: {
-        'refresh-cache': flags.Discriminated<flags.Boolean<boolean>>;
-        suppresswarnings: flags.Discriminated<flags.Boolean<boolean>>;
+    static flags: {
+        'refresh-cache': import("@oclif/core/lib/interfaces/parser.js").BooleanFlag<boolean>;
+        suppresswarnings: import("@oclif/core/lib/interfaces/parser.js").BooleanFlag<boolean>;
     };
     run(): Promise<void>;
     private updateCache;

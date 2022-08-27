@@ -13,6 +13,8 @@ import { Interfaces } from '@oclif/core';
 import Debug from 'debug';
 
 import { AutocompleteBase } from '../../base.js';
+import bashAutocomplete from '../../autocomplete/bash.js';
+import zshAutocomplete from '../../autocomplete/zsh.js';
 
 type CommandCompletion = {
   id: string;
@@ -60,8 +62,8 @@ export default class Create extends AutocompleteBase {
   }
 
   private get fishSetupScriptPath(): string {
-    // <cacheDir>/autocomplete/sfdx.fish
-    return path.join(this.autocompleteCacheDir, 'sfdx.fish');
+    // <cacheDir>/autocomplete/clibin.fish
+    return path.join(this.autocompleteCacheDir, `${this.cliBin}.fish`);
   }
 
   private get zshCompletionSettersPath(): string {
@@ -73,45 +75,59 @@ export default class Create extends AutocompleteBase {
   private get fishCompletionFunctionPath(): string {
     // dynamically load path to completions file
     // eslint-disable-next-line camelcase
-    const dir = child_process.execSync('pkg-config --variable completionsdir fish').toString().trimRight();
-    return `${dir}/sfdx.fish`;
+    const dir = child_process.execSync('pkg-config --variable completionsdir fish').toString().trimEnd();
+    return `${dir}/${this.cliBin}.fish`;
   }
 
   // eslint-disable-next-line class-methods-use-this
   private get skipEllipsis(): boolean {
-    return process.env.SFDX_AC_ZSH_SKIP_ELLIPSIS === '1';
+    return process.env[`${this.cliBinEnvVar}_AC_ZSH_SKIP_ELLIPSIS`] === '1';
   }
 
   private get envAnalyticsDir(): string {
-    return `SFDX_AC_ANALYTICS_DIR=${path.join(this.autocompleteCacheDir, 'completion_analytics')};`;
+    return `${this.cliBinEnvVar}_AC_ANALYTICS_DIR=${path.join(this.autocompleteCacheDir, 'completion_analytics')};`;
   }
 
   private get envCommandsPath(): string {
-    return `SFDX_AC_COMMANDS_PATH=${path.join(this.autocompleteCacheDir, 'commands')};`;
+    return `${this.cliBinEnvVar}_AC_COMMANDS_PATH=${path.join(this.autocompleteCacheDir, 'commands')};`;
+  }
+
+  private get bashFunctionsDir(): string {
+    // <cachedir>/autocomplete/functions/bash
+    return path.join(this.autocompleteCacheDir, 'functions', 'bash');
+  }
+
+  private get zshFunctionsDir(): string {
+    // <cachedir>/autocomplete/functions/zsh
+    return path.join(this.autocompleteCacheDir, 'functions', 'zsh');
+  }
+
+  private get zshCompletionFunctionPath(): string {
+    // <cachedir>/autocomplete/functions/zsh/_<bin>
+    return path.join(this.zshFunctionsDir, `_${this.cliBin}`);
+  }
+
+  private get bashCompletionFunctionPath(): string {
+    // <cachedir>/autocomplete/functions/bash/<bin>.bash
+    return path.join(this.bashFunctionsDir, `${this.cliBin}.bash`);
   }
 
   private get bashSetupScript(): string {
+    const bin = this.cliBinEnvVar;
     return `${this.envAnalyticsDir}
 ${this.envCommandsPath}
-SFDX_AC_BASH_COMPFUNC_PATH=${path.join(
-      new URL('./', import.meta.url).pathname,
-      '..',
-      '..',
-      '..',
-      'autocomplete',
-      'bash',
-      'sfdx.bash'
-    )} && test -f $SFDX_AC_BASH_COMPFUNC_PATH && source $SFDX_AC_BASH_COMPFUNC_PATH;
+${bin}_AC_BASH_COMPFUNC_PATH=${this.bashCompletionFunctionPath} && test -f $${bin}_AC_BASH_COMPFUNC_PATH && source $${bin}_AC_BASH_COMPFUNC_PATH;
 `;
   }
 
   private get zshSetupScript(): string {
+    const bin = this.cliBinEnvVar;
     return `${this.skipEllipsis ? '' : this.completionDotsFunc}
 ${this.envAnalyticsDir}
 ${this.envCommandsPath}
-SFDX_AC_ZSH_SETTERS_PATH=\${SFDX_AC_COMMANDS_PATH}_setters && test -f $SFDX_AC_ZSH_SETTERS_PATH && source $SFDX_AC_ZSH_SETTERS_PATH;
+${bin}_AC_ZSH_SETTERS_PATH=\${${bin}_AC_COMMANDS_PATH}_setters && test -f $${bin}_AC_ZSH_SETTERS_PATH && source $${bin}_AC_ZSH_SETTERS_PATH;
 fpath=(
-${path.join(new URL('./', import.meta.url).pathname, '..', '..', '..', 'autocomplete', 'zsh')}
+${this.zshFunctionsDir}
 $fpath
 );
 autoload -Uz compinit;
@@ -222,6 +238,16 @@ bindkey "^I" expand-or-complete-with-dots`;
     return this._commands;
   }
 
+  private get bashCompletionFunction(): string {
+    const bashScript = this.config.topicSeparator === ' ' ? bashAutocomplete : bashAutocomplete;
+    return bashScript.replace(/<CLI_BINENV>/g, this.cliBinEnvVar).replace(/<CLI_BIN>/g, this.cliBin);
+  }
+
+  private get zshCompletionFunction(): string {
+    const zshScript = zshAutocomplete;
+    return zshScript.replace(/<CLI_BINENV>/g, this.cliBinEnvVar).replace(/<CLI_BIN>/g, this.cliBin);
+  }
+
   public async run() {
     this.errorIfWindows();
     // 1. ensure needed dirs
@@ -235,16 +261,22 @@ bindkey "^I" expand-or-complete-with-dots`;
     await fs.ensureDir(this.autocompleteCacheDir);
     // ensure autocomplete completions dir
     await fs.ensureDir(this.completionsCacheDir);
+    // ensure autocomplete bash function dir
+    await fs.ensureDir(this.bashFunctionsDir);
+    // ensure autocomplete zsh function dir
+    await fs.ensureDir(this.zshFunctionsDir);
   }
 
   private async createFiles() {
     if (this.config.shell === 'bash') {
       await fs.writeFile(this.bashSetupScriptPath, this.bashSetupScript);
       await fs.writeFile(this.bashCommandsListPath, this.bashCommandsList);
+      await fs.writeFile(this.bashCompletionFunctionPath, this.bashCompletionFunction);
     }
     if (this.config.shell === 'zsh') {
       await fs.writeFile(this.zshSetupScriptPath, this.zshSetupScript);
       await fs.writeFile(this.zshCompletionSettersPath, this.zshCompletionSetters);
+      await fs.writeFile(this.zshCompletionFunctionPath, this.zshCompletionFunction);
     }
     if (this.config.shell === 'fish') {
       await fs.writeFile(this.fishSetupScriptPath, await this.fishSetupScript());
@@ -261,7 +293,7 @@ bindkey "^I" expand-or-complete-with-dots`;
   }
 
   private async fishSetupScript(): Promise<string> {
-    const cliBin = this.config.bin;
+    const cliBin = this.cliBin;
     const completions: string[] = [];
     completions.push(`
 function __fish_${cliBin}_needs_command
@@ -295,7 +327,7 @@ end`);
       for await (const flag of fl) {
         const f: Interfaces.Command.Flag = flags[flag];
         const shortFlag = f.char ? `-s ${f.char}` : '';
-        const description = f.description ? `-d "${f.description}"` : '';
+        const description = `-d "${sanitizeDescription(f.summary || f.description)}"`;
         let options = f['options'] ? `-r -a "${f['options'].join(' ')}"` : '';
         if (options.length === 0) {
           const cacheKey: string = f.name;
@@ -344,24 +376,27 @@ end`);
         const isBoolean = f.type === 'boolean';
         const hasCompletion =
           // eslint-disable-next-line no-prototype-builtins
-          f.hasOwnProperty('completion') || f.hasOwnProperty('options') || this.findCompletion(id, flag, f.description);
+          f.hasOwnProperty('completion') ||
+          // eslint-disable-next-line no-prototype-builtins
+          f.hasOwnProperty('options') ||
+          this.findCompletion(id, flag, f.summary || f.description);
         const name = isBoolean ? flag : `${flag}=-`;
         let cachecompl = '';
         if (hasCompletion) {
-          cachecompl = ': :_sfdx_compadd_flag_options';
+          cachecompl = ': :_compadd_flag_options';
         }
         if (this.wantsLocalFiles(flag) && command.flags[flag].type === 'option') {
           cachecompl = ': :_files';
         }
         const help = isBoolean ? '(switch) ' : hasCompletion ? '(autocomplete) ' : '';
-        const completion = `--${name}[${help}${f.description}]${cachecompl}`;
+        const completion = `--${name}[${help}${sanitizeDescription(f.summary || f.description)}]${cachecompl}`;
         return `"${completion}"`;
       })
       .join('\n');
 
     if (flagscompletions) {
-      return `_sfdx_set_${id.replace(/:/g, '_')}_flags () {
-_sfdx_flags=(
+      return `_set_${id.replace(/:/g, '_')}_flags () {
+_flags=(
 ${flagscompletions}
 )
 }
@@ -373,8 +408,8 @@ ${flagscompletions}
   // eslint-disable-next-line class-methods-use-this
   private genZshAllCmdsListSetter(cmdsWithDesc: string[]): string {
     return `
-_sfdx_set_all_commands_list () {
-_sfdx_all_commands_list=(
+_${this.cliBin}_set_all_commands_list () {
+_all_commands_list=(
 ${cmdsWithDesc.join('\n')}
 )
 }

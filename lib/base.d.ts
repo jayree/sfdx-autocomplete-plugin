@@ -1,12 +1,14 @@
 import { Completion } from '@oclif/core/lib/interfaces/index.js';
-import { SfdxCommand } from '@salesforce/command';
-export declare abstract class AutocompleteBase extends SfdxCommand {
+import { Command } from '@oclif/core';
+export declare abstract class AutocompleteBase extends Command {
     parsedArgs: {
         [name: string]: string;
     };
     parsedFlags: {
         [name: string]: string;
     };
+    get cliBin(): string;
+    get cliBinEnvVar(): string;
     get autocompleteCacheDir(): string;
     get completionsCacheDir(): string;
     get acLogfilePath(): string;
