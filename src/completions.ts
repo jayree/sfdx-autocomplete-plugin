@@ -73,7 +73,8 @@ export const targetUserNameCompletion: Completion = {
   options: async () => {
     try {
       const info = await StateAggregator.create();
-      return [...Object.keys(info.aliases.getAll()), ...new Set(Object.values(info.aliases.getAll()))];
+      const aliases = info.aliases.getAll();
+      return [...Object.keys(aliases), ...new Set(Object.values(aliases))];
     } catch (error) {
       return [];
     }
@@ -83,5 +84,6 @@ export const targetUserNameCompletion: Completion = {
 // tslint:disable-next-line: variable-name
 export const CompletionMapping: { [key: string]: Completion } = {
   targetusername: targetUserNameCompletion,
+  'target-org': targetUserNameCompletion,
   instanceurl: instanceurlCompletion,
 };

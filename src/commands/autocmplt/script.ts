@@ -21,15 +21,17 @@ export default class Script extends AutocompleteBase {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   public async run() {
-    const shell: string = this.args.shell;
+    const { args } = await this.parse(Script);
+    const shell: string = args.shell;
     this.errorIfNotSupportedShell(shell);
 
     const shellUpcase = shell.toUpperCase();
+    const bin = this.cliBinEnvVar;
     this.log(
-      `${this.prefix}SFDX_AC_${shellUpcase}_SETUP_PATH=${path.join(
+      `${this.prefix}${bin}_AC_${shellUpcase}_SETUP_PATH=${path.join(
         this.autocompleteCacheDir,
         `${shell}_setup`
-      )} && test -f $SFDX_AC_${shellUpcase}_SETUP_PATH && source $SFDX_AC_${shellUpcase}_SETUP_PATH;`
+      )} && test -f $${bin}_AC_${shellUpcase}_SETUP_PATH && source $${bin}_AC_${shellUpcase}_SETUP_PATH;`
     );
   }
 }

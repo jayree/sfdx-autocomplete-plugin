@@ -40,32 +40,16 @@ display autocomplete installation instructions
 
 ```
 USAGE
-  $ sfdx autocmplt [-r] [--json] [--loglevel
-    trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+  $ sfdx autocmplt [SHELL] [-r]
 
 ARGUMENTS
   SHELL  shell type
 
 FLAGS
-  -r, --refresh-cache                                                               refresh cache only (ignores
-                                                                                    displaying instructions)
-  --json                                                                            format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
-                                                                                    this command invocation
+  -r, --refresh-cache  refresh cache only (ignores displaying instructions)
 
 DESCRIPTION
   display autocomplete installation instructions
-
-EXAMPLES
-  $ sfdx autocmplt
-
-  $ sfdx autocmplt bash
-
-  $ sfdx autocmplt zsh
-
-  $ sfdx autocmplt fish
-
-  $ sfdx autocmplt --refresh-cache
 ```
 
 _See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.3.3/src/commands/autocmplt/index.ts)_

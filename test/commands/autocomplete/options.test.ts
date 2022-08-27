@@ -5,8 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import path from 'path';
-import { Config } from '@oclif/core';
-import { flags, SfdxCommand } from '@salesforce/command';
+import { Config, Command, Flags } from '@oclif/core';
 import { expect } from 'chai';
 
 import Options from '../../../src/commands/autocmplt/options.js';
@@ -14,11 +13,11 @@ import Options from '../../../src/commands/autocmplt/options.js';
 const root = path.resolve(new URL('./', import.meta.url).pathname, '../../../package.json');
 const config = new Config({ root });
 
-class TestCommand extends SfdxCommand {
+class TestCommand extends Command {
   public static description = 'baz';
   public static args = [{ name: 'app', required: false }];
-  protected static flagsConfig = {
-    app: flags.string({
+  public static flags = {
+    app: Flags.string({
       char: 'a',
 
       description: 'app',

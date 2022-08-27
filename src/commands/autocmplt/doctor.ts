@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import path from 'path';
-import { flags } from '@salesforce/command';
+import { Flags, CliUx } from '@oclif/core';
 import fs from 'fs-extra';
 
 import { AutocompleteBase } from '../../base.js';
@@ -22,14 +22,15 @@ export default class Doctor extends AutocompleteBase {
       required: false,
     },
   ];
-  protected static flagsConfig = {
-    debug: flags.boolean({
+  public static flags = {
+    debug: Flags.boolean({
       description: 'list completable commands',
     }),
   };
 
   public async run() {
-    const shell: string = this.args.shell || this.config.shell;
+    const { args, flags } = await this.parse(Doctor);
+    const shell: string = args.shell || this.config.shell;
     this.errorIfNotSupportedShell(shell);
 
     const data = [];
@@ -42,14 +43,16 @@ export default class Doctor extends AutocompleteBase {
 
     // plugin version
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const pjson = await fs.readJson(path.resolve(new URL('./', import.meta.url).pathname, '..', '..', '..', 'package.json'));
+    const pjson = await fs.readJson(
+      path.resolve(new URL('./', import.meta.url).pathname, '..', '..', '..', 'package.json')
+    );
     data.push({
       name: 'plugin version',
       value: pjson.version,
     });
 
     // check shell shim source env var
-    // i.e. SFDX_AC_<shell>_SETUP_PATH
+    // i.e. BIN_AC_<shell>_SETUP_PATH
     const shellProfilePath = path.join(process.env.HOME || '', shell === 'zsh' ? '.zshrc' : '.bashrc');
     const shellProfile = fs.readFileSync(shellProfilePath);
     const regex = /AC_\w+_SETUP_PATH/;
@@ -89,7 +92,7 @@ export default class Doctor extends AutocompleteBase {
       name: 'targetusernames completion cache',
       value: targetusernamesCacheValue,
     });
-    this.ux.table(
+    CliUx.ux.table(
       data,
       {
         name: {},
@@ -98,7 +101,7 @@ export default class Doctor extends AutocompleteBase {
       { 'no-header': true }
     );
 
-    if (this.flags.debug) this.printList();
+    if (flags.debug) this.printList();
   }
 
   private printList() {

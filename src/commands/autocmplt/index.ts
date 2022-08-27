@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import path from 'path';
-import { flags } from '@salesforce/command';
+import { Flags, CliUx } from '@oclif/core';
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import { targetUserNameCompletion } from '../../completions.js';
@@ -26,35 +26,27 @@ export default class Index extends AutocompleteBase {
     },
   ];
 
-  public static examples = [
-    '$ sfdx autocmplt',
-    '$ sfdx autocmplt bash',
-    '$ sfdx autocmplt zsh',
-    '$ sfdx autocmplt fish',
-    '$ sfdx autocmplt --refresh-cache',
-  ];
-
-  protected static flagsConfig = {
-    'refresh-cache': flags.boolean({
+  public static flags = {
+    'refresh-cache': Flags.boolean({
       description: 'refresh cache only (ignores displaying instructions)',
       char: 'r',
     }),
-    suppresswarnings: flags.boolean({
+    suppresswarnings: Flags.boolean({
       description: 'suppress warnings',
       hidden: true,
     }),
   };
 
   public async run() {
-    const shell: string = this.args.shell || this.config.shell;
+    const { args, flags } = await this.parse(Index);
+    const shell: string = args.shell || this.config.shell;
     this.errorIfNotSupportedShell(shell);
-
-    this.ux.startSpinner(`${chalk.bold('Building the autocomplete cache')}`);
+    CliUx.ux.action.start(`${chalk.bold('Building the autocomplete cache')}`);
     await Create.run([], this.config);
     await this.updateCache(targetUserNameCompletion, 'targetusername');
-    this.ux.stopSpinner();
+    CliUx.ux.action.stop();
 
-    if (!this.flags['refresh-cache']) {
+    if (!flags['refresh-cache']) {
       const bin = this.config.bin;
       const bashNote =
         'If your terminal starts as a login shell you may need to print the init script into ~/.bash_profile or ~/.profile.';
@@ -87,15 +79,19 @@ Enjoy!
 `);
     }
 
-    if (this.flags.suppresswarnings) {
+    if (flags.suppresswarnings) {
       try {
-        const suppresswarningsfile = path.join(this.config.cacheDir, 'sfdx-autocmplt', 'suppresswarnings');
+        const suppresswarningsfile = path.join(
+          this.config.cacheDir,
+          `${this.config.bin}-autocmplt`,
+          'suppresswarnings'
+        );
         await fs.ensureFile(suppresswarningsfile);
         await fs.writeJson(suppresswarningsfile, {
           SuppressUpdateWarning: true,
         });
       } catch (error) {
-        this.logger.error(error);
+        this.debug(error);
       }
     }
   }
