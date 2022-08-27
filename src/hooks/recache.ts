@@ -32,7 +32,7 @@ export const completions: Hook<any> = async function () {
 
   let suppresswarnings;
 
-  const suppresswarningsfile = path.join(this.config.cacheDir, 'sfdx-autocmplt', 'suppresswarnings');
+  const suppresswarningsfile = path.join(this.config.cacheDir, `${this.config.bin}-autocmplt`, 'suppresswarnings');
 
   try {
     suppresswarnings = await fs.readJson(suppresswarningsfile);
@@ -44,11 +44,11 @@ export const completions: Hook<any> = async function () {
 
   if (this.config.plugins.filter((p) => p.name === '@oclif/plugin-autocomplete').length) {
     if (!suppresswarnings.SuppressUpdateWarning) {
-      CliUx.ux.styledHeader('sfdx-autocmplt');
+      CliUx.ux.styledHeader(`${this.config.bin}-autocmplt`);
       CliUx.ux.warn(
         `'@oclif/plugin-autocomplete' plugin detected!
 Use the 'autocmplt' command instead of 'autocomplete' for improved auto-completion.
-Run 'sfdx autocmplt --suppresswarnings' to suppress this warning.`
+Run '${this.config.bin} autocmplt --suppresswarnings' to suppress this warning.`
       );
     }
   } else if (suppresswarnings.SuppressUpdateWarning) {
@@ -62,7 +62,7 @@ Run 'sfdx autocmplt --suppresswarnings' to suppress this warning.`
   }
 
   process.once('beforeExit', () => {
-    CliUx.ux.action.start('sfdx-autocmplt: Updating completions');
+    CliUx.ux.action.start(`${this.config.bin}-autocmplt: Updating completions`);
     void rm();
     void acCreate.run([], this.config);
 

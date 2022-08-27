@@ -13,6 +13,10 @@ export default class Create extends AutocompleteBase {
     private get skipEllipsis();
     private get envAnalyticsDir();
     private get envCommandsPath();
+    private get bashFunctionsDir();
+    private get zshFunctionsDir();
+    private get zshCompletionFunctionPath();
+    private get bashCompletionFunctionPath();
     private get bashSetupScript();
     private get zshSetupScript();
     private get completionDotsFunc();
@@ -21,6 +25,8 @@ export default class Create extends AutocompleteBase {
     private get zshCommandsSetter();
     private get zshCommandsFlagsSetters();
     private get commands();
+    private get bashCompletionFunction();
+    private get zshCompletionFunction();
     run(): Promise<void>;
     private ensureDirs;
     private createFiles;

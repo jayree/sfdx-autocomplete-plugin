@@ -6,15 +6,23 @@
  */
 import path from 'path';
 import { Completion } from '@oclif/core/lib/interfaces/index.js';
-import { SfdxCommand } from '@salesforce/command';
+import { Command } from '@oclif/core';
 import fs from 'fs-extra';
 
 import { fetchCache } from './cache.js';
 import { CompletionLookup } from './completions.js';
 
-export abstract class AutocompleteBase extends SfdxCommand {
+export abstract class AutocompleteBase extends Command {
   public parsedArgs: { [name: string]: string } = {};
   public parsedFlags: { [name: string]: string } = {};
+
+  public get cliBin(): string {
+    return this.config.bin;
+  }
+
+  public get cliBinEnvVar() {
+    return this.config.bin.toUpperCase().replace('-', '_');
+  }
 
   public get autocompleteCacheDir(): string {
     return path.join(this.config.cacheDir, 'autocomplete');

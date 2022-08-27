@@ -2,55 +2,55 @@
   {
     "command": "autocmplt",
     "plugin": "sfdx-autocmplt",
-    "flags": ["json", "loglevel", "refresh-cache", "suppresswarnings"],
+    "flags": ["refresh-cache", "suppresswarnings"],
     "alias": []
   },
   {
     "command": "autocmplt:create",
     "plugin": "sfdx-autocmplt",
-    "flags": ["json", "loglevel"],
+    "flags": [],
     "alias": ["autocomplete:create"]
   },
   {
     "command": "autocmplt:doctor",
     "plugin": "sfdx-autocmplt",
-    "flags": ["debug", "json", "loglevel"],
+    "flags": ["debug"],
     "alias": ["autocomplete:doctor"]
   },
   {
     "command": "autocmplt:options",
     "plugin": "sfdx-autocmplt",
-    "flags": ["json", "loglevel"],
+    "flags": [],
     "alias": ["autocomplete:options"]
   },
   {
     "command": "autocmplt:script",
     "plugin": "sfdx-autocmplt",
-    "flags": ["json", "loglevel"],
+    "flags": [],
     "alias": ["autocomplete:script"]
   },
   {
     "command": "autocomplete:create",
     "plugin": "sfdx-autocmplt",
-    "flags": ["json", "loglevel"],
+    "flags": [],
     "alias": ["autocomplete:create"]
   },
   {
     "command": "autocomplete:doctor",
     "plugin": "sfdx-autocmplt",
-    "flags": ["debug", "json", "loglevel"],
+    "flags": ["debug"],
     "alias": ["autocomplete:doctor"]
   },
   {
     "command": "autocomplete:options",
     "plugin": "sfdx-autocmplt",
-    "flags": ["json", "loglevel"],
+    "flags": [],
     "alias": ["autocomplete:options"]
   },
   {
     "command": "autocomplete:script",
     "plugin": "sfdx-autocmplt",
-    "flags": ["json", "loglevel"],
+    "flags": [],
     "alias": ["autocomplete:script"]
   }
 ]
