@@ -1,3 +1,18 @@
+# [2.4.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.3.3...v2.4.0) (2022-09-14)
+
+
+### Bug Fixes
+
+* **deps:** bump @oclif/core from 1.9.0 to 1.9.3 ([64b1fa3](https://github.com/jayree/sfdx-autocomplete-plugin/commit/64b1fa37709b4986712d1bdd22d44638a95bda26))
+* **deps:** bump @salesforce/command from 5.1.3 to 5.2.0 ([745d15c](https://github.com/jayree/sfdx-autocomplete-plugin/commit/745d15c8c838bc4d4d5288ceac69562edacb511d))
+* **deps:** bump @salesforce/core from 3.19.1 to 3.21.1 ([117ed1c](https://github.com/jayree/sfdx-autocomplete-plugin/commit/117ed1cf9eb1b83aebaabd95e0dc15d5817fd4b5))
+
+
+### Features
+
+* move to ESM ([9bd3742](https://github.com/jayree/sfdx-autocomplete-plugin/commit/9bd37422f6c2ed454a93b53eed44fd9d37bfd181))
+* support sf CLI ([91920a7](https://github.com/jayree/sfdx-autocomplete-plugin/commit/91920a7360a6cd6c8ff2bac251d3c42482104331))
+
 ## [2.3.3](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.3.2...v2.3.3) (2022-05-29)
 
 
