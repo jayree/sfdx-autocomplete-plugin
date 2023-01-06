@@ -28,29 +28,5 @@
     "plugin": "sfdx-autocmplt",
     "flags": [],
     "alias": ["autocomplete:script"]
-  },
-  {
-    "command": "autocomplete:create",
-    "plugin": "sfdx-autocmplt",
-    "flags": [],
-    "alias": ["autocomplete:create"]
-  },
-  {
-    "command": "autocomplete:doctor",
-    "plugin": "sfdx-autocmplt",
-    "flags": ["debug"],
-    "alias": ["autocomplete:doctor"]
-  },
-  {
-    "command": "autocomplete:options",
-    "plugin": "sfdx-autocmplt",
-    "flags": [],
-    "alias": ["autocomplete:options"]
-  },
-  {
-    "command": "autocomplete:script",
-    "plugin": "sfdx-autocmplt",
-    "flags": [],
-    "alias": ["autocomplete:script"]
   }
 ]

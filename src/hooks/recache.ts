@@ -5,8 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import path from 'path';
-import { Hook } from '@oclif/core';
-import { CliUx } from '@oclif/core';
+import { Hook, CliUx } from '@oclif/core';
 import fs from 'fs-extra';
 import { targetUserNameCompletion } from '../completions.js';
 

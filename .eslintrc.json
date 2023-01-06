@@ -7,8 +7,9 @@
 
 {
   "plugins": ["eslint-plugin-header"],
-  "extends": ["eslint-config-salesforce-typescript", "eslint-config-prettier", "plugin:sf-plugin/recommended"],
+  "extends": ["eslint-config-salesforce-typescript", "eslint-config-prettier"],
   "rules": {
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
     "@typescript-eslint/restrict-template-expressions": [
       "error",
       {
