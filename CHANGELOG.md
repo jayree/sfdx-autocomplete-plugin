@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.4.0...v2.5.0) (2023-01-10)
+
+
+### Features
+
+* support 'multiple' flags and dir expansion ([bf2edf2](https://github.com/jayree/sfdx-autocomplete-plugin/commit/bf2edf2828deca32d0bdf895193b4a1a2e228eaa))
+
 # [2.4.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.3.3...v2.4.0) (2022-09-14)
 
 
