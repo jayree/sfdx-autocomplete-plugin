@@ -374,6 +374,7 @@ end`);
           // tslint:disable-next-line: no-any
           ({ description: '' } as any);
         const isBoolean = f.type === 'boolean';
+        const isOption = f.type === 'option';
         const hasCompletion =
           // eslint-disable-next-line no-prototype-builtins
           f.hasOwnProperty('completion') ||
@@ -388,8 +389,14 @@ end`);
         if (this.wantsLocalFiles(flag) && command.flags[flag].type === 'option') {
           cachecompl = ': :_files';
         }
+        if (this.wantsLocalDirs(flag) && command.flags[flag].type === 'option') {
+          cachecompl = ': :_files -/';
+        }
         const help = isBoolean ? '(switch) ' : hasCompletion ? '(autocomplete) ' : '';
-        const completion = `--${name}[${help}${sanitizeDescription(f.summary || f.description)}]${cachecompl}`;
+        const multiple = isOption && f.multiple ? '*' : '';
+        const completion = `${multiple}--${name}[${help}${sanitizeDescription(
+          f.summary || f.description
+        )}]${cachecompl}`;
         return `"${completion}"`;
       })
       .join('\n');
@@ -424,21 +431,36 @@ ${cmdsWithDesc.join('\n')}
       'configfile',
       'csvfile',
       'definitionfile',
-      'deploydir',
       'file',
       'jwtkeyfile',
       'manifest',
-      'outputdir',
       'privatekeypath',
       'resultfile',
-      'retrievetargetdir',
-      'rootdir',
       'sfdxurlfile',
       'sobjecttreefiles',
       'sourcefile',
       'sourcepath',
       'unpackaged',
       'zipfile',
+      'source-dir',
+    ].includes(flag);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private wantsLocalDirs(flag: string): boolean {
+    return [
+      'deploydir',
+      'outputdir',
+      'retrievetargetdir',
+      'rootdir',
+      'target-dir',
+      'project-dir',
+      'messages-dir',
+      'default-package-dir',
+      'output-dir',
+      'directory',
+      'metadata-dir',
+      'target-metadata-dir',
     ].includes(flag);
   }
 }

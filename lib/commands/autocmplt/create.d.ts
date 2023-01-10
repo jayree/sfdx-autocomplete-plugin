@@ -36,4 +36,5 @@ export default class Create extends AutocompleteBase {
     private genZshCmdFlagsSetter;
     private genZshAllCmdsListSetter;
     private wantsLocalFiles;
+    private wantsLocalDirs;
 }
