@@ -4,14 +4,20 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import path from 'path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Config, Plugin } from '@oclif/core';
 import { loadJSON } from '@oclif/core/lib/config/util.js';
 import { expect } from 'chai';
 
+// eslint-disable-next-line no-underscore-dangle
+const __filename = fileURLToPath(import.meta.url);
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = dirname(__filename);
+
 import Create from '../../../src/commands/autocmplt/create.js';
 
-const root = path.resolve(new URL('./', import.meta.url).pathname, '../../../package.json');
+const root = resolve(__dirname, '../../../package.json');
 const config = new Config({ root });
 
 const cacheBuildFlagsTest = {
@@ -48,9 +54,7 @@ describe('Create', () => {
       plugin = new Plugin({ root });
       cmd.config.plugins = [plugin];
       await plugin.load();
-      plugin.manifest = await loadJSON(
-        path.resolve(new URL('./', import.meta.url).pathname, '../../../test/test.oclif.manifest.json')
-      );
+      plugin.manifest = await loadJSON(resolve(__dirname, '../../../test/test.oclif.manifest.json'));
       plugin.commands = Object.entries(plugin.manifest.commands as { [s: string]: unknown }).map(([id, c]) => ({
         ...(c as Record<string, unknown>),
         load: () => plugin.findCommand(id, { must: true }),

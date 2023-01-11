@@ -4,9 +4,15 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import path from 'path';
+import { join, dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Flags, CliUx } from '@oclif/core';
 import fs from 'fs-extra';
+
+// eslint-disable-next-line no-underscore-dangle
+const __filename = fileURLToPath(import.meta.url);
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = dirname(__filename);
 
 import { AutocompleteBase } from '../../base.js';
 
@@ -43,9 +49,7 @@ export default class Doctor extends AutocompleteBase {
 
     // plugin version
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const pjson = await fs.readJson(
-      path.resolve(new URL('./', import.meta.url).pathname, '..', '..', '..', 'package.json')
-    );
+    const pjson = await fs.readJson(resolve(__dirname, '..', '..', '..', 'package.json'));
     data.push({
       name: 'plugin version',
       value: pjson.version,
@@ -53,7 +57,7 @@ export default class Doctor extends AutocompleteBase {
 
     // check shell shim source env var
     // i.e. BIN_AC_<shell>_SETUP_PATH
-    const shellProfilePath = path.join(process.env.HOME || '', shell === 'zsh' ? '.zshrc' : '.bashrc');
+    const shellProfilePath = join(process.env.HOME || '', shell === 'zsh' ? '.zshrc' : '.bashrc');
     const shellProfile = fs.readFileSync(shellProfilePath);
     const regex = /AC_\w+_SETUP_PATH/;
     const shimVlaue = regex.exec(shellProfile.toString()) ? 'present' : 'missing';
@@ -63,7 +67,7 @@ export default class Doctor extends AutocompleteBase {
     });
 
     // check shell shim
-    const shellCompletion = path.join(this.autocompleteCacheDir, `${shell}_setup`);
+    const shellCompletion = join(this.autocompleteCacheDir, `${shell}_setup`);
     const shellCompletionValue = fs.existsSync(shellCompletion) ? 'present' : 'missing';
     data.push({
       name: `${shell} shim file`,
@@ -71,7 +75,7 @@ export default class Doctor extends AutocompleteBase {
     });
 
     // check shell command cache
-    const shellCmdCache = path.join(this.autocompleteCacheDir, shell === 'zsh' ? 'commands_setters' : 'commands');
+    const shellCmdCache = join(this.autocompleteCacheDir, shell === 'zsh' ? 'commands_setters' : 'commands');
     const shellCmdCacheValue = fs.existsSync(shellCmdCache) ? 'present' : 'missing';
     data.push({
       name: `${shell} commands cache`,
@@ -79,7 +83,7 @@ export default class Doctor extends AutocompleteBase {
     });
 
     // check app completion cache
-    const targetusernamesCache = path.join(this.completionsCacheDir, 'targetusername');
+    const targetusernamesCache = join(this.completionsCacheDir, 'targetusername');
     let targetusernamesCacheValue;
     if (fs.existsSync(targetusernamesCache)) {
       const length = fs.readJSONSync(targetusernamesCache).length;

@@ -4,9 +4,15 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import path from 'path';
+import { join, dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Config, Flags } from '@oclif/core';
 import { expect } from 'chai';
+
+// eslint-disable-next-line no-underscore-dangle
+const __filename = fileURLToPath(import.meta.url);
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = dirname(__filename);
 
 import { AutocompleteBase } from '../src/base.js';
 
@@ -21,7 +27,7 @@ class AutocompleteTest extends AutocompleteBase {
   public async run() {}
 }
 
-const root = path.resolve(new URL('./', import.meta.url).pathname, '../package.json');
+const root = resolve(__dirname, '../package.json');
 const config = new Config({ root });
 
 const cmd = new AutocompleteTest([], config);
@@ -40,15 +46,15 @@ describe('AutocompleteBase', () => {
   });
 
   it('#autocompleteCacheDir', async () => {
-    expect(cmd.autocompleteCacheDir).to.eq(path.join(config.cacheDir, 'autocomplete'));
+    expect(cmd.autocompleteCacheDir).to.eq(join(config.cacheDir, 'autocomplete'));
   });
 
   it('#completionsCacheDir', async () => {
-    expect(cmd.completionsCacheDir).to.eq(path.join(config.cacheDir, 'autocomplete', 'completions'));
+    expect(cmd.completionsCacheDir).to.eq(join(config.cacheDir, 'autocomplete', 'completions'));
   });
 
   it('#acLogfilePath', async () => {
-    expect(cmd.acLogfilePath).to.eq(path.join(config.cacheDir, 'autocomplete.log'));
+    expect(cmd.acLogfilePath).to.eq(join(config.cacheDir, 'autocomplete.log'));
   });
 
   it('#findCompletion', async () => {
