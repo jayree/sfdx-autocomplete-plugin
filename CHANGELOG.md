@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.5.0...v2.5.1) (2023-01-12)
+
+
+### Bug Fixes
+
+* restore windows compatibility ([2445fa3](https://github.com/jayree/sfdx-autocomplete-plugin/commit/2445fa3c114f1ddd1c89f712b6adc3f2c32107c6))
+
 # [2.5.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.4.0...v2.5.0) (2023-01-10)
 
 
