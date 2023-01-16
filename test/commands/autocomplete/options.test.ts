@@ -6,7 +6,8 @@
  */
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Config, Command, Flags } from '@oclif/core';
+import { Config } from '@oclif/core';
+import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { expect } from 'chai';
 
 // eslint-disable-next-line no-underscore-dangle
@@ -19,7 +20,7 @@ import Options from '../../../src/commands/autocmplt/options.js';
 const root = resolve(__dirname, '../../../package.json');
 const config = new Config({ root });
 
-class TestCommand extends Command {
+class TestCommand extends SfCommand<void> {
   public static description = 'baz';
   public static args = [{ name: 'app', required: false }];
   public static flags = {

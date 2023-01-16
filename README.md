@@ -9,26 +9,11 @@ based on [oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplet
 [![Downloads/week](https://img.shields.io/npm/dw/sfdx-autocmplt.svg)](https://npmjs.org/package/sfdx-autocmplt)
 [![License](https://img.shields.io/npm/l/sfdx-autocmplt.svg)](https://github.com/jayree/sfdx-autocomplete-plugin/blob/master/package.json)
 
-<!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
+## Install
 
-## Usage
-
-<!-- usage -->
-```sh-session
-$ sfdx plugins:install sfdx-autocmplt
-$ sfdx autocmplt:[COMMAND]
-running command...
-$ sfdx plugins
-sfdx-autocmplt 2.5.1
-$ sfdx help autocmplt:[COMMAND]
-USAGE
-  $ sfdx autocmplt:COMMAND
-...
+```bash
+sfdx plugins:install sfdx-autocmplt
 ```
-<!-- usagestop -->
 
 ## Commands
 <!-- commands -->

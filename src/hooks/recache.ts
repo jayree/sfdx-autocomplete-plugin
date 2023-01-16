@@ -4,8 +4,9 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import path from 'path';
-import { Hook, CliUx } from '@oclif/core';
+import path from 'node:path';
+import { Hook } from '@oclif/core';
+import { Ux } from '@salesforce/sf-plugins-core';
 import fs from 'fs-extra';
 import { targetUserNameCompletion } from '../completions.js';
 
@@ -14,6 +15,7 @@ import acCreate from '../commands/autocmplt/create.js';
 
 // tslint:disable-next-line: no-any
 export const completions: Hook<any> = async function () {
+  const ux = new Ux();
   // autocomplete is now in core, skip windows
   if (this.config.windows) return;
   const completionsDir = path.join(this.config.cacheDir, 'autocomplete', 'completions');
@@ -43,8 +45,8 @@ export const completions: Hook<any> = async function () {
 
   if (this.config.plugins.filter((p) => p.name === '@oclif/plugin-autocomplete').length) {
     if (!suppresswarnings.SuppressUpdateWarning) {
-      CliUx.ux.styledHeader(`${this.config.bin}-autocmplt`);
-      CliUx.ux.warn(
+      ux.styledHeader(`${this.config.bin}-autocmplt`);
+      ux.warn(
         `'@oclif/plugin-autocomplete' plugin detected!
 Use the 'autocmplt' command instead of 'autocomplete' for improved auto-completion.
 Run '${this.config.bin} autocmplt --suppresswarnings' to suppress this warning.`
@@ -61,7 +63,7 @@ Run '${this.config.bin} autocmplt --suppresswarnings' to suppress this warning.`
   }
 
   process.once('beforeExit', () => {
-    CliUx.ux.action.start(`${this.config.bin}-autocmplt: Updating completions`);
+    ux.spinner.start(`${this.config.bin}-autocmplt: Updating completions`);
     void rm();
     void acCreate.run([], this.config);
 
@@ -70,6 +72,6 @@ Run '${this.config.bin} autocmplt --suppresswarnings' to suppress this warning.`
     } catch (err) {
       this.debug(err.message);
     }
-    CliUx.ux.action.stop();
+    ux.spinner.stop();
   });
 };

@@ -6,7 +6,8 @@
  */
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Config, Flags } from '@oclif/core';
+import { Config } from '@oclif/core';
+import { Flags } from '@salesforce/sf-plugins-core';
 import { expect } from 'chai';
 
 // eslint-disable-next-line no-underscore-dangle

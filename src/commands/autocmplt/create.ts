@@ -5,10 +5,9 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 // eslint-disable-next-line camelcase
-import child_process from 'child_process';
-import path from 'path';
+import child_process from 'node:child_process';
+import path from 'node:path';
 import fs from 'fs-extra';
-import lodash from 'lodash';
 import { Interfaces } from '@oclif/core';
 import Debug from 'debug';
 
@@ -42,7 +41,7 @@ export default class Create extends AutocompleteBase {
   public static aliases = ['autocomplete:create'];
 
   public static hidden = true;
-  public static description = 'create autocomplete setup scripts and completion functions';
+  public static readonly description = 'create autocomplete setup scripts and completion functions';
 
   private _commands?: CommandCompletion[];
 
@@ -205,25 +204,25 @@ bindkey "^I" expand-or-complete-with-dots`;
     const plugins = this.config.plugins;
     const commands: CommandCompletion[] = [];
 
-    plugins.map((p) => {
-      p.commands.map((c) => {
-        if (c.hidden) return;
-        if (c.pluginName === '@oclif/plugin-autocomplete') return;
+    plugins.forEach((p) => {
+      p.commands.forEach((c) => {
         try {
+          if (c.hidden) return;
+          if (c.pluginName === '@oclif/plugin-autocomplete') return;
+          const description = sanitizeDescription(c.summary || c.description || '');
+          const flags = c.flags;
           commands.push({
             id: c.id,
-            description: sanitizeDescription(c.description || ''),
-            flags: c.flags,
+            description,
+            flags,
           });
-          for (const alias of c.aliases) {
-            const clone = lodash.cloneDeep({
-              id: c.id,
-              description: sanitizeDescription(c.description || ''),
-              flags: c.flags,
-            }) as CommandCompletion;
-            clone.id = alias;
-            commands.push(clone);
-          }
+          c.aliases.forEach((alias) => {
+            commands.push({
+              id: alias,
+              description,
+              flags,
+            });
+          });
         } catch (err) {
           debug(`Error creating completions for command ${c.id}`);
           debug(err.message);
@@ -248,7 +247,7 @@ bindkey "^I" expand-or-complete-with-dots`;
     return zshScript.replace(/<CLI_BINENV>/g, this.cliBinEnvVar).replace(/<CLI_BIN>/g, this.cliBin);
   }
 
-  public async run() {
+  public async run(): Promise<void> {
     this.errorIfWindows();
     // 1. ensure needed dirs
     await this.ensureDirs();

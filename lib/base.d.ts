@@ -1,6 +1,7 @@
 import { Completion } from '@oclif/core/lib/interfaces/index.js';
-import { Command } from '@oclif/core';
-export declare abstract class AutocompleteBase extends Command {
+import { SfCommand } from '@salesforce/sf-plugins-core';
+export declare abstract class AutocompleteBase extends SfCommand<void> {
+    static readonly enableJsonFlag = false;
     parsedArgs: {
         [name: string]: string;
     };

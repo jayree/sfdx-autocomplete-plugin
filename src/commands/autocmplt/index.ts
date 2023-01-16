@@ -4,8 +4,8 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import path from 'path';
-import { Flags, CliUx } from '@oclif/core';
+import path from 'node:path';
+import { Flags } from '@salesforce/sf-plugins-core';
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import { targetUserNameCompletion } from '../../completions.js';
@@ -16,7 +16,7 @@ import { updateCache } from '../../cache.js';
 import Create from './create.js';
 
 export default class Index extends AutocompleteBase {
-  public static description = 'display autocomplete installation instructions';
+  public static readonly description = 'display autocomplete installation instructions';
 
   public static args = [
     {
@@ -31,20 +31,17 @@ export default class Index extends AutocompleteBase {
       description: 'refresh cache only (ignores displaying instructions)',
       char: 'r',
     }),
-    suppresswarnings: Flags.boolean({
-      description: 'suppress warnings',
-      hidden: true,
-    }),
+    suppresswarnings: Flags.boolean({ hidden: true }),
   };
 
-  public async run() {
+  public async run(): Promise<void> {
     const { args, flags } = await this.parse(Index);
     const shell: string = args.shell || this.config.shell;
     this.errorIfNotSupportedShell(shell);
-    CliUx.ux.action.start(`${chalk.bold('Building the autocomplete cache')}`);
+    this.spinner.start(`${chalk.bold('Building the autocomplete cache')}`);
     await Create.run([], this.config);
     await this.updateCache(targetUserNameCompletion, 'targetusername');
-    CliUx.ux.action.stop();
+    this.spinner.stop();
 
     if (!flags['refresh-cache']) {
       const bin = this.config.bin;

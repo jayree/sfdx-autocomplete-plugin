@@ -4,14 +4,14 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import path from 'path';
+import path from 'node:path';
 
 import { AutocompleteBase } from '../../base.js';
 
 export default class Script extends AutocompleteBase {
   public static aliases = ['autocomplete:script'];
 
-  public static description = 'display autocomplete setup script for shell';
+  public static readonly description = 'display autocomplete setup script for shell';
   public static hidden = true;
   public static args = [{ name: 'shell', description: 'shell type', required: true }];
 
@@ -20,7 +20,7 @@ export default class Script extends AutocompleteBase {
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await
-  public async run() {
+  public async run(): Promise<void> {
     const { args } = await this.parse(Script);
     const shell: string = args.shell;
     this.errorIfNotSupportedShell(shell);

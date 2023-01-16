@@ -16,7 +16,8 @@ export default class Options extends AutocompleteBase {
   public static aliases = ['autocomplete:options'];
 
   public static hidden = true;
-  public static description = 'display arg or flag completion options (used internally by completion fuctions)';
+  public static readonly description =
+    'display arg or flag completion options (used internally by completion fuctions)';
   /*   public static flags = {
     app: flags.app({ required: false, hidden: true })
   }; */
@@ -31,7 +32,7 @@ export default class Options extends AutocompleteBase {
   // curPosition*: the current argv position the shell is trying to complete
   // options: (string) white-space seperated list of values for the shell to use for completion
 
-  public async run() {
+  public async run(): Promise<void> {
     this.errorIfWindows();
 
     // ex: heroku autocomplete:options 'heroku addons:destroy -a myapp myaddon'

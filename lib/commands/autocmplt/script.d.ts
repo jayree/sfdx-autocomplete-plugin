@@ -1,7 +1,7 @@
 import { AutocompleteBase } from '../../base.js';
 export default class Script extends AutocompleteBase {
     static aliases: string[];
-    static description: string;
+    static readonly description = "display autocomplete setup script for shell";
     static hidden: boolean;
     static args: {
         name: string;

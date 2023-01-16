@@ -6,6 +6,7 @@
  */
 import { Completion } from '@oclif/core/lib/interfaces/index.js';
 import { StateAggregator } from '@salesforce/core';
+import { Org } from '@salesforce/core';
 
 export const oneDay = 60 * 60 * 24;
 
@@ -71,13 +72,18 @@ export const instanceurlCompletion: Completion = {
 export const targetUserNameCompletion: Completion = {
   cacheDuration: oneDay,
   options: async () => {
-    try {
-      const info = await StateAggregator.create();
-      const aliases = info.aliases.getAll();
-      return [...Object.keys(aliases), ...new Set(Object.values(aliases))];
-    } catch (error) {
-      return [];
+    const info = await StateAggregator.create();
+    const aliases = info.aliases.getAll();
+    const activeAliasOrUsername = [];
+    for await (const aliasOrUsername of [...Object.keys(aliases), ...new Set(Object.values(aliases))]) {
+      try {
+        await (await Org.create({ aliasOrUsername })).refreshAuth();
+        activeAliasOrUsername.push(aliasOrUsername);
+      } catch (error) {
+        /* empty */
+      }
     }
+    return activeAliasOrUsername;
   },
 };
 

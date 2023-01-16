@@ -2,7 +2,7 @@ import { AutocompleteBase } from '../../base.js';
 export default class Create extends AutocompleteBase {
     static aliases: string[];
     static hidden: boolean;
-    static description: string;
+    static readonly description = "create autocomplete setup scripts and completion functions";
     private _commands?;
     private get bashSetupScriptPath();
     private get bashCommandsListPath();

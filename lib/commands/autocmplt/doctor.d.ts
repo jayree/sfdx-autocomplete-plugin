@@ -2,7 +2,7 @@ import { AutocompleteBase } from '../../base.js';
 export default class Doctor extends AutocompleteBase {
     static aliases: string[];
     static hidden: boolean;
-    static description: string;
+    static readonly description = "autocomplete diagnostic";
     static args: {
         name: string;
         description: string;

@@ -1,6 +1,6 @@
 import { AutocompleteBase } from '../../base.js';
 export default class Index extends AutocompleteBase {
-    static description: string;
+    static readonly description = "display autocomplete installation instructions";
     static args: {
         name: string;
         description: string;

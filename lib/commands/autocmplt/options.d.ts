@@ -2,7 +2,7 @@ import { AutocompleteBase } from '../../base.js';
 export default class Options extends AutocompleteBase {
     static aliases: string[];
     static hidden: boolean;
-    static description: string;
+    static readonly description = "display arg or flag completion options (used internally by completion fuctions)";
     static args: {
         name: string;
         strict: boolean;

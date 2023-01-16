@@ -6,7 +6,7 @@
  */
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Flags, CliUx } from '@oclif/core';
+import { Flags } from '@salesforce/sf-plugins-core';
 import fs from 'fs-extra';
 
 // eslint-disable-next-line no-underscore-dangle
@@ -20,7 +20,7 @@ export default class Doctor extends AutocompleteBase {
   public static aliases = ['autocomplete:doctor'];
 
   public static hidden = true;
-  public static description = 'autocomplete diagnostic';
+  public static readonly description = 'autocomplete diagnostic';
   public static args = [
     {
       name: 'shell',
@@ -34,7 +34,7 @@ export default class Doctor extends AutocompleteBase {
     }),
   };
 
-  public async run() {
+  public async run(): Promise<void> {
     const { args, flags } = await this.parse(Doctor);
     const shell: string = args.shell || this.config.shell;
     this.errorIfNotSupportedShell(shell);
@@ -96,7 +96,7 @@ export default class Doctor extends AutocompleteBase {
       name: 'targetusernames completion cache',
       value: targetusernamesCacheValue,
     });
-    CliUx.ux.table(
+    this.table(
       data,
       {
         name: {},

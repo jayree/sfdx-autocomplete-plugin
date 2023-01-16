@@ -4,15 +4,16 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import path from 'path';
+import path from 'node:path';
 import { Completion } from '@oclif/core/lib/interfaces/index.js';
-import { Command } from '@oclif/core';
+import { SfCommand } from '@salesforce/sf-plugins-core';
 import fs from 'fs-extra';
 
 import { fetchCache } from './cache.js';
 import { CompletionLookup } from './completions.js';
 
-export abstract class AutocompleteBase extends Command {
+export abstract class AutocompleteBase extends SfCommand<void> {
+  public static readonly enableJsonFlag = false;
   public parsedArgs: { [name: string]: string } = {};
   public parsedFlags: { [name: string]: string } = {};
 
