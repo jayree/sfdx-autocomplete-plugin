@@ -1,7 +1,7 @@
 {
   "name": "sfdx-autocmplt",
   "description": "autocomplete plugin for sfdx and sf CLI",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "author": "jayree @jayree",
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "type": "module",
@@ -109,7 +109,7 @@
     "format": "sf-format",
     "lint": "sf-lint",
     "lint-fix": "sf-lint --fix",
-    "postinstall": "node ./bin/is-sfdx.js || (patch-package && (is-ci || husky install))",
+    "_postinstall": "node ./bin/is-sfdx.js || (patch-package && (is-ci || husky install))",
     "postpack": "pinst --enable && shx rm -f oclif.manifest.json",
     "prepack": "sf-prepack && pinst --disable",
     "test": "sf-compile-test && sf-test && yarn lint && yarn test:deprecation-policy && yarn test:json-schema",

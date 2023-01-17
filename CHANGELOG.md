@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.5.1...v2.5.2) (2023-01-17)
+
+
+### Bug Fixes
+
+* complete only active orgs ([aec9f98](https://github.com/jayree/sfdx-autocomplete-plugin/commit/aec9f981f8e7247989f84bce49b95c061ba2a333))
+
 ## [2.5.1](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.5.0...v2.5.1) (2023-01-12)
 
 
