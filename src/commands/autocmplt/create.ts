@@ -8,18 +8,13 @@
 import child_process from 'node:child_process';
 import path from 'node:path';
 import fs from 'fs-extra';
-import { Interfaces } from '@oclif/core';
+// eslint-disable-next-line sf-plugin/no-oclif-flags-command-import
+import { Command } from '@oclif/core';
 import Debug from 'debug';
 
 import { AutocompleteBase } from '../../base.js';
 import bashAutocomplete from '../../autocomplete/bash.js';
 import zshAutocomplete from '../../autocomplete/zsh.js';
-
-type CommandCompletion = {
-  id: string;
-  description: string;
-  flags: Record<string, Interfaces.Command.Flag>;
-};
 
 function sanitizeDescription(description?: string): string {
   if (description === undefined) {
@@ -43,7 +38,7 @@ export default class Create extends AutocompleteBase {
   public static hidden = true;
   public static readonly description = 'create autocomplete setup scripts and completion functions';
 
-  private _commands?: CommandCompletion[];
+  private _commands?: Command.Cached[];
 
   private get bashSetupScriptPath(): string {
     // <cacheDir>/autocomplete/bash_setup
@@ -197,12 +192,12 @@ bindkey "^I" expand-or-complete-with-dots`;
       .join('\n');
   }
 
-  private get commands(): CommandCompletion[] {
+  private get commands(): Command.Cached[] {
     // eslint-disable-next-line no-underscore-dangle
     if (this._commands) return this._commands;
 
     const plugins = this.config.plugins;
-    const commands: CommandCompletion[] = [];
+    const commands: Command.Cached[] = [];
 
     plugins.forEach((p) => {
       p.commands.forEach((c) => {
@@ -211,16 +206,24 @@ bindkey "^I" expand-or-complete-with-dots`;
           if (c.pluginName === '@oclif/plugin-autocomplete') return;
           const description = sanitizeDescription(c.summary || c.description || '');
           const flags = c.flags;
+          const hidden = c.hidden;
+          const args = c.args;
           commands.push({
             id: c.id,
             description,
             flags,
+            hidden,
+            aliases: c.aliases,
+            args,
           });
           c.aliases.forEach((alias) => {
             commands.push({
               id: alias,
               description,
               flags,
+              hidden,
+              aliases: [],
+              args,
             });
           });
         } catch (err) {
@@ -319,12 +322,13 @@ end`);
           command.description.split('\n')[0]
         }"`
       );
-      // tslint:disable-next-line: no-any
-      const flags: Record<string, Interfaces.Command.Flag> = command.flags || {};
+      const flags: {
+        [name: string]: Command.Flag.Cached;
+      } = command.flags || {};
       const fl = Object.keys(flags).filter((flag) => flags[flag] && !flags[flag].hidden);
 
       for await (const flag of fl) {
-        const f: Interfaces.Command.Flag = flags[flag];
+        const f = flags[flag];
         const shortFlag = f.char ? `-s ${f.char}` : '';
         const description = `-d "${sanitizeDescription(f.summary || f.description)}"`;
         let options = f['options'] ? `-r -a "${f['options'].join(' ')}"` : '';
@@ -345,8 +349,8 @@ end`);
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private genCmdPublicFlags(command: CommandCompletion): string {
-    const flags: Record<string, Interfaces.Command.Flag> = command.flags || {};
+  private genCmdPublicFlags(command: Command.Cached): string {
+    const flags = command.flags || {};
     return Object.keys(flags)
       .filter((flag) => !flags[flag].hidden)
       .map((flag) => `--${flag}`)
@@ -354,7 +358,7 @@ end`);
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private genCmdWithDescription(command: CommandCompletion): string {
+  private genCmdWithDescription(command: Command.Cached): string {
     let description = '';
     if (command.description) {
       const text = command.description.split('\n')[0];
@@ -363,15 +367,12 @@ end`);
     return `"${command.id.replace(/:/g, '\\:')}"${description}`;
   }
 
-  private genZshCmdFlagsSetter(command: CommandCompletion): string {
+  private genZshCmdFlagsSetter(command: Command.Cached): string {
     const id = command.id;
     const flagscompletions = Object.keys(command.flags || {})
       .filter((flag) => command.flags && !command.flags[flag].hidden)
       .map((flag) => {
-        const f: Interfaces.Command.Flag =
-          command.flags?.[flag] ||
-          // tslint:disable-next-line: no-any
-          ({ description: '' } as any);
+        const f = command.flags?.[flag];
         const isBoolean = f.type === 'boolean';
         const isOption = f.type === 'option';
         const hasCompletion =

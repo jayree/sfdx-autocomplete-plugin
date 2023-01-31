@@ -7,6 +7,7 @@
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Flags } from '@salesforce/sf-plugins-core';
+import { Args } from '@oclif/core';
 import fs from 'fs-extra';
 
 // eslint-disable-next-line no-underscore-dangle
@@ -21,13 +22,9 @@ export default class Doctor extends AutocompleteBase {
 
   public static hidden = true;
   public static readonly description = 'autocomplete diagnostic';
-  public static args = [
-    {
-      name: 'shell',
-      description: 'shell type',
-      required: false,
-    },
-  ];
+  public static args = {
+    shell: Args.string({ description: 'shell type', required: false }),
+  };
   public static flags = {
     debug: Flags.boolean({
       description: 'list completable commands',

@@ -6,7 +6,7 @@
  */
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Config } from '@oclif/core';
+import { Config, Args } from '@oclif/core';
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { expect } from 'chai';
 
@@ -22,7 +22,9 @@ const config = new Config({ root });
 
 class TestCommand extends SfCommand<void> {
   public static description = 'baz';
-  public static args = [{ name: 'app', required: false }];
+  public static args = {
+    app: Args.string({ required: false }),
+  };
   public static flags = {
     app: Flags.string({
       char: 'a',

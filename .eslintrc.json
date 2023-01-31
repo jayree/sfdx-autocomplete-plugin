@@ -7,9 +7,10 @@
 
 {
   "plugins": ["eslint-plugin-header"],
-  "extends": ["eslint-config-salesforce-typescript", "eslint-config-prettier", "plugin:sf-plugin/recommended"],
+  "extends": ["eslint-config-salesforce-typescript", "plugin:sf-plugin/migration", "plugin:prettier/recommended"],
   "rules": {
     "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "sf-plugin/no-missing-messages": "off",
     "@typescript-eslint/restrict-template-expressions": [
       "error",
       {

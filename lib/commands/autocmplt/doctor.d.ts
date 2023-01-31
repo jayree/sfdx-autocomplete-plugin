@@ -4,10 +4,8 @@ export default class Doctor extends AutocompleteBase {
     static hidden: boolean;
     static readonly description = "autocomplete diagnostic";
     static args: {
-        name: string;
-        description: string;
-        required: boolean;
-    }[];
+        shell: import("@oclif/core/lib/interfaces/parser.js").Arg<string, Record<string, unknown>>;
+    };
     static flags: {
         debug: import("@oclif/core/lib/interfaces/parser.js").BooleanFlag<boolean>;
     };

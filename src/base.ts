@@ -5,12 +5,11 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import path from 'node:path';
-import { Completion } from '@oclif/core/lib/interfaces/index.js';
 import { SfCommand } from '@salesforce/sf-plugins-core';
 import fs from 'fs-extra';
 
 import { fetchCache } from './cache.js';
-import { CompletionLookup } from './completions.js';
+import { CompletionLookup, Completion } from './completions.js';
 
 export abstract class AutocompleteBase extends SfCommand<void> {
   public static readonly enableJsonFlag = false;

@@ -4,14 +4,10 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+// eslint-disable-next-line sf-plugin/no-oclif-flags-command-import
+import { Args, Command } from '@oclif/core';
 import { AutocompleteBase } from '../../base.js';
 
-type CommandCompletion = {
-  id: string;
-  description: string;
-  flags: any;
-  args: any;
-};
 export default class Options extends AutocompleteBase {
   public static aliases = ['autocomplete:options'];
 
@@ -21,7 +17,10 @@ export default class Options extends AutocompleteBase {
   /*   public static flags = {
     app: flags.app({ required: false, hidden: true })
   }; */
-  public static args = [{ name: 'completion', strict: false }];
+
+  public static args = {
+    completion: Args.string({ strict: false }),
+  };
 
   // helpful dictionary
   //
@@ -53,15 +52,12 @@ export default class Options extends AutocompleteBase {
     const id = commandLineToComplete[1];
     // find Command
     const C = this.config.findCommand(id);
-    let klass;
+    let klass: Command.Class;
     if (C) {
       klass = await C.load();
       // process Command state from command line data
       const slicedArgv = commandLineToComplete.slice(2);
-      const [argsIndex, curPositionIsFlag, curPositionIsFlagValue] = this.determineCmdState(
-        slicedArgv,
-        klass as CommandCompletion
-      );
+      const [argsIndex, curPositionIsFlag, curPositionIsFlagValue] = this.determineCmdState(slicedArgv, klass);
       return {
         id,
         klass,
@@ -76,7 +72,14 @@ export default class Options extends AutocompleteBase {
   }
 
   // tslint:disable-next-line: no-any
-  private determineCompletion(commandStateVars: any) {
+  private determineCompletion(commandStateVars: {
+    id: string;
+    klass: Command.Class;
+    argsIndex: number;
+    curPositionIsFlag: boolean;
+    curPositionIsFlagValue: boolean;
+    slicedArgv: string[];
+  }) {
     const { id, klass, argsIndex, curPositionIsFlag, curPositionIsFlagValue, slicedArgv } = commandStateVars;
     // setup empty cache completion vars to assign
     // tslint:disable-next-line: no-any
@@ -90,7 +93,7 @@ export default class Options extends AutocompleteBase {
       const lastArgvArg = slicedArgv[slicedArgvCount - 1];
       const previousArgvArg = slicedArgv[slicedArgvCount - 2];
       const argvFlag: string = curPositionIsFlagValue ? previousArgvArg : lastArgvArg;
-      const { name, flag } = this.findFlagFromWildArg(argvFlag, klass as CommandCompletion);
+      const { name, flag } = this.findFlagFromWildArg(argvFlag, klass);
       if (!flag) this.throwError(`${argvFlag} is not a valid flag for ${id}`);
       cacheKey = name || flag.name;
       cacheCompletion = flag.completion;
@@ -105,15 +108,15 @@ export default class Options extends AutocompleteBase {
         }
       }
     } else {
-      const cmdArgs = klass.args || [];
+      const cmdArgs = klass.args || {};
       // variable arg (strict: false)
       if (!klass.strict) {
         cacheKey = cmdArgs[0]?.name.toLowerCase();
-        cacheCompletion = this.findCompletion(id as string, cacheKey);
+        cacheCompletion = this.findCompletion(id, cacheKey);
         if (!cacheCompletion) {
           this.throwError(`Cannot complete variable arg position for ${id}`);
         }
-      } else if (argsIndex > cmdArgs.length - 1) {
+      } else if (argsIndex > Object.keys(cmdArgs).length - 1) {
         this.throwError(`Cannot complete arg position ${argsIndex} for ${id}`);
       } else {
         const arg = cmdArgs[argsIndex];
@@ -123,7 +126,7 @@ export default class Options extends AutocompleteBase {
 
     // try to auto-populate the completion object
     if (!cacheCompletion) {
-      cacheCompletion = this.findCompletion(id as string, cacheKey);
+      cacheCompletion = this.findCompletion(id, cacheKey);
     }
     return { cacheKey, cacheCompletion };
   }
@@ -136,7 +139,7 @@ export default class Options extends AutocompleteBase {
   // eslint-disable-next-line class-methods-use-this
   private findFlagFromWildArg(
     wild: string,
-    klass: CommandCompletion
+    klass: Command.Class
     // tslint:disable-next-line: no-any
   ): { flag: any; name: any } {
     let name = wild.replace(/^-+/, '');
@@ -144,7 +147,7 @@ export default class Options extends AutocompleteBase {
 
     const unknown = { flag: undefined, name: undefined };
     if (!klass.flags) return unknown;
-    const cFlags: Record<string, { char: string }> = klass.flags;
+    const cFlags = klass.flags;
 
     let flag = cFlags[name];
     if (flag) return { name, flag };
@@ -155,8 +158,8 @@ export default class Options extends AutocompleteBase {
     return unknown;
   }
 
-  private determineCmdState(argv: string[], klass: CommandCompletion): [number, boolean, boolean] {
-    const args = klass.args || [];
+  private determineCmdState(argv: string[], klass: Command.Class): [number, boolean, boolean] {
+    const args = klass.args || {};
     let needFlagValueSatisfied = false;
     let argIsFlag = false;
     let argIsFlagValue = false;
@@ -220,8 +223,10 @@ export default class Options extends AutocompleteBase {
       // add parsedArgs
       // TO-DO: how to handle variableArgs?
       argsIndex += 1;
-      if (argsIndex < args.length) {
-        this.parsedArgs[args[argsIndex].name] = wild;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      if (argsIndex < Object.keys(args).length) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        this.parsedArgs[Object.keys(args)[argsIndex]] = wild;
       }
 
       argIsFlagValue = false;

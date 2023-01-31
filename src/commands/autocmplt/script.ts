@@ -6,6 +6,7 @@
  */
 import path from 'node:path';
 
+import { Args } from '@oclif/core';
 import { AutocompleteBase } from '../../base.js';
 
 export default class Script extends AutocompleteBase {
@@ -13,7 +14,10 @@ export default class Script extends AutocompleteBase {
 
   public static readonly description = 'display autocomplete setup script for shell';
   public static hidden = true;
-  public static args = [{ name: 'shell', description: 'shell type', required: true }];
+
+  public static args = {
+    shell: Args.string({ description: 'shell type', required: true }),
+  };
 
   private get prefix(): string {
     return `\n# ${this.config.bin} autocomplete setup\n`;

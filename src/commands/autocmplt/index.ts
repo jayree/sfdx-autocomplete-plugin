@@ -6,6 +6,7 @@
  */
 import path from 'node:path';
 import { Flags } from '@salesforce/sf-plugins-core';
+import { Args } from '@oclif/core';
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import { targetUserNameCompletion } from '../../completions.js';
@@ -18,13 +19,9 @@ import Create from './create.js';
 export default class Index extends AutocompleteBase {
   public static readonly description = 'display autocomplete installation instructions';
 
-  public static args = [
-    {
-      name: 'shell',
-      description: 'shell type',
-      required: false,
-    },
-  ];
+  public static args = {
+    shell: Args.string({ description: 'shell type', required: false }),
+  };
 
   public static flags = {
     'refresh-cache': Flags.boolean({

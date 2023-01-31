@@ -4,9 +4,8 @@ export default class Options extends AutocompleteBase {
     static hidden: boolean;
     static readonly description = "display arg or flag completion options (used internally by completion fuctions)";
     static args: {
-        name: string;
-        strict: boolean;
-    }[];
+        completion: import("@oclif/core/lib/interfaces/parser.js").Arg<string, Record<string, unknown>>;
+    };
     run(): Promise<void>;
     private processCommandLine;
     private determineCompletion;

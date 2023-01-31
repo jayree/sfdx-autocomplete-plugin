@@ -17,9 +17,9 @@ sfdx plugins:install sfdx-autocmplt
 
 ## Commands
 <!-- commands -->
-* [`sfdx autocmplt`](#sfdx-autocmplt)
+* [`sfdx autocmplt [SHELL]`](#sfdx-autocmplt-shell)
 
-### `sfdx autocmplt`
+## `sfdx autocmplt [SHELL]`
 
 display autocomplete installation instructions
 

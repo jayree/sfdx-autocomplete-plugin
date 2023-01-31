@@ -2,10 +2,8 @@ import { AutocompleteBase } from '../../base.js';
 export default class Index extends AutocompleteBase {
     static readonly description = "display autocomplete installation instructions";
     static args: {
-        name: string;
-        description: string;
-        required: boolean;
-    }[];
+        shell: import("@oclif/core/lib/interfaces/parser.js").Arg<string, Record<string, unknown>>;
+    };
     static flags: {
         'refresh-cache': import("@oclif/core/lib/interfaces/parser.js").BooleanFlag<boolean>;
         suppresswarnings: import("@oclif/core/lib/interfaces/parser.js").BooleanFlag<boolean>;

@@ -4,40 +4,50 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { Completion } from '@oclif/core/lib/interfaces/index.js';
 import { StateAggregator } from '@salesforce/core';
 import { Org } from '@salesforce/core';
+// eslint-disable-next-line sf-plugin/no-oclif-flags-command-import
+import { Command } from '@oclif/core';
 
-export const oneDay = 60 * 60 * 24;
+export type Completion = {
+  skipCache?: boolean;
+  cacheDuration?: number;
+  cacheKey?(ctx: Command.Class): Promise<string>;
+  options(ctx: Command.Class): Promise<string[]>;
+};
+
+const oneDay = 60 * 60 * 24;
 
 export class CompletionLookup {
-  private readonly blacklistMap: { [key: string]: string[] } = {
+  private readonly blocklistMap: { [key: string]: string[] } = {
     // app: ['apps:create'],
-    // space: ['spaces:create']
+    // space: ['spaces:create'],
   };
 
   private readonly keyAliasMap: { [key: string]: { [key: string]: string } } = {
-    /*     resultformat: {
-      'force:apex:test:report': 'resultformatTap',
-      'force:apex:test:run': 'resultformatTap',
-      'force:lightning:test:run': 'resultformatTap',
-      'force:data:soql:query': 'resultformatCsv'
-    } */
+    key: {
+      // 'config:get': 'config',
+    },
   };
 
-  private readonly commandArgsMap: {
-    [key: string]: { [key: string]: string };
-  } = {};
+  private readonly commandArgsMap: { [key: string]: { [key: string]: string } } = {
+    key: {
+      // 'config:set': 'configSet',
+    },
+  };
 
-  // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  constructor(private readonly cmdId: string, private readonly name: string, private readonly description?: string) {}
+  public constructor(
+    private readonly cmdId: string,
+    private readonly name: string,
+    private readonly description?: string
+  ) {}
 
   private get key(): string {
     return this.argAlias() || this.keyAlias() || this.descriptionAlias() || this.name;
   }
 
   public run(): Completion | undefined {
-    if (this.blacklisted()) return;
+    if (this.blocklisted()) return;
     return CompletionMapping[this.key];
   }
 
@@ -49,16 +59,16 @@ export class CompletionLookup {
     return this.keyAliasMap[this.name]?.[this.cmdId];
   }
 
+  // eslint-disable-next-line class-methods-use-this
   private descriptionAlias(): string | undefined {
     const d = this.description;
     // if (d.match(/^dyno size/)) return 'dynosize';
     // if (d.match(/^process type/)) return 'processtype';
-    if (d) return '';
-    return '';
+    return d ? undefined : undefined;
   }
 
-  private blacklisted(): boolean {
-    return this.blacklistMap[this.name]?.includes(this.cmdId);
+  private blocklisted(): boolean {
+    return this.blocklistMap[this.name]?.includes(this.cmdId);
   }
 }
 
