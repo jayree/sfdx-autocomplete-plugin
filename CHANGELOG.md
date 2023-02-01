@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.5.2...v2.6.0) (2023-02-01)
+
+
+### Features
+
+* continue to convert to new SfCommand ([7c14a67](https://github.com/jayree/sfdx-autocomplete-plugin/commit/7c14a67b4035d0507665a7ab67f6f21c4e825564))
+
 ## [2.5.2](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.5.1...v2.5.2) (2023-01-17)
 
 
