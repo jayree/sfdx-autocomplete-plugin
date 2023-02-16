@@ -9,7 +9,6 @@ package-lock.json
 # debug logs
 npm-error.log
 yarn-error.log
-lerna-debug.log
 
 # compile source
 # lib
@@ -25,10 +24,10 @@ coverage
 docs
 
 # -- CLEAN ALL
-*.tsbuildinfo
-.eslintcache
-.wireit
 node_modules
+.wireit
+.eslintcache
+*.tsbuildinfo
 
 # --
 # put files here you don't want cleaned with sf-clean

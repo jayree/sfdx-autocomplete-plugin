@@ -38,7 +38,7 @@ Enjoy!
 Setup Instructions for SFDX CLI Autocomplete ---
 
 1) Add the autocomplete env var to your zsh profile and source it
-$ printf "$(sfdx autocmplt:script zsh)" >> ~/.zshrc; source ~/.zshrc
+$ printf "$(sfdx autocmplt:script zsh)" >> ~/.zshrc; exec zsh
 
 NOTE: After sourcing, you can run \`$ compaudit -D\` to ensure no permissions conflicts are present
 

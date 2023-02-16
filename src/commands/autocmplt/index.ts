@@ -8,7 +8,6 @@ import path from 'node:path';
 import { Flags } from '@salesforce/sf-plugins-core';
 import { Args } from '@oclif/core';
 import chalk from 'chalk';
-import fs from 'fs-extra';
 import { targetUserNameCompletion } from '../../completions.js';
 
 import { AutocompleteBase } from '../../base.js';
@@ -28,7 +27,6 @@ export default class Index extends AutocompleteBase {
       description: 'refresh cache only (ignores displaying instructions)',
       char: 'r',
     }),
-    suppresswarnings: Flags.boolean({ hidden: true }),
   };
 
   public async run(): Promise<void> {
@@ -55,7 +53,11 @@ export default class Index extends AutocompleteBase {
           ? `Update your shell to load the new completions
 ${chalk.cyan('$ source ~/.config/fish/config.fish')}`
           : `Add the autocomplete env var to your ${shell} profile and source it
-${chalk.cyan(`$ printf "$(${bin} autocmplt:script ${shell})" >> ~/.${shell}rc; source ~/.${shell}rc`)}`;
+${chalk.cyan(
+  `$ printf "$(${bin} autocmplt:script ${shell})" >> ~/.${shell}rc; ${
+    shell === 'zsh' ? 'exec zsh' : `source ~/.${shell}rc`
+  }`
+)}`;
 
       this.log(`
 ${chalk.bold(`Setup Instructions for ${bin.toUpperCase()} CLI Autocomplete ---`)}
@@ -71,22 +73,6 @@ ${chalk.cyan(`$ ${bin} apps:info --app=${tabStr}`)} # Flag option completion
 
 Enjoy!
 `);
-    }
-
-    if (flags.suppresswarnings) {
-      try {
-        const suppresswarningsfile = path.join(
-          this.config.cacheDir,
-          `${this.config.bin}-autocmplt`,
-          'suppresswarnings'
-        );
-        await fs.ensureFile(suppresswarningsfile);
-        await fs.writeJson(suppresswarningsfile, {
-          SuppressUpdateWarning: true,
-        });
-      } catch (error) {
-        this.debug(error);
-      }
     }
   }
 

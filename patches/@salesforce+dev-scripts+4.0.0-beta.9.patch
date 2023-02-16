@@ -1,5 +1,5 @@
 diff --git a/node_modules/@salesforce/dev-scripts/bin/sf-clean.js b/node_modules/@salesforce/dev-scripts/bin/sf-clean.js
-index 90af01f..7873725 100755
+index 90af01f..ff466a9 100755
 --- a/node_modules/@salesforce/dev-scripts/bin/sf-clean.js
 +++ b/node_modules/@salesforce/dev-scripts/bin/sf-clean.js
 @@ -38,7 +38,7 @@ if (gitignorePath) {
@@ -20,16 +20,101 @@ index 90af01f..7873725 100755
    }
  }
  
-@@ -56,6 +56,6 @@ if (gitignorePath) {
- if (cleanAll) {
+@@ -57,5 +57,6 @@ if (cleanAll) {
    toClean = [...toClean, ...toCleanAll];
  }
--
+ 
 +toClean = [...new Set(toClean)]
  log(`rm -rf ${toClean}`);
  shell.rm('-rf', toClean);
+diff --git a/node_modules/@salesforce/dev-scripts/bin/sf-install.js b/node_modules/@salesforce/dev-scripts/bin/sf-install.js
+index 2e1a739..67d15b0 100755
+--- a/node_modules/@salesforce/dev-scripts/bin/sf-install.js
++++ b/node_modules/@salesforce/dev-scripts/bin/sf-install.js
+@@ -19,7 +19,8 @@ if (changed) {
+ } else {
+   require('../utils/standardize-pjson')();
+   require('../utils/standardize-files')();
+-  if (exists('.git')) {
++  const isCi = process.env.CI !== undefined;
++  if (exists('.git') && !isCi) {
+     require('../utils/husky-init')();
+   }
+ }
+diff --git a/node_modules/@salesforce/dev-scripts/files/mocharc.json b/node_modules/@salesforce/dev-scripts/files/mocharc.json
+index 2e6bae4..4253f30 100644
+--- a/node_modules/@salesforce/dev-scripts/files/mocharc.json
++++ b/node_modules/@salesforce/dev-scripts/files/mocharc.json
+@@ -3,5 +3,6 @@
+   "watch-extensions": "ts",
+   "recursive": true,
+   "reporter": "spec",
+-  "timeout": 5000
++  "timeout": 5000,
++  "node-option": ["experimental-specifier-resolution=node", "loader=ts-node/esm"]
+ }
+diff --git a/node_modules/@salesforce/dev-scripts/files/tsconfig-strict.json b/node_modules/@salesforce/dev-scripts/files/tsconfig-strict.json
+index d4f6ee8..7e65dc8 100644
+--- a/node_modules/@salesforce/dev-scripts/files/tsconfig-strict.json
++++ b/node_modules/@salesforce/dev-scripts/files/tsconfig-strict.json
+@@ -5,7 +5,11 @@
+   "extends": "@salesforce/dev-config/tsconfig-strict",
+   "compilerOptions": {
+     "outDir": "lib",
+-    "incremental": true
++    "module": "node16",
++    "moduleResolution": "node16",
++    "skipLibCheck": true,
++    "incremental": true,
++    "tsBuildInfoFile": ".tsbuildinfo"
+   },
+   "include": ["./src/**/*.ts"]
+ }
+diff --git a/node_modules/@salesforce/dev-scripts/files/tsconfig-test-strict.json b/node_modules/@salesforce/dev-scripts/files/tsconfig-test-strict.json
+index 44147cc..25e4a7c 100644
+--- a/node_modules/@salesforce/dev-scripts/files/tsconfig-test-strict.json
++++ b/node_modules/@salesforce/dev-scripts/files/tsconfig-test-strict.json
+@@ -3,5 +3,8 @@
+ 
+ {
+   "extends": "@salesforce/dev-config/tsconfig-test-strict",
++  "compilerOptions": {
++    "skipLibCheck": true
++  },
+   "include": ["./**/*.ts"]
+ }
+diff --git a/node_modules/@salesforce/dev-scripts/files/tsconfig.json b/node_modules/@salesforce/dev-scripts/files/tsconfig.json
+index f4f0945..90c250a 100644
+--- a/node_modules/@salesforce/dev-scripts/files/tsconfig.json
++++ b/node_modules/@salesforce/dev-scripts/files/tsconfig.json
+@@ -1,7 +1,12 @@
+ {
+   "extends": "@salesforce/dev-config/tsconfig",
+   "compilerOptions": {
+-    "outDir": "lib"
++    "outDir": "lib",
++    "module": "node16",
++    "moduleResolution": "node16",
++    "skipLibCheck": true,
++    "incremental": true,
++    "tsBuildInfoFile": ".tsbuildinfo"
+   },
+   "include": ["./src/**/*.ts"]
+ }
+diff --git a/node_modules/@salesforce/dev-scripts/package.json b/node_modules/@salesforce/dev-scripts/package.json
+index aac690f..a58dee7 100644
+--- a/node_modules/@salesforce/dev-scripts/package.json
++++ b/node_modules/@salesforce/dev-scripts/package.json
+@@ -40,6 +40,7 @@
+     "@types/mocha": "^9.0.0",
+     "@types/node": "^15.6.1",
+     "@types/sinon": "10.0.11",
++    "c8": "^7.12.0",
+     "chai": "^4.2.0",
+     "chalk": "^4.0.0",
+     "cosmiconfig": "^7.0.0",
 diff --git a/node_modules/@salesforce/dev-scripts/utils/sf-config.js b/node_modules/@salesforce/dev-scripts/utils/sf-config.js
-index 4c116b8..98b6c20 100644
+index 4c116b8..b69cc44 100644
 --- a/node_modules/@salesforce/dev-scripts/utils/sf-config.js
 +++ b/node_modules/@salesforce/dev-scripts/utils/sf-config.js
 @@ -31,17 +31,17 @@ const PACKAGE_DEFAULTS = {
@@ -54,6 +139,15 @@ index 4c116b8..98b6c20 100644
        output: [],
      },
      'test:compile': {
+@@ -53,7 +53,7 @@ const PACKAGE_DEFAULTS = {
+       dependencies: ['test:only', 'test:compile'],
+     },
+     'test:only': {
+-      command: 'nyc mocha "test/**/*.test.ts"',
++      command: 'c8 mocha "test/**/*.test.ts"',
+       files: ['test/**/*.ts', 'src/**/*.ts', 'tsconfig.json', 'test/tsconfig.json'],
+       output: [],
+     },
 @@ -70,18 +70,18 @@ const PLUGIN_DEFAULTS = {
    wireit: {
      ...PACKAGE_DEFAULTS.wireit,
@@ -76,6 +170,15 @@ index 4c116b8..98b6c20 100644
        files: ['src/**/*.ts', 'schemas'],
        output: [],
      },
+@@ -118,7 +118,7 @@ const resolveConfig = (path) => {
+   const configFromFile = (result && result.config) || {};
+ 
+   if (configFromFile.test?.testsPath) {
+-    defaults.wireit['test:only'].command = `nyc mocha "${configFromFile.test.testsPath}"`;
++    defaults.wireit['test:only'].command = `c8 mocha "${configFromFile.test.testsPath}"`;
+   }
+ 
+   // Allow users to override certain scripts
 @@ -140,6 +140,8 @@ const resolveConfig = (path) => {
    // Remove excluded items
    excludeScripts.forEach((scriptName) => {
@@ -119,9 +222,18 @@ index 6a851f6..ac30cf1 100644
    const scripts = config.scripts;
  
 diff --git a/node_modules/@salesforce/dev-scripts/utils/write-dependencies.js b/node_modules/@salesforce/dev-scripts/utils/write-dependencies.js
-index 928b982..d078ca7 100644
+index 928b982..5fc50dd 100644
 --- a/node_modules/@salesforce/dev-scripts/utils/write-dependencies.js
 +++ b/node_modules/@salesforce/dev-scripts/utils/write-dependencies.js
+@@ -69,7 +69,7 @@ module.exports = (projectPath) => {
+   add('@salesforce/dev-config');
+ 
+   // Included by dev-scripts
+-  add('nyc');
++  add('c8');
+   add('ts-node');
+   add('mocha');
+   add('sinon');
 @@ -85,7 +85,7 @@ module.exports = (projectPath) => {
    remove('@types/sinon');
    remove('typedoc');

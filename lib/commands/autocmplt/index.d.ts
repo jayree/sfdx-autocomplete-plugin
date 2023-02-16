@@ -6,7 +6,6 @@ export default class Index extends AutocompleteBase {
     };
     static flags: {
         'refresh-cache': import("@oclif/core/lib/interfaces/parser.js").BooleanFlag<boolean>;
-        suppresswarnings: import("@oclif/core/lib/interfaces/parser.js").BooleanFlag<boolean>;
     };
     run(): Promise<void>;
     private updateCache;

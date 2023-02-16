@@ -2,7 +2,7 @@
   {
     "command": "autocmplt",
     "plugin": "sfdx-autocmplt",
-    "flags": ["refresh-cache", "suppresswarnings"],
+    "flags": ["refresh-cache"],
     "alias": []
   },
   {

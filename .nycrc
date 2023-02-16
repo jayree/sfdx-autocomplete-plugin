@@ -1,5 +1,3 @@
 {
-  "reporter": ["lcov", "text"],
-  "extension": [".ts"],
-  "exclude": ["**/*.d.ts", "**/*.test.js","**/helpers/*.js"]
+  "extends": "@salesforce/dev-config/nyc"
 }

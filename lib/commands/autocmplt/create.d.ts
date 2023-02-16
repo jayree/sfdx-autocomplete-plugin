@@ -25,6 +25,7 @@ export default class Create extends AutocompleteBase {
     private get zshCommandsSetter();
     private get zshCommandsFlagsSetters();
     private get commands();
+    private get bashCommandsWithFlagsList();
     private get bashCompletionFunction();
     private get zshCompletionFunction();
     run(): Promise<void>;

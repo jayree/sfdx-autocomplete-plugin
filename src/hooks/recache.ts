@@ -31,37 +31,6 @@ export const completions: Hook<any> = async function () {
     await updateCache(cachePath, options);
   };
 
-  let suppresswarnings;
-
-  const suppresswarningsfile = path.join(this.config.cacheDir, `${this.config.bin}-autocmplt`, 'suppresswarnings');
-
-  try {
-    suppresswarnings = await fs.readJson(suppresswarningsfile);
-  } catch (err) {
-    suppresswarnings = {
-      SuppressUpdateWarning: false,
-    };
-  }
-
-  if (this.config.plugins.filter((p) => p.name === '@oclif/plugin-autocomplete').length) {
-    if (!suppresswarnings.SuppressUpdateWarning) {
-      ux.styledHeader(`${this.config.bin}-autocmplt`);
-      ux.warn(
-        `'@oclif/plugin-autocomplete' plugin detected!
-Use the 'autocmplt' command instead of 'autocomplete' for improved auto-completion.
-Run '${this.config.bin} autocmplt --suppresswarnings' to suppress this warning.`
-      );
-    }
-  } else if (suppresswarnings.SuppressUpdateWarning) {
-    try {
-      await fs.ensureFile(suppresswarningsfile);
-      await fs.writeJson(suppresswarningsfile, {
-        SuppressUpdateWarning: false,
-      });
-      // eslint-disable-next-line no-empty
-    } catch (error) {}
-  }
-
   process.once('beforeExit', () => {
     ux.spinner.start(`${this.config.bin}-autocmplt: Updating completions`);
     void rm();
