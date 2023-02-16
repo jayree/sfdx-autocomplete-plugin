@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.6.1...v2.7.0) (2023-02-16)
+
+
+### Features
+
+* support commands that use spaces as separators ([d874359](https://github.com/jayree/sfdx-autocomplete-plugin/commit/d8743593e27cce77c874dc08f583e3804dc258d5))
+
 ## [2.6.1](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.6.0...v2.6.1) (2023-02-01)
 
 
