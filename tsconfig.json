@@ -2,11 +2,14 @@
   "extends": "@salesforce/dev-config/tsconfig",
   "compilerOptions": {
     "outDir": "lib",
-    "module": "node16",
-    "moduleResolution": "node16",
+    "module": "ES2020",
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo"
+  },
+  "ts-node": {
+    "esm": true
   },
   "include": ["./src/**/*.ts"]
 }
