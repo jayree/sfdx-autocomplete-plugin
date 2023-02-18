@@ -212,7 +212,7 @@ _test-cli_app() {
         ;;
       esac
       ;;
-  esac 
+  esac
 }
 
 _test-cli_app_execute() {
@@ -234,7 +234,7 @@ _test-cli_app_execute() {
           ;;
       esac
       ;;
-  esac 
+  esac
 }
 
 _test-cli_deploy() {
