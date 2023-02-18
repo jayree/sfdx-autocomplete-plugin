@@ -39,7 +39,6 @@ class TestCommand extends SfCommand<void> {
 }
 
 describe('AutocompleteOptions', () => {
-  // tslint:disable-next-line: no-any
   let cmd: any;
   before(async () => {
     await config.load();

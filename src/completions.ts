@@ -97,9 +97,9 @@ export const targetUserNameCompletion: Completion = {
   },
 };
 
-// tslint:disable-next-line: variable-name
 export const CompletionMapping: { [key: string]: Completion } = {
   targetusername: targetUserNameCompletion,
   'target-org': targetUserNameCompletion,
+  'target-hub-org': targetUserNameCompletion,
   instanceurl: instanceurlCompletion,
 };

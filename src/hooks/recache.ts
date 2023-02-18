@@ -13,7 +13,6 @@ import { targetUserNameCompletion } from '../completions.js';
 import { updateCache } from '../cache.js';
 import acCreate from '../commands/autocmplt/create.js';
 
-// tslint:disable-next-line: no-any
 export const completions: Hook<any> = async function () {
   const ux = new Ux();
   // autocomplete is now in core, skip windows
@@ -24,7 +23,6 @@ export const completions: Hook<any> = async function () {
 
   await rmKey('targetusername');
 
-  // tslint:disable-next-line: no-any
   const update = async (completion: any, cacheKey: string) => {
     const cachePath = path.join(completionsDir, cacheKey);
     const options = await completion.options({ config: this.config });

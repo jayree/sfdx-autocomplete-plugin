@@ -59,9 +59,7 @@ describe('AutocompleteBase', () => {
   });
 
   it('#findCompletion', async () => {
-    // tslint:disable-next-line: no-any
     expect((cmd as any).findCompletion(AutocompleteTest.id, 'targetusername')).to.be.ok;
-    // tslint:disable-next-line: no-any
     expect((cmd as any).findCompletion(AutocompleteTest.id, 'bar')).to.not.be.ok;
   });
 });

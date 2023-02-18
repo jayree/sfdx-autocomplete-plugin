@@ -71,7 +71,6 @@ export default class Options extends AutocompleteBase {
     }
   }
 
-  // tslint:disable-next-line: no-any
   private determineCompletion(commandStateVars: {
     id: string;
     klass: Command.Class;
@@ -82,9 +81,7 @@ export default class Options extends AutocompleteBase {
   }) {
     const { id, klass, argsIndex, curPositionIsFlag, curPositionIsFlagValue, slicedArgv } = commandStateVars;
     // setup empty cache completion vars to assign
-    // tslint:disable-next-line: no-any
     let cacheKey: string;
-    // tslint:disable-next-line: no-any
     let cacheCompletion: any;
 
     // completing a flag/value? else completing an arg
@@ -137,11 +134,7 @@ export default class Options extends AutocompleteBase {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private findFlagFromWildArg(
-    wild: string,
-    klass: Command.Class
-    // tslint:disable-next-line: no-any
-  ): { flag: any; name: any } {
+  private findFlagFromWildArg(wild: string, klass: Command.Class): { flag: any; name: any } {
     let name = wild.replace(/^-+/, '');
     name = name.replace(/=(.+)?$/, '');
 

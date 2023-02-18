@@ -6,7 +6,6 @@
  */
 import fs from 'fs-extra';
 
-// tslint:disable-next-line: no-any
 export async function updateCache(cachePath: string, cache: any) {
   await fs.ensureFile(cachePath);
   await fs.writeJSON(cachePath, cache);
@@ -28,7 +27,6 @@ export async function fetchCache(
   cachePath: string,
   cacheDuration: number,
   skipCache: boolean,
-  // tslint:disable-next-line: no-any
   options: any
 ): Promise<string[]> {
   const cachePresent = fs.existsSync(cachePath);

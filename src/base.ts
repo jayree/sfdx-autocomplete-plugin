@@ -60,7 +60,6 @@ export abstract class AutocompleteBase extends SfCommand<void> {
     fs.writeSync(fd, entry);
   }
 
-  // tslint:disable-next-line: no-any
   protected async fetchOptions(cache: any) {
     const { cacheCompletion, cacheKey } = cache;
     // build/retrieve & return options cache

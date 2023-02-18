@@ -42,11 +42,8 @@ const cacheBuildFlagsTest = {
 describe('Create', () => {
   // Unit test private methods for extra coverage
   describe('private methods', () => {
-    // tslint:disable-next-line: no-any
     let cmd: any;
-    // tslint:disable-next-line: no-any
     let klass: any;
-    // tslint:disable-next-line: no-any
     let plugin: any;
     before(async () => {
       await config.load();
