@@ -6,6 +6,7 @@ export default class ZshCompWithSpaces {
     private _coTopics?;
     constructor(config: Config);
     generate(): string;
+    private genZshFlagArgumentsList;
     private genZshFlagArgumentsBlock;
     private genZshValuesBlock;
     private genZshTopicCompFun;

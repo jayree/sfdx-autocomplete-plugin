@@ -30,7 +30,7 @@ function wantsLocalDirs(flag: string): boolean {
   return wantsLocalDirsArray.includes(flag);
 }
 
-const argTemplate = '        "%s")\n          %s\n        ;;\n';
+const argTemplate = '"%s")\n          %s\n        ;;';
 
 type CommandCompletion = {
   id: string;
@@ -86,7 +86,7 @@ export default class ZshCompWithSpaces {
       for (const arg of firstArgs) {
         if (this.coTopics.includes(arg.id)) {
           // coTopics already have a completion function.
-          caseBlock += `${arg.id})\n  _${this.config.bin}_${arg.id}\n  ;;\n`;
+          caseBlock += `        ${arg.id})\n          _${this.config.bin}_${arg.id}\n          ;;\n`;
         } else {
           const cmd = this.commands.find((c) => c.id === arg.id);
 
@@ -94,16 +94,16 @@ export default class ZshCompWithSpaces {
             // if it's a command and has flags, inline flag completion statement.
             // skip it from the args statement if it doesn't accept any flag.
             if (Object.keys(cmd.flags).length > 0) {
-              caseBlock += `${arg.id})\n${this.genZshFlagArgumentsBlock(cmd.flags)} ;; \n`;
+              caseBlock += `        ${arg.id})\n          ${this.genZshFlagArgumentsBlock(cmd.flags)}         ;; \n`;
             }
           } else {
             // it's a topic, redirect to its completion function.
-            caseBlock += `${arg.id})\n  _${this.config.bin}_${arg.id}\n  ;;\n`;
+            caseBlock += `        ${arg.id})\n          _${this.config.bin}_${arg.id}\n          ;;\n`;
           }
         }
       }
 
-      caseBlock += 'esac\n';
+      caseBlock += '      esac';
 
       return caseBlock;
     };
@@ -120,11 +120,11 @@ _${this.config.bin}() {
 
   case "$state" in
     cmds)
-      ${this.genZshValuesBlock(firstArgs)} 
-    ;;
+      ${this.genZshValuesBlock(firstArgs)}
+      ;;
     args)
       ${mainArgsCaseBlock()}
-    ;;
+      ;;
   esac
 }
 
@@ -134,10 +134,10 @@ _${this.config.bin}
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private genZshFlagArgumentsBlock(flags?: CommandFlags): string {
+  private genZshFlagArgumentsList(flags?: CommandFlags): string {
     // if a command doesn't have flags make it only complete files
     // also add comp for the global `--help` flag.
-    if (!flags) return '_arguments -S \\\n --help"[Show help for command]" "*: :_files';
+    if (!flags) return '--help"[Show help for command]" "*: :_files';
 
     const flagNames = Object.keys(flags);
 
@@ -145,7 +145,7 @@ _${this.config.bin}
     // Do not complete flags after a ‘--’ appearing on the line, and ignore the ‘--’. For example, with -S, in the line:
     // foobar -x -- -y
     // the ‘-x’ is considered a flag, the ‘-y’ is considered an argument, and the ‘--’ is considered to be neither.
-    let argumentsBlock = '_arguments -S \\\n';
+    let argumentsBlock = '';
 
     for (const flagName of flagNames) {
       const f = flags[flagName];
@@ -163,7 +163,7 @@ _${this.config.bin}
             // this flag can be present multiple times on the line
             flagSpec += `"*"{-${f.char},--${f.name}}`;
           } else {
-            flagSpec += `"(-${f.char} --${f.name})"{-${f.char},--${f.name}}`;
+            flagSpec += `{-${f.char},--${f.name}}`;
           }
 
           flagSpec += `"[${f.summary}]`;
@@ -215,11 +215,25 @@ _${this.config.bin}
   }
 
   // eslint-disable-next-line class-methods-use-this
+  private genZshFlagArgumentsBlock(flags?: CommandFlags): string {
+    let argumentsBlock = '_arguments -S \\';
+    const flagArgsBlockTemplate = '                     %s';
+
+    this.genZshFlagArgumentsList(flags)
+      .split('\n')
+      .forEach((f) => {
+        argumentsBlock += `\n${util.format(flagArgsBlockTemplate, f)}`;
+      });
+
+    return argumentsBlock;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   private genZshValuesBlock(subArgs: Array<{ id: string; summary?: string }>): string {
-    let valuesBlock = '_values "completions" \\\n';
+    let valuesBlock = '_values "completions"';
 
     subArgs.forEach((subArg) => {
-      valuesBlock += `"${subArg.id}[${subArg.summary}]" \\\n`;
+      valuesBlock += ` \\\n              "${subArg.id}[${subArg.summary}]"`;
     });
 
     return valuesBlock;
@@ -236,7 +250,7 @@ _${this.config.bin}
       }
     }
 
-    const flagArgsTemplate = '        "%s")\n          %s\n        ;;\n';
+    const flagArgsTemplate = '"%s")\n          %s\n          ;;';
 
     const underscoreSepId = id.replace(/:/g, '_');
     const depth = id.split(':').length;
@@ -247,32 +261,18 @@ _${this.config.bin}
       const compFuncName = `${this.config.bin}_${underscoreSepId}`;
 
       const coTopicCompFunc = `_${compFuncName}() {
-  _${compFuncName}_flags() {
-    local context state state_descr line
-    typeset -A opt_args
-
-    ${this.genZshFlagArgumentsBlock(this.commands.find((c) => c.id === id)?.flags)}
-  }
-
   local context state state_descr line
   typeset -A opt_args
 
-  _arguments -C "1: :->cmds" "*: :->args"
+  _arguments -C "1: :->cmds" "*::arg:->args"
 
   case "$state" in
     cmds)
-      if [[ "\${words[CURRENT]}" == -* ]]; then
-        _${compFuncName}_flags
-      else
-%s
-      fi
+      %s
       ;;
     args)
       case $line[1] in
-%s
-      *)
-        _${compFuncName}_flags
-      ;;
+        %s
       esac
       ;;
   esac
@@ -309,7 +309,16 @@ _${this.config.bin}
           argsBlock += util.format(flagArgsTemplate, subArg, this.genZshFlagArgumentsBlock(c.flags));
         });
 
-      return util.format(coTopicCompFunc, this.genZshValuesBlock(subArgs), argsBlock);
+      let argumentsListBlock = '';
+      const flagArgsBlockTemplate = '              %s';
+
+      this.genZshFlagArgumentsList(this.commands.find((c) => c.id === id)?.flags)
+        .split('\n')
+        .forEach((f) => {
+          argumentsListBlock += `\n${util.format(flagArgsBlockTemplate, f)}`;
+        });
+
+      return util.format(coTopicCompFunc, `${this.genZshValuesBlock(subArgs)} \\${argumentsListBlock}`, argsBlock);
     }
     let argsBlock = '';
 
@@ -349,11 +358,11 @@ _${this.config.bin}
 
   case "$state" in
     cmds)
-%s
+      %s
       ;;
     args)
       case $line[1] in
-%s
+        %s
       esac
       ;;
   esac 
