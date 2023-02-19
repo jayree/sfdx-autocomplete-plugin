@@ -362,7 +362,7 @@ end`);
         let options = f['options'] ? `-r -a "${f['options'].join(' ')}"` : '';
         if (options.length === 0) {
           const cacheKey: string = f.name;
-          const cacheCompletion = this.findCompletion(command.id, cacheKey);
+          const cacheCompletion = this.findCompletion(cacheKey);
           if (cacheCompletion) {
             options = await this.fetchOptions({ cacheCompletion, cacheKey });
             options = `-r -a "${options.split('\n').join(' ')}"`;
@@ -408,7 +408,7 @@ end`);
           f.hasOwnProperty('completion') ||
           // eslint-disable-next-line no-prototype-builtins
           f.hasOwnProperty('options') ||
-          this.findCompletion(id, flag, f.summary || f.description);
+          this.findCompletion(flag);
         const name = isBoolean ? flag : `${flag}=-`;
         let cachecompl = '';
         if (hasCompletion) {

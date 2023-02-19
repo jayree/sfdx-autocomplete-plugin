@@ -6,19 +6,9 @@ export type Completion = {
     options(ctx: Command.Class): Promise<string[]>;
 };
 export declare class CompletionLookup {
-    private readonly cmdId;
     private readonly name;
-    private readonly description?;
-    private readonly blocklistMap;
-    private readonly keyAliasMap;
-    private readonly commandArgsMap;
-    constructor(cmdId: string, name: string, description?: string);
-    private get key();
+    constructor(name: string);
     run(): Completion | undefined;
-    private argAlias;
-    private keyAlias;
-    private descriptionAlias;
-    private blocklisted;
 }
 export declare const instanceurlCompletion: Completion;
 export declare const targetUserNameCompletion: Completion;

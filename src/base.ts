@@ -87,7 +87,7 @@ export abstract class AutocompleteBase extends SfCommand<void> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  protected findCompletion(cmdId: string, name: string, description = ''): Completion | undefined {
-    return new CompletionLookup(cmdId, name, description).run();
+  protected findCompletion(name: string): Completion | undefined {
+    return new CompletionLookup(name).run();
   }
 }

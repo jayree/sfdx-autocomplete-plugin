@@ -19,56 +19,10 @@ export type Completion = {
 const oneDay = 60 * 60 * 24;
 
 export class CompletionLookup {
-  private readonly blocklistMap: { [key: string]: string[] } = {
-    // app: ['apps:create'],
-    // space: ['spaces:create'],
-  };
-
-  private readonly keyAliasMap: { [key: string]: { [key: string]: string } } = {
-    key: {
-      // 'config:get': 'config',
-    },
-  };
-
-  private readonly commandArgsMap: { [key: string]: { [key: string]: string } } = {
-    key: {
-      // 'config:set': 'configSet',
-    },
-  };
-
-  public constructor(
-    private readonly cmdId: string,
-    private readonly name: string,
-    private readonly description?: string
-  ) {}
-
-  private get key(): string {
-    return this.argAlias() || this.keyAlias() || this.descriptionAlias() || this.name;
-  }
+  public constructor(private readonly name: string) {}
 
   public run(): Completion | undefined {
-    if (this.blocklisted()) return;
-    return CompletionMapping[this.key];
-  }
-
-  private argAlias(): string | undefined {
-    return this.commandArgsMap[this.name]?.[this.cmdId];
-  }
-
-  private keyAlias(): string | undefined {
-    return this.keyAliasMap[this.name]?.[this.cmdId];
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private descriptionAlias(): string | undefined {
-    const d = this.description;
-    // if (d.match(/^dyno size/)) return 'dynosize';
-    // if (d.match(/^process type/)) return 'processtype';
-    return d ? undefined : undefined;
-  }
-
-  private blocklisted(): boolean {
-    return this.blocklistMap[this.name]?.includes(this.cmdId);
+    return CompletionMapping[this.name];
   }
 }
 

@@ -59,7 +59,7 @@ describe('AutocompleteBase', () => {
   });
 
   it('#findCompletion', async () => {
-    expect((cmd as any).findCompletion(AutocompleteTest.id, 'targetusername')).to.be.ok;
-    expect((cmd as any).findCompletion(AutocompleteTest.id, 'bar')).to.not.be.ok;
+    expect((cmd as any).findCompletion('targetusername')).to.be.ok;
+    expect((cmd as any).findCompletion('bar')).to.not.be.ok;
   });
 });
