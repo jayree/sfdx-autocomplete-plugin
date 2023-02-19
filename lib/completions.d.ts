@@ -1,9 +1,8 @@
-import { Command } from '@oclif/core';
 export type Completion = {
     skipCache?: boolean;
     cacheDuration?: number;
-    cacheKey?(ctx: Command.Class): Promise<string>;
-    options(ctx?: Command.Class): Promise<string[]>;
+    cacheKey?(): Promise<string>;
+    options(): Promise<string[]>;
 };
 export declare class CompletionLookup {
     private readonly name;

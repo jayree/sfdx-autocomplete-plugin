@@ -16,6 +16,9 @@ export declare abstract class AutocompleteBase extends SfCommand<void> {
     errorIfWindows(): void;
     errorIfNotSupportedShell(shell: string): void;
     writeLogFile(msg: string): void;
-    protected fetchOptions(cache: any): Promise<string>;
-    protected findCompletion(name: string): Completion | undefined;
+    findCompletion(name: string): Completion | undefined;
+    protected fetchOptions(cache: {
+        cacheCompletion: Completion;
+        cacheKey: string;
+    }): Promise<string>;
 }

@@ -39,7 +39,7 @@ class TestCommand extends SfCommand<void> {
 }
 
 describe('AutocompleteOptions', () => {
-  let cmd: any;
+  let cmd: Options;
   before(async () => {
     await config.load();
     cmd = new Options([], config);

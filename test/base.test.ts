@@ -41,8 +41,8 @@ describe('AutocompleteBase', () => {
   it('#errorIfWindows', async () => {
     try {
       new AutocompleteTest([], config).errorIfWindows();
-    } catch (e) {
-      expect(e.message).to.eq('Autocomplete is not currently supported in Windows');
+    } catch (err) {
+      expect((err as Error).message).to.eq('Autocomplete is not currently supported in Windows');
     }
   });
 
@@ -59,7 +59,7 @@ describe('AutocompleteBase', () => {
   });
 
   it('#findCompletion', async () => {
-    expect((cmd as any).findCompletion('targetusername')).to.be.ok;
-    expect((cmd as any).findCompletion('bar')).to.not.be.ok;
+    expect(cmd.findCompletion('targetusername')).to.be.ok;
+    expect(cmd.findCompletion('bar')).to.not.be.ok;
   });
 });

@@ -79,7 +79,7 @@ export default class ZshCompWithSpaces {
         });
     });
 
-    const mainArgsCaseBlock = async () => {
+    const mainArgsCaseBlock = async (): Promise<string> => {
       let caseBlock = 'case $line[1] in\n';
 
       for await (const arg of firstArgs) {

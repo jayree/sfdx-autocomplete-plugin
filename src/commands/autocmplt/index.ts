@@ -8,7 +8,7 @@ import path from 'node:path';
 import { Flags } from '@salesforce/sf-plugins-core';
 import { Args } from '@oclif/core';
 import chalk from 'chalk';
-import { targetUserNameCompletion } from '../../completions.js';
+import { Completion, targetUserNameCompletion } from '../../completions.js';
 
 import { AutocompleteBase } from '../../base.js';
 import { updateCache } from '../../cache.js';
@@ -76,11 +76,9 @@ Enjoy!
     }
   }
 
-  private async updateCache(completion: any, cacheKey: string) {
+  private async updateCache(completion: Completion, cacheKey: string): Promise<void> {
     const cachePath = path.join(this.completionsCacheDir, cacheKey);
-    const options = await completion.options({
-      config: this.config,
-    });
+    const options = await completion.options();
     await updateCache(cachePath, options);
   }
 }

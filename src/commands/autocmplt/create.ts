@@ -32,7 +32,6 @@ function sanitizeDescription(description?: string): string {
   ); // only use the first line
 }
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const debug = Debug('autocmplt:create');
 
 export default class Create extends AutocompleteBase {
@@ -43,29 +42,85 @@ export default class Create extends AutocompleteBase {
 
   private _commands?: Command.Cached[];
 
-  private get bashSetupScriptPath(): string {
+  public get bashSetupScriptPath(): string {
     // <cacheDir>/autocomplete/bash_setup
     return path.join(this.autocompleteCacheDir, 'bash_setup');
   }
 
-  private get bashCommandsListPath(): string {
+  public get bashCommandsListPath(): string {
     // <cacheDir>/autocomplete/commands
     return path.join(this.autocompleteCacheDir, 'commands');
   }
 
-  private get zshSetupScriptPath(): string {
+  public get zshSetupScriptPath(): string {
     // <cacheDir>/autocomplete/zsh_setup
     return path.join(this.autocompleteCacheDir, 'zsh_setup');
+  }
+
+  public get zshCompletionSettersPath(): string {
+    // <cacheDir>/autocomplete/commands_setters
+    return path.join(this.autocompleteCacheDir, 'commands_setters');
+  }
+
+  public get bashSetupScript(): string {
+    const bin = this.cliBinEnvVar;
+    return `${this.envAnalyticsDir}
+${this.envCommandsPath}
+${bin}_AC_BASH_COMPFUNC_PATH=${this.bashCompletionFunctionPath} && test -f $${bin}_AC_BASH_COMPFUNC_PATH && source $${bin}_AC_BASH_COMPFUNC_PATH;
+`;
+  }
+
+  public get zshSetupScript(): string {
+    const bin = this.cliBinEnvVar;
+    return `${this.skipEllipsis ? '' : this.completionDotsFunc}
+${this.envAnalyticsDir}
+${this.envCommandsPath}
+${bin}_AC_ZSH_SETTERS_PATH=\${${bin}_AC_COMMANDS_PATH}_setters && test -f $${bin}_AC_ZSH_SETTERS_PATH && source $${bin}_AC_ZSH_SETTERS_PATH;
+fpath=(
+${this.zshFunctionsDir}
+$fpath
+);
+autoload -Uz compinit;
+compinit;
+`;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public get completionDotsFunc(): string {
+    return `expand-or-complete-with-dots() {
+  echo -n "..."
+  zle expand-or-complete
+  zle redisplay
+}
+zle -N expand-or-complete-with-dots
+bindkey "^I" expand-or-complete-with-dots`;
+  }
+
+  public get bashCommandsList(): string {
+    return this.commands
+      .map((c) => {
+        try {
+          const publicFlags = this.genCmdPublicFlags(c).trim();
+          return `${c.id} ${publicFlags}`;
+        } catch (err) {
+          debug(`Error creating bash completion for command ${c.id}, moving on...`);
+          debug((err as Error).message);
+          this.writeLogFile((err as Error).message);
+          return '';
+        }
+      })
+      .join('\n');
+  }
+
+  public get zshCompletionSetters(): string {
+    const cmdsSetter = this.zshCommandsSetter;
+    const flagSetters = this.zshCommandsFlagsSetters;
+    return `${cmdsSetter}\n${flagSetters}`;
   }
 
   private get fishSetupScriptPath(): string {
     // <cacheDir>/autocomplete/clibin.fish
     return path.join(this.autocompleteCacheDir, `${this.cliBin}.fish`);
-  }
-
-  private get zshCompletionSettersPath(): string {
-    // <cacheDir>/autocomplete/commands_setters
-    return path.join(this.autocompleteCacheDir, 'commands_setters');
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -109,70 +164,14 @@ export default class Create extends AutocompleteBase {
     return path.join(this.bashFunctionsDir, `${this.cliBin}.bash`);
   }
 
-  private get bashSetupScript(): string {
-    const bin = this.cliBinEnvVar;
-    return `${this.envAnalyticsDir}
-${this.envCommandsPath}
-${bin}_AC_BASH_COMPFUNC_PATH=${this.bashCompletionFunctionPath} && test -f $${bin}_AC_BASH_COMPFUNC_PATH && source $${bin}_AC_BASH_COMPFUNC_PATH;
-`;
-  }
-
-  private get zshSetupScript(): string {
-    const bin = this.cliBinEnvVar;
-    return `${this.skipEllipsis ? '' : this.completionDotsFunc}
-${this.envAnalyticsDir}
-${this.envCommandsPath}
-${bin}_AC_ZSH_SETTERS_PATH=\${${bin}_AC_COMMANDS_PATH}_setters && test -f $${bin}_AC_ZSH_SETTERS_PATH && source $${bin}_AC_ZSH_SETTERS_PATH;
-fpath=(
-${this.zshFunctionsDir}
-$fpath
-);
-autoload -Uz compinit;
-compinit;
-`;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private get completionDotsFunc(): string {
-    return `expand-or-complete-with-dots() {
-  echo -n "..."
-  zle expand-or-complete
-  zle redisplay
-}
-zle -N expand-or-complete-with-dots
-bindkey "^I" expand-or-complete-with-dots`;
-  }
-
-  private get bashCommandsList(): string {
-    return this.commands
-      .map((c) => {
-        try {
-          const publicFlags = this.genCmdPublicFlags(c).trim();
-          return `${c.id} ${publicFlags}`;
-        } catch (err) {
-          debug(`Error creating bash completion for command ${c.id}, moving on...`);
-          debug(err.message);
-          this.writeLogFile(err.message as string);
-          return '';
-        }
-      })
-      .join('\n');
-  }
-
-  private get zshCompletionSetters(): string {
-    const cmdsSetter = this.zshCommandsSetter;
-    const flagSetters = this.zshCommandsFlagsSetters;
-    return `${cmdsSetter}\n${flagSetters}`;
-  }
-
   private get zshCommandsSetter(): string {
     const cmdsWithDescriptions = this.commands.map((c) => {
       try {
         return this.genCmdWithDescription(c);
       } catch (err) {
         debug(`Error creating zsh autocomplete for command ${c.id}, moving on...`);
-        debug(err.message);
-        this.writeLogFile(err.message as string);
+        debug((err as Error).message);
+        this.writeLogFile((err as Error).message);
         return '';
       }
     });
@@ -187,8 +186,8 @@ bindkey "^I" expand-or-complete-with-dots`;
           return this.genZshCmdFlagsSetter(c);
         } catch (err) {
           debug(`Error creating zsh autocomplete for command ${c.id}, moving on...`);
-          debug(err.message);
-          this.writeLogFile(err.message as string);
+          debug((err as Error).message);
+          this.writeLogFile((err as Error).message);
           return '';
         }
       })
@@ -231,8 +230,8 @@ bindkey "^I" expand-or-complete-with-dots`;
           });
         } catch (err) {
           debug(`Error creating completions for command ${c.id}`);
-          debug(err.message);
-          this.writeLogFile(err.message as string);
+          debug((err as Error).message);
+          this.writeLogFile((err as Error).message);
         }
       });
     });
@@ -277,7 +276,82 @@ bindkey "^I" expand-or-complete-with-dots`;
     await this.createFiles();
   }
 
-  private async ensureDirs() {
+  // eslint-disable-next-line class-methods-use-this
+  public genCmdPublicFlags(command: Command.Cached): string {
+    const flags = command.flags || {};
+    return Object.keys(flags)
+      .filter((flag) => !flags[flag].hidden)
+      .map((flag) => `--${flag}`)
+      .join(' ');
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public genCmdWithDescription(command: Command.Cached): string {
+    let description = '';
+    if (command.description) {
+      const text = command.description.split('\n')[0];
+      description = `:"${text}"`;
+    }
+    return `"${command.id.replace(/:/g, '\\:')}"${description}`;
+  }
+
+  public genZshCmdFlagsSetter(command: Command.Cached): string {
+    const id = command.id;
+    const flagscompletions = Object.keys(command.flags || {})
+      .filter((flag) => command.flags && !command.flags[flag].hidden)
+      .map((flag) => {
+        const f = command.flags?.[flag];
+        const isBoolean = f.type === 'boolean';
+        const isOption = f.type === 'option';
+        const hasCompletion =
+          // eslint-disable-next-line no-prototype-builtins
+          f.hasOwnProperty('completion') ||
+          // eslint-disable-next-line no-prototype-builtins
+          f.hasOwnProperty('options') ||
+          this.findCompletion(flag);
+        const name = isBoolean ? flag : `${flag}=-`;
+        let cachecompl = '';
+        if (hasCompletion) {
+          cachecompl = ': :_compadd_flag_options';
+        }
+        if (this.wantsLocalFiles(flag) && command.flags[flag].type === 'option') {
+          cachecompl = ': :_files';
+        }
+        if (this.wantsLocalDirs(flag) && command.flags[flag].type === 'option') {
+          cachecompl = ': :_files -/';
+        }
+        const help = isBoolean ? '(switch) ' : hasCompletion ? '(autocomplete) ' : '';
+        const multiple = isOption && f.multiple ? '*' : '';
+        const completion = `${multiple}--${name}[${help}${sanitizeDescription(
+          f.summary || f.description
+        )}]${cachecompl}`;
+        return `"${completion}"`;
+      })
+      .join('\n');
+
+    if (flagscompletions) {
+      return `_set_${id.replace(/:/g, '_')}_flags () {
+_flags=(
+${flagscompletions}
+)
+}
+`;
+    }
+    return `# no flags for ${id}`;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public genZshAllCmdsListSetter(cmdsWithDesc: string[]): string {
+    return `
+_${this.cliBin}_set_all_commands_list () {
+_all_commands_list=(
+${cmdsWithDesc.join('\n')}
+)
+}
+`;
+  }
+
+  private async ensureDirs(): Promise<void> {
     // ensure autocomplete cache dir
     await fs.ensureDir(this.autocompleteCacheDir);
     // ensure autocomplete completions dir
@@ -288,7 +362,7 @@ bindkey "^I" expand-or-complete-with-dots`;
     await fs.ensureDir(this.zshFunctionsDir);
   }
 
-  private async createFiles() {
+  private async createFiles(): Promise<void> {
     if (this.config.shell === 'bash') {
       await fs.writeFile(this.bashSetupScriptPath, this.bashSetupScript);
       await fs.writeFile(this.bashCommandsListPath, this.bashCommandsList);
@@ -359,7 +433,7 @@ end`);
         const f = flags[flag];
         const shortFlag = f.char ? `-s ${f.char}` : '';
         const description = `-d "${sanitizeDescription(f.summary || f.description)}"`;
-        let options = f['options'] ? `-r -a "${f['options'].join(' ')}"` : '';
+        let options = f.type === 'option' ? `-r -a "${f.options.join(' ')}"` : '';
         if (options.length === 0) {
           const cacheKey: string = f.name;
           const cacheCompletion = this.findCompletion(cacheKey);
@@ -374,81 +448,6 @@ end`);
       }
     }
     return completions.join('\n');
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private genCmdPublicFlags(command: Command.Cached): string {
-    const flags = command.flags || {};
-    return Object.keys(flags)
-      .filter((flag) => !flags[flag].hidden)
-      .map((flag) => `--${flag}`)
-      .join(' ');
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private genCmdWithDescription(command: Command.Cached): string {
-    let description = '';
-    if (command.description) {
-      const text = command.description.split('\n')[0];
-      description = `:"${text}"`;
-    }
-    return `"${command.id.replace(/:/g, '\\:')}"${description}`;
-  }
-
-  private genZshCmdFlagsSetter(command: Command.Cached): string {
-    const id = command.id;
-    const flagscompletions = Object.keys(command.flags || {})
-      .filter((flag) => command.flags && !command.flags[flag].hidden)
-      .map((flag) => {
-        const f = command.flags?.[flag];
-        const isBoolean = f.type === 'boolean';
-        const isOption = f.type === 'option';
-        const hasCompletion =
-          // eslint-disable-next-line no-prototype-builtins
-          f.hasOwnProperty('completion') ||
-          // eslint-disable-next-line no-prototype-builtins
-          f.hasOwnProperty('options') ||
-          this.findCompletion(flag);
-        const name = isBoolean ? flag : `${flag}=-`;
-        let cachecompl = '';
-        if (hasCompletion) {
-          cachecompl = ': :_compadd_flag_options';
-        }
-        if (this.wantsLocalFiles(flag) && command.flags[flag].type === 'option') {
-          cachecompl = ': :_files';
-        }
-        if (this.wantsLocalDirs(flag) && command.flags[flag].type === 'option') {
-          cachecompl = ': :_files -/';
-        }
-        const help = isBoolean ? '(switch) ' : hasCompletion ? '(autocomplete) ' : '';
-        const multiple = isOption && f.multiple ? '*' : '';
-        const completion = `${multiple}--${name}[${help}${sanitizeDescription(
-          f.summary || f.description
-        )}]${cachecompl}`;
-        return `"${completion}"`;
-      })
-      .join('\n');
-
-    if (flagscompletions) {
-      return `_set_${id.replace(/:/g, '_')}_flags () {
-_flags=(
-${flagscompletions}
-)
-}
-`;
-    }
-    return `# no flags for ${id}`;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private genZshAllCmdsListSetter(cmdsWithDesc: string[]): string {
-    return `
-_${this.cliBin}_set_all_commands_list () {
-_all_commands_list=(
-${cmdsWithDesc.join('\n')}
-)
-}
-`;
   }
 
   // eslint-disable-next-line class-methods-use-this

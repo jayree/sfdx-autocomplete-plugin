@@ -6,9 +6,10 @@
  */
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Config, Plugin } from '@oclif/core';
+import { Config, Plugin, Command } from '@oclif/core';
 import { loadJSON } from '@oclif/core/lib/config/util.js';
 import { expect } from 'chai';
+import { Manifest } from '@oclif/core/lib/interfaces';
 
 // eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);
@@ -20,7 +21,7 @@ import Create from '../../../src/commands/autocmplt/create.js';
 const root = resolve(__dirname, '../../../package.json');
 const config = new Config({ root });
 
-const cacheBuildFlagsTest = {
+const cacheBuildFlagsTest: Command.Loadable = {
   id: 'autocmplt:create',
   flags: {
     targetusername: {
@@ -28,39 +29,46 @@ const cacheBuildFlagsTest = {
       type: 'option',
       description: 'targetusername to use',
     },
-    visable: { name: 'visable', type: 'boolean', description: 'visable flag' },
+    visable: { name: 'visable', type: 'boolean', description: 'visable flag', allowNo: false },
     hidden: {
       name: 'hidden',
       type: 'boolean',
       description: 'hidden flag',
       hidden: true,
+      allowNo: false,
     },
   },
-  args: [],
+  async load(): Promise<Command.Class> {
+    return config as unknown as Command.Class;
+  },
+  hidden: false,
+  aliases: [],
+  args: {},
 };
 
 describe('Create', () => {
   // Unit test private methods for extra coverage
   describe('private methods', () => {
-    let cmd: any;
-    let klass: any;
-    let plugin: any;
+    let cmd: Create;
+    let klass: Command.Cached;
+    let plugin: Plugin;
     before(async () => {
       await config.load();
       cmd = new Create([], config);
       plugin = new Plugin({ root });
       cmd.config.plugins = [plugin];
       await plugin.load();
-      plugin.manifest = await loadJSON(resolve(__dirname, '../../../test/test.oclif.manifest.json'));
+      plugin.manifest = (await loadJSON(resolve(__dirname, '../../../test/test.oclif.manifest.json'))) as Manifest;
       plugin.commands = Object.entries(plugin.manifest.commands as { [s: string]: unknown }).map(([id, c]) => ({
         ...(c as Record<string, unknown>),
-        load: () => plugin.findCommand(id, { must: true }),
-      }));
-      klass = plugin.commands[1];
+        load: async (): Promise<Command.Class> => plugin.findCommand(id, { must: true }) as unknown as Command.Class,
+      })) as Command.Loadable[];
+
+      klass = plugin.commands[1] as unknown as Command.Cached;
     });
 
     it('file paths', () => {
-      const dir = cmd.config.cacheDir;
+      const dir: string = cmd.config.cacheDir;
       expect(cmd.bashSetupScriptPath).to.eq(`${dir}/autocomplete/bash_setup`);
       expect(cmd.zshSetupScriptPath).to.eq(`${dir}/autocomplete/zsh_setup`);
       expect(cmd.bashCommandsListPath).to.eq(`${dir}/autocomplete/commands`);
@@ -74,7 +82,7 @@ describe('Create', () => {
     it('#genCmdPublicFlags', () => {
       expect(cmd.genCmdPublicFlags(cacheBuildFlagsTest)).to.eq('--targetusername --visable');
       expect(cmd.genCmdPublicFlags(cacheBuildFlagsTest)).to.not.match(/--hidden/);
-      expect(cmd.genCmdPublicFlags(Create)).to.eq('');
+      expect(cmd.genCmdPublicFlags(Create as unknown as Command.Cached)).to.eq('');
     });
 
     it('#bashCommandsList', () => {

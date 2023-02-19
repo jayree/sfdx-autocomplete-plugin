@@ -6,14 +6,12 @@
  */
 import { StateAggregator } from '@salesforce/core';
 import { Org } from '@salesforce/core';
-// eslint-disable-next-line sf-plugin/no-oclif-flags-command-import
-import { Command } from '@oclif/core';
 
 export type Completion = {
   skipCache?: boolean;
   cacheDuration?: number;
-  cacheKey?(ctx: Command.Class): Promise<string>;
-  options(ctx?: Command.Class): Promise<string[]>;
+  cacheKey?(): Promise<string>;
+  options(): Promise<string[]>;
 };
 
 const oneDay = 60 * 60 * 24;
@@ -38,7 +36,7 @@ export const instanceurlCompletion: Completion = {
 
 export const targetUserNameCompletion: Completion = {
   cacheDuration: oneDay,
-  options: async () => {
+  options: async (): Promise<string[]> => {
     if (_activeAliasOrUsername) return _activeAliasOrUsername;
     const info = await StateAggregator.create();
     const aliases = info.aliases.getAll();

@@ -20,7 +20,7 @@ export abstract class AutocompleteBase extends SfCommand<void> {
     return this.config.bin;
   }
 
-  public get cliBinEnvVar() {
+  public get cliBinEnvVar(): string {
     return this.config.bin.toUpperCase().replace('-', '_');
   }
 
@@ -36,13 +36,13 @@ export abstract class AutocompleteBase extends SfCommand<void> {
     return path.join(this.config.cacheDir, 'autocomplete.log');
   }
 
-  public errorIfWindows() {
+  public errorIfWindows(): void {
     if (this.config.windows) {
       throw new Error('Autocomplete is not currently supported in Windows');
     }
   }
 
-  public errorIfNotSupportedShell(shell: string) {
+  public errorIfNotSupportedShell(shell: string): void {
     if (!shell) {
       this.error('Missing required argument shell');
     }
@@ -52,7 +52,7 @@ export abstract class AutocompleteBase extends SfCommand<void> {
     }
   }
 
-  public writeLogFile(msg: string) {
+  public writeLogFile(msg: string): void {
     const now = new Date();
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     const entry = `[${now}] ${msg}\n`;
@@ -60,34 +60,28 @@ export abstract class AutocompleteBase extends SfCommand<void> {
     fs.writeSync(fd, entry);
   }
 
-  protected async fetchOptions(cache: any) {
+  // eslint-disable-next-line class-methods-use-this
+  public findCompletion(name: string): Completion | undefined {
+    return new CompletionLookup(name).run();
+  }
+
+  protected async fetchOptions(cache: { cacheCompletion: Completion; cacheKey: string }): Promise<string> {
     const { cacheCompletion, cacheKey } = cache;
     // build/retrieve & return options cache
     if (cacheCompletion?.options) {
-      const ctx = {
-        args: this.parsedArgs,
-        flags: this.parsedFlags,
-        argv: this.argv,
-        config: this.config,
-      };
       // use cacheKey function or fallback to arg/flag name
-      const ckey = cacheCompletion.cacheKey ? await cacheCompletion.cacheKey(ctx) : null;
+      const ckey = cacheCompletion.cacheKey ? await cacheCompletion.cacheKey() : null;
       const key: string = ckey || cacheKey || 'unknown_key_error';
       const flagCachePath = path.join(this.completionsCacheDir, key);
 
       // build/retrieve cache
       const duration: number = cacheCompletion.cacheDuration || 60 * 60 * 24; // 1 day
       const skip: boolean = cacheCompletion.skipCache || false;
-      const opts = { cacheFn: () => cacheCompletion.options(ctx) };
-      const options = await fetchCache(flagCachePath, duration, skip, opts);
+      const opts = { cacheFn: (): Promise<string[]> => cacheCompletion.options() };
+      const options = (await fetchCache(flagCachePath, duration, skip, opts)) || [];
 
       // return options cache
-      return (options || []).join('\n');
+      return options.join('\n');
     }
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  protected findCompletion(name: string): Completion | undefined {
-    return new CompletionLookup(name).run();
   }
 }

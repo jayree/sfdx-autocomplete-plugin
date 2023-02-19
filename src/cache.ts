@@ -6,7 +6,7 @@
  */
 import fs from 'fs-extra';
 
-export async function updateCache(cachePath: string, cache: any) {
+export async function updateCache(cachePath: string, cache: string[]): Promise<void> {
   await fs.ensureFile(cachePath);
   await fs.writeJSON(cachePath, cache);
 }
@@ -27,11 +27,13 @@ export async function fetchCache(
   cachePath: string,
   cacheDuration: number,
   skipCache: boolean,
-  options: any
+  options: {
+    cacheFn: () => Promise<string[]>;
+  }
 ): Promise<string[]> {
   const cachePresent = fs.existsSync(cachePath);
   if (cachePresent && !skipCache && !_isStale(cachePath, cacheDuration)) {
-    return fs.readJSON(cachePath);
+    return fs.readJSON(cachePath) as Promise<string[]>;
   }
   const cache = await options.cacheFn();
   // TODO: move this to a fork

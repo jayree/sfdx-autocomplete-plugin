@@ -8,24 +8,24 @@ import path from 'node:path';
 import { Hook } from '@oclif/core';
 import { Ux } from '@salesforce/sf-plugins-core';
 import fs from 'fs-extra';
-import { targetUserNameCompletion } from '../completions.js';
+import { targetUserNameCompletion, Completion } from '../completions.js';
 
 import { updateCache } from '../cache.js';
 import acCreate from '../commands/autocmplt/create.js';
 
-export const completions: Hook<any> = async function () {
+export const completions: Hook<'update'> = async function () {
   const ux = new Ux();
   // autocomplete is now in core, skip windows
   if (this.config.windows) return;
   const completionsDir = path.join(this.config.cacheDir, 'autocomplete', 'completions');
-  const rm = () => fs.emptyDir(completionsDir);
-  const rmKey = (cacheKey: string) => fs.remove(path.join(completionsDir, cacheKey));
+  const rm = (): Promise<void> => fs.emptyDir(completionsDir);
+  const rmKey = (cacheKey: string): Promise<void> => fs.remove(path.join(completionsDir, cacheKey));
 
   await rmKey('targetusername');
 
-  const update = async (completion: any, cacheKey: string) => {
+  const update = async (completion: Completion, cacheKey: string): Promise<void> => {
     const cachePath = path.join(completionsDir, cacheKey);
-    const options = await completion.options({ config: this.config });
+    const options = await completion.options();
     await updateCache(cachePath, options);
   };
 
@@ -37,7 +37,7 @@ export const completions: Hook<any> = async function () {
     try {
       void update(targetUserNameCompletion, 'targetusername');
     } catch (err) {
-      this.debug(err.message);
+      this.debug((err as Error).message);
     }
     ux.spinner.stop();
   });

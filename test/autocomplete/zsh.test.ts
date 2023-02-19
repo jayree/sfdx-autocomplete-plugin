@@ -7,7 +7,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Config, Command } from '@oclif/core';
-import { Plugin as IPlugin } from '@oclif/core/lib/interfaces';
+import { Plugin as IPlugin, PJSON } from '@oclif/core/lib/interfaces';
 import { expect } from 'chai';
 import ZshCompWithSpaces from '../../src/autocomplete/zsh-spaces.js';
 
@@ -35,14 +35,14 @@ class MyCommandClass implements Command.Cached {
   public new(): Command.Cached {
     // @ts-expect-error this is not the full interface but enough for testing
     return {
-      _run(): Promise<any> {
+      _run(): Promise<void> {
         return Promise.resolve();
       },
     };
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public run(): PromiseLike<any> {
+  public run(): PromiseLike<void> {
     return Promise.resolve();
   }
 }
@@ -153,7 +153,7 @@ const pluginA: IPlugin = {
   alias: '@My/plugina',
   commands: [commandPluginA, commandPluginB, commandPluginC, commandPluginD],
   _base: '',
-  pjson: {} as any,
+  pjson: {} as PJSON.CLI,
   commandIDs: ['deploy'],
   root: '',
   version: '0.0.0',
@@ -183,8 +183,10 @@ describe('zsh completion with spaces', () => {
     config.pjson.dependencies = { '@My/pluginb': '0.0.0' };
     for (const plugin of config.plugins) {
       // @ts-expect-error private method
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       config.loadCommands(plugin);
       // @ts-expect-error private method
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       config.loadTopics(plugin);
     }
   });

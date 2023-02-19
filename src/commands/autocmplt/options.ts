@@ -7,7 +7,7 @@
 // eslint-disable-next-line sf-plugin/no-oclif-flags-command-import
 import { Args, Command } from '@oclif/core';
 import { AutocompleteBase } from '../../base.js';
-
+import { Completion } from '../../completions.js';
 export default class Options extends AutocompleteBase {
   public static aliases = ['autocomplete:options'];
 
@@ -42,99 +42,12 @@ export default class Options extends AutocompleteBase {
       if (options) this.log(options);
     } catch (err) {
       // write to ac log
-      this.writeLogFile(err.message as string);
+      this.writeLogFile((err as Error).message);
     }
-  }
-
-  private async processCommandLine() {
-    // find command id
-    const commandLineToComplete = this.argv[0].split(' ');
-    const id = commandLineToComplete[1];
-    // find Command
-    const C = this.config.findCommand(id);
-    let klass: Command.Class;
-    if (C) {
-      klass = await C.load();
-      // process Command state from command line data
-      const slicedArgv = commandLineToComplete.slice(2);
-      const [argsIndex, curPositionIsFlag, curPositionIsFlagValue] = this.determineCmdState(slicedArgv, klass);
-      return {
-        id,
-        klass,
-        argsIndex,
-        curPositionIsFlag,
-        curPositionIsFlagValue,
-        slicedArgv,
-      };
-    } else {
-      this.throwError(`Command ${id} not found`);
-    }
-  }
-
-  private determineCompletion(commandStateVars: {
-    id: string;
-    klass: Command.Class;
-    argsIndex: number;
-    curPositionIsFlag: boolean;
-    curPositionIsFlagValue: boolean;
-    slicedArgv: string[];
-  }) {
-    const { id, klass, argsIndex, curPositionIsFlag, curPositionIsFlagValue, slicedArgv } = commandStateVars;
-    // setup empty cache completion vars to assign
-    let cacheKey: string;
-    let cacheCompletion: any;
-
-    // completing a flag/value? else completing an arg
-    if (curPositionIsFlag || curPositionIsFlagValue) {
-      const slicedArgvCount = slicedArgv.length;
-      const lastArgvArg = slicedArgv[slicedArgvCount - 1];
-      const previousArgvArg = slicedArgv[slicedArgvCount - 2];
-      const argvFlag: string = curPositionIsFlagValue ? previousArgvArg : lastArgvArg;
-      const { name, flag } = this.findFlagFromWildArg(argvFlag, klass);
-      if (!flag) this.throwError(`${argvFlag} is not a valid flag for ${id}`);
-      cacheKey = name || flag.name;
-      cacheCompletion = flag.completion;
-      if (!cacheCompletion) {
-        if (flag.options) {
-          cacheCompletion = {
-            skipCache: true,
-
-            // eslint-disable-next-line @typescript-eslint/require-await
-            options: async () => flag.options,
-          };
-        }
-      }
-    } else {
-      const cmdArgs = klass.args || {};
-      // variable arg (strict: false)
-      if (!klass.strict) {
-        cacheKey = cmdArgs[0]?.name.toLowerCase();
-        cacheCompletion = this.findCompletion(cacheKey);
-        if (!cacheCompletion) {
-          this.throwError(`Cannot complete variable arg position for ${id}`);
-        }
-      } else if (argsIndex > Object.keys(cmdArgs).length - 1) {
-        this.throwError(`Cannot complete arg position ${argsIndex} for ${id}`);
-      } else {
-        const arg = cmdArgs[argsIndex];
-        cacheKey = arg.name.toLowerCase();
-      }
-    }
-
-    // try to auto-populate the completion object
-    if (!cacheCompletion) {
-      cacheCompletion = this.findCompletion(cacheKey);
-    }
-    return { cacheKey, cacheCompletion };
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private throwError(msg: string) {
-    throw new Error(msg);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private findFlagFromWildArg(wild: string, klass: Command.Class): { flag: any; name: any } {
+  public findFlagFromWildArg(wild: string, klass: Command.Class): { flag: Command.Flag.Cached; name: string } {
     let name = wild.replace(/^-+/, '');
     name = name.replace(/=(.+)?$/, '');
 
@@ -151,7 +64,7 @@ export default class Options extends AutocompleteBase {
     return unknown;
   }
 
-  private determineCmdState(argv: string[], klass: Command.Class): [number, boolean, boolean] {
+  public determineCmdState(argv: string[], klass: Command.Class): [number, boolean, boolean] {
     const args = klass.args || {};
     let needFlagValueSatisfied = false;
     let argIsFlag = false;
@@ -228,5 +141,96 @@ export default class Options extends AutocompleteBase {
     });
 
     return [argsIndex, argIsFlag, argIsFlagValue];
+  }
+
+  private async processCommandLine(): Promise<{
+    id: string;
+    klass: Command.Class;
+    argsIndex: number;
+    curPositionIsFlag: boolean;
+    curPositionIsFlagValue: boolean;
+    slicedArgv: string[];
+  }> {
+    // find command id
+    const commandLineToComplete = this.argv[0].split(' ');
+    const id = commandLineToComplete[1];
+    // find Command
+    const C = this.config.findCommand(id);
+    let klass: Command.Class;
+    if (C) {
+      klass = await C.load();
+      // process Command state from command line data
+      const slicedArgv = commandLineToComplete.slice(2);
+      const [argsIndex, curPositionIsFlag, curPositionIsFlagValue] = this.determineCmdState(slicedArgv, klass);
+      return {
+        id,
+        klass,
+        argsIndex,
+        curPositionIsFlag,
+        curPositionIsFlagValue,
+        slicedArgv,
+      };
+    } else {
+      this.throwError(`Command ${id} not found`);
+    }
+  }
+
+  private determineCompletion(commandStateVars: {
+    id: string;
+    klass: Command.Class;
+    argsIndex: number;
+    curPositionIsFlag: boolean;
+    curPositionIsFlagValue: boolean;
+    slicedArgv: string[];
+  }): { cacheKey: string; cacheCompletion: Completion } {
+    const { id, klass, argsIndex, curPositionIsFlag, curPositionIsFlagValue, slicedArgv } = commandStateVars;
+    // setup empty cache completion vars to assign
+    let cacheKey: string;
+    let cacheCompletion: Completion;
+
+    // completing a flag/value? else completing an arg
+    if (curPositionIsFlag || curPositionIsFlagValue) {
+      const slicedArgvCount = slicedArgv.length;
+      const lastArgvArg = slicedArgv[slicedArgvCount - 1];
+      const previousArgvArg = slicedArgv[slicedArgvCount - 2];
+      const argvFlag: string = curPositionIsFlagValue ? previousArgvArg : lastArgvArg;
+      const { name, flag } = this.findFlagFromWildArg(argvFlag, klass);
+      if (!flag) this.throwError(`${argvFlag} is not a valid flag for ${id}`);
+      cacheKey = name || flag.name;
+      if (flag.type === 'option') {
+        cacheCompletion = {
+          skipCache: true,
+
+          // eslint-disable-next-line @typescript-eslint/require-await
+          options: async (): Promise<string[]> => flag.options,
+        };
+      }
+    } else {
+      const cmdArgs = klass.args || {};
+      // variable arg (strict: false)
+      if (!klass.strict) {
+        cacheKey = cmdArgs[0]?.name.toLowerCase();
+        cacheCompletion = this.findCompletion(cacheKey);
+        if (!cacheCompletion) {
+          this.throwError(`Cannot complete variable arg position for ${id}`);
+        }
+      } else if (argsIndex > Object.keys(cmdArgs).length - 1) {
+        this.throwError(`Cannot complete arg position ${argsIndex} for ${id}`);
+      } else {
+        const arg = cmdArgs[argsIndex];
+        cacheKey = arg.name.toLowerCase();
+      }
+    }
+
+    // try to auto-populate the completion object
+    if (!cacheCompletion) {
+      cacheCompletion = this.findCompletion(cacheKey);
+    }
+    return { cacheKey, cacheCompletion };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private throwError(msg: string): void {
+    throw new Error(msg);
   }
 }

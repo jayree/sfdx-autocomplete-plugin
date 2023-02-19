@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { Flags } from '@salesforce/sf-plugins-core';
 import { Args } from '@oclif/core';
 import fs from 'fs-extra';
+import { PJSON } from '@oclif/core/lib/interfaces';
 
 // eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);
@@ -46,7 +47,7 @@ export default class Doctor extends AutocompleteBase {
 
     // plugin version
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const pjson = await fs.readJson(resolve(__dirname, '..', '..', '..', 'package.json'));
+    const pjson = (await fs.readJson(resolve(__dirname, '..', '..', '..', 'package.json'))) as PJSON.CLI;
     data.push({
       name: 'plugin version',
       value: pjson.version,
@@ -81,9 +82,9 @@ export default class Doctor extends AutocompleteBase {
 
     // check app completion cache
     const targetusernamesCache = join(this.completionsCacheDir, 'targetusername');
-    let targetusernamesCacheValue;
+    let targetusernamesCacheValue: number | string;
     if (fs.existsSync(targetusernamesCache)) {
-      const length = fs.readJSONSync(targetusernamesCache).length;
+      const length = (fs.readJSONSync(targetusernamesCache) as string[]).length;
       targetusernamesCacheValue = length ? length : 'empty';
     } else {
       targetusernamesCacheValue = 'missing';
@@ -105,7 +106,7 @@ export default class Doctor extends AutocompleteBase {
     if (flags.debug) this.printList();
   }
 
-  private printList() {
+  private printList(): void {
     this.log();
     const header = 'Completable Commands';
     this.log(header);
