@@ -4,7 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as path from 'node:path';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Config, Command } from '@oclif/core';
 import { Plugin as IPlugin } from '@oclif/core/lib/interfaces';
@@ -189,10 +189,10 @@ describe('zsh completion with spaces', () => {
     }
   });
 
-  it('generates a valid completion file.', () => {
+  it('generates a valid completion file.', async () => {
     config.bin = 'test-cli';
     const zshCompWithSpaces = new ZshCompWithSpaces(config);
-    expect(zshCompWithSpaces.generate()).to.equal(`#compdef test-cli
+    expect(await zshCompWithSpaces.generate()).to.equal(`#compdef test-cli
 
 _test-cli_app() {
   local context state state_descr line
@@ -248,8 +248,8 @@ _test-cli_deploy() {
       _values "completions" \\
               "functions[Deploy a function.]" \\
               "*"{-f,--file}"[]:file:_files" \\
-              --output-dir"[]:dir:_files -" \\
-              {-a,--api-version}"[]" \\
+              --output-dir"[]:dir:_files -/" \\
+              "(-a --api-version)"{-a,--api-version}"[]" \\
               --json"[Format output as json.]" \\
               "(-i --ignore-errors)"{-i,--ignore-errors}"[Ignore errors.]" \\
               --help"[Show help for command]"
@@ -258,14 +258,13 @@ _test-cli_deploy() {
       case $line[1] in
         "functions")
           _arguments -S \\
-                     {-b,--branch}"[]" \\
+                     "(-b --branch)"{-b,--branch}"[]" \\
                      --help"[Show help for command]"
           ;;
       esac
       ;;
   esac
 }
-
 
 _test-cli() {
   local context state state_descr line

@@ -4,8 +4,9 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import * as util from 'node:util';
+import util from 'node:util';
 import { Config, Interfaces, Command } from '@oclif/core';
+import { CompletionLookup } from '../completions.js';
 import { wantsLocalDirsArray, wantsLocalFilesArray } from './wantsLocal.js';
 
 function sanitizeSummary(description?: string): string {
@@ -28,8 +29,6 @@ function wantsLocalFiles(flag: string): boolean {
 function wantsLocalDirs(flag: string): boolean {
   return wantsLocalDirsArray.includes(flag);
 }
-
-const argTemplate = '"%s")\n          %s\n        ;;';
 
 type CommandCompletion = {
   id: string;
@@ -62,7 +61,7 @@ export default class ZshCompWithSpaces {
     this.coTopics = this.getCoTopics();
   }
 
-  public generate(): string {
+  public async generate(): Promise<string> {
     const firstArgs: Array<{ id: string; summary?: string }> = [];
 
     this.topics.forEach((t) => {
@@ -80,10 +79,10 @@ export default class ZshCompWithSpaces {
         });
     });
 
-    const mainArgsCaseBlock = () => {
+    const mainArgsCaseBlock = async () => {
       let caseBlock = 'case $line[1] in\n';
 
-      for (const arg of firstArgs) {
+      for await (const arg of firstArgs) {
         if (this.coTopics.includes(arg.id)) {
           // coTopics already have a completion function.
           caseBlock += `        ${arg.id})\n          _${this.config.bin}_${arg.id}\n          ;;\n`;
@@ -94,7 +93,9 @@ export default class ZshCompWithSpaces {
             // if it's a command and has flags, inline flag completion statement.
             // skip it from the args statement if it doesn't accept any flag.
             if (Object.keys(cmd.flags).length > 0) {
-              caseBlock += `        ${arg.id})\n          ${this.genZshFlagArgumentsBlock(cmd.flags)}         ;; \n`;
+              caseBlock += `        ${arg.id})\n          ${await this.genZshFlagArgumentsBlock(
+                cmd.flags
+              )}         ;; \n`;
             }
           } else {
             // it's a topic, redirect to its completion function.
@@ -108,10 +109,13 @@ export default class ZshCompWithSpaces {
       return caseBlock;
     };
 
+    let zshTopicsComp = '';
+    for await (const t of this.topics) {
+      zshTopicsComp += `\n${await this.genZshTopicCompFun(t.name)}`;
+    }
+
     const compFunc = `#compdef ${this.config.bin}
-
-${this.topics.map((t) => this.genZshTopicCompFun(t.name)).join('\n')}
-
+${zshTopicsComp}
 _${this.config.bin}() {
   local context state state_descr line
   typeset -A opt_args
@@ -123,7 +127,7 @@ _${this.config.bin}() {
       ${this.genZshValuesBlock(firstArgs)}
       ;;
     args)
-      ${mainArgsCaseBlock()}
+      ${await mainArgsCaseBlock()}
       ;;
   esac
 }
@@ -134,7 +138,7 @@ _${this.config.bin}
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private genZshFlagArgumentsList(flags?: CommandFlags): string {
+  private async genZshFlagArguments(flags?: CommandFlags): Promise<string> {
     // if a command doesn't have flags make it only complete files
     // also add comp for the global `--help` flag.
     if (!flags) return '--help"[Show help for command]" "*: :_files';
@@ -147,7 +151,7 @@ _${this.config.bin}
     // the ‘-x’ is considered a flag, the ‘-y’ is considered an argument, and the ‘--’ is considered to be neither.
     let argumentsBlock = '';
 
-    for (const flagName of flagNames) {
+    for await (const flagName of flagNames) {
       const f = flags[flagName];
 
       // skip hidden flags
@@ -163,37 +167,13 @@ _${this.config.bin}
             // this flag can be present multiple times on the line
             flagSpec += `"*"{-${f.char},--${f.name}}`;
           } else {
-            flagSpec += `{-${f.char},--${f.name}}`;
+            flagSpec += `"(-${f.char} --${f.name})"{-${f.char},--${f.name}}`;
           }
-
-          flagSpec += `"[${f.summary}]`;
-
-          if (f.options) {
-            flagSpec += `:${f.name} options:(${f.options?.join(' ')})"`;
-          } else if (wantsLocalFiles(f.name)) {
-            flagSpec += ':file:_files"';
-          } else if (wantsLocalDirs(f.name)) {
-            flagSpec += ':dir:_files -/"';
-          } else {
-            flagSpec += '"';
-          }
+        } else if (f.multiple) {
+          // this flag can be present multiple times on the line
+          flagSpec += `"*"--${f.name}`;
         } else {
-          if (f.multiple) {
-            // this flag can be present multiple times on the line
-            flagSpec += '"*"';
-          }
-
-          flagSpec += `--${f.name}"[${f.summary}]:`;
-
-          if (f.options) {
-            flagSpec += `${f.name} options:(${f.options?.join(' ')})"`;
-          } else if (wantsLocalFiles(f.name)) {
-            flagSpec += 'file:_files"';
-          } else if (wantsLocalDirs(f.name)) {
-            flagSpec += 'dir:_files -"';
-          } else {
-            flagSpec += '"';
-          }
+          flagSpec += `--${f.name}`;
         }
       } else if (f.char) {
         // Flag.Boolean
@@ -201,6 +181,26 @@ _${this.config.bin}
       } else {
         // Flag.Boolean
         flagSpec += `--${f.name}"[${f.summary}]"`;
+      }
+
+      if (f.type === 'option') {
+        flagSpec += `"[${f.summary}]`;
+
+        let options = f.options;
+        const cacheCompletion = new CompletionLookup(f.name).run();
+        if (cacheCompletion) {
+          options = await cacheCompletion.options();
+        }
+
+        if (options) {
+          flagSpec += `:${f.name} options:(${options?.join(' ')})"`;
+        } else if (wantsLocalFiles(f.name)) {
+          flagSpec += ':file:_files"';
+        } else if (wantsLocalDirs(f.name)) {
+          flagSpec += ':dir:_files -/"';
+        } else {
+          flagSpec += '"';
+        }
       }
 
       flagSpec += ' \\\n';
@@ -215,15 +215,12 @@ _${this.config.bin}
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private genZshFlagArgumentsBlock(flags?: CommandFlags): string {
+  private async genZshFlagArgumentsBlock(flags?: CommandFlags): Promise<string> {
     let argumentsBlock = '_arguments -S \\';
-    const flagArgsBlockTemplate = '                     %s';
 
-    this.genZshFlagArgumentsList(flags)
-      .split('\n')
-      .forEach((f) => {
-        argumentsBlock += `\n${util.format(flagArgsBlockTemplate, f)}`;
-      });
+    (await this.genZshFlagArguments(flags)).split('\n').forEach((f) => {
+      argumentsBlock += `\n                     ${f}`;
+    });
 
     return argumentsBlock;
   }
@@ -239,9 +236,7 @@ _${this.config.bin}
     return valuesBlock;
   }
 
-  private genZshTopicCompFun(id: string): string {
-    const flagArgsTemplate = '"%s")\n          %s\n          ;;';
-
+  private async genZshTopicCompFun(id: string): Promise<string> {
     const underscoreSepId = id.replace(/:/g, '_');
     const depth = id.split(':').length;
 
@@ -258,13 +253,18 @@ _${this.config.bin}
           summary: t.description,
         });
 
-        argsBlock += util.format(argTemplate, subArg, `_${this.config.bin}_${underscoreSepId}_${subArg}`);
+        argsBlock += util.format(
+          '"%s")\n          %s\n        ;;',
+          subArg,
+          `_${this.config.bin}_${underscoreSepId}_${subArg}`
+        );
       });
 
-    this.commands
-      .filter((c) => c.id.startsWith(id + ':') && c.id.split(':').length === depth + 1)
-      .forEach((c) => {
-        if (this.coTopics.includes(c.id)) return;
+    for await (const c of this.commands.filter(
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      (c) => c.id.startsWith(id + ':') && c.id.split(':').length === depth + 1
+    )) {
+      if (!this.coTopics.includes(c.id)) {
         const subArg = c.id.split(':')[depth];
 
         subArgs.push({
@@ -272,8 +272,10 @@ _${this.config.bin}
           summary: c.summary,
         });
 
-        argsBlock += util.format(flagArgsTemplate, subArg, this.genZshFlagArgumentsBlock(c.flags));
-      });
+        const block = await this.genZshFlagArgumentsBlock(c.flags);
+        argsBlock += util.format('"%s")\n          %s\n          ;;', subArg, block);
+      }
+    }
 
     const topicCompFunc = `_${this.config.bin}_${underscoreSepId}() {
   local context state state_descr line
@@ -299,12 +301,9 @@ _${this.config.bin}
 
     if (flags) {
       argumentsListBlock += ' \\';
-      const flagArgsBlockTemplate = '              %s';
-      this.genZshFlagArgumentsList(flags)
-        .split('\n')
-        .forEach((f) => {
-          argumentsListBlock += `\n${util.format(flagArgsBlockTemplate, f)}`;
-        });
+      (await this.genZshFlagArguments(flags)).split('\n').forEach((f) => {
+        argumentsListBlock += `\n              ${f}`;
+      });
     }
 
     return util.format(topicCompFunc, `${this.genZshValuesBlock(subArgs)}${argumentsListBlock}`, argsBlock);

@@ -305,7 +305,7 @@ bindkey "^I" expand-or-complete-with-dots`;
         await fs.writeFile(this.zshCompletionFunctionPath, this.zshCompletionFunction);
       } else {
         const zshCompWithSpaces = new ZshCompWithSpaces(this.config);
-        await fs.writeFile(this.zshCompletionFunctionPath, zshCompWithSpaces.generate());
+        await fs.writeFile(this.zshCompletionFunctionPath, await zshCompWithSpaces.generate());
       }
     }
     if (this.config.shell === 'fish') {

@@ -6,7 +6,7 @@
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "type": "module",
   "dependencies": {
-    "@oclif/core": "^2.1.4",
+    "@oclif/core": "^2.1.7",
     "@salesforce/core": "^3.33.1",
     "@salesforce/sf-plugins-core": "^2.1.2",
     "chalk": "^5.2.0",
@@ -15,9 +15,9 @@
     "tslib": "^2.5.0"
   },
   "devDependencies": {
-    "@oclif/plugin-command-snapshot": "^3.3.5",
-    "@oclif/plugin-help": "^5.2.4",
-    "@oclif/test": "^2.3.6",
+    "@oclif/plugin-command-snapshot": "^3.3.6",
+    "@oclif/plugin-help": "^5.2.5",
+    "@oclif/test": "^2.3.7",
     "@salesforce/dev-config": "^3.1.0",
     "@salesforce/dev-scripts": "^4.0.0-beta.9",
     "@salesforce/prettier-config": "^0.0.2",

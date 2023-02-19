@@ -3,7 +3,7 @@ export type Completion = {
     skipCache?: boolean;
     cacheDuration?: number;
     cacheKey?(ctx: Command.Class): Promise<string>;
-    options(ctx: Command.Class): Promise<string[]>;
+    options(ctx?: Command.Class): Promise<string[]>;
 };
 export declare class CompletionLookup {
     private readonly name;
