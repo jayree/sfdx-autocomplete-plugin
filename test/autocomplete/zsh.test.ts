@@ -251,7 +251,7 @@ _test-cli_deploy() {
               "functions[Deploy a function.]" \\
               "*"{-f,--file}"[]:file:_files" \\
               --output-dir"[]:dir:_files -/" \\
-              "(-a --api-version)"{-a,--api-version}"[]" \\
+              "(-a --api-version)"{-a,--api-version}"[]:" \\
               --json"[Format output as json.]" \\
               "(-i --ignore-errors)"{-i,--ignore-errors}"[Ignore errors.]" \\
               --help"[Show help for command]"
@@ -260,7 +260,7 @@ _test-cli_deploy() {
       case $line[1] in
         "functions")
           _arguments -S \\
-                     "(-b --branch)"{-b,--branch}"[]" \\
+                     "(-b --branch)"{-b,--branch}"[]:" \\
                      --help"[Show help for command]"
           ;;
       esac

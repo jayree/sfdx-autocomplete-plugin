@@ -199,7 +199,7 @@ _${this.config.bin}
         } else if (wantsLocalDirs(f.name)) {
           flagSpec += ':dir:_files -/"';
         } else {
-          flagSpec += '"';
+          flagSpec += ':"';
         }
       }
 
