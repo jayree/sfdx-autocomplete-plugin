@@ -83,7 +83,7 @@ export default class ZshCompWithSpaces {
       let caseBlock = 'case $line[1] in\n';
 
       for await (const arg of firstArgs) {
-        if (this.coTopics.includes(arg.id)) {
+        if (this.coTopics?.includes(arg.id)) {
           // coTopics already have a completion function.
           caseBlock += `        ${arg.id})\n          _${this.config.bin}_${arg.id}\n          ;;\n`;
         } else {
@@ -124,7 +124,7 @@ _${this.config.bin}() {
 
   case "$state" in
     cmds)
-      ${this.genZshValuesBlock(firstArgs)}
+      ${await this.genZshValuesBlock({ subArgs: firstArgs })}
       ;;
     args)
       ${await mainArgsCaseBlock()}
@@ -226,12 +226,27 @@ _${this.config.bin}
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private genZshValuesBlock(subArgs: Array<{ id: string; summary?: string }>): string {
+  private async genZshValuesBlock(options: {
+    id?: string;
+    subArgs: Array<{ id: string; summary?: string }>;
+  }): Promise<string> {
     let valuesBlock = '_values "completions"';
+    const { id, subArgs } = options;
 
     subArgs.forEach((subArg) => {
       valuesBlock += ` \\\n              "${subArg.id}[${subArg.summary}]"`;
     });
+
+    if (id) {
+      const cflags = this.commands.find((c) => c.id === id)?.flags;
+
+      if (cflags) {
+        valuesBlock += ' \\';
+        (await this.genZshFlagArguments(cflags)).split('\n').forEach((f) => {
+          valuesBlock += `\n              ${f}`;
+        });
+      }
+    }
 
     return valuesBlock;
   }
@@ -264,7 +279,7 @@ _${this.config.bin}
       // eslint-disable-next-line @typescript-eslint/no-shadow
       (c) => c.id.startsWith(id + ':') && c.id.split(':').length === depth + 1
     )) {
-      if (!this.coTopics.includes(c.id)) {
+      if (!this.coTopics?.includes(c.id)) {
         const subArg = c.id.split(':')[depth];
 
         subArgs.push({
@@ -296,17 +311,7 @@ _${this.config.bin}
 }
 `;
 
-    let argumentsListBlock = '';
-    const flags = this.commands.find((c) => c.id === id)?.flags;
-
-    if (flags) {
-      argumentsListBlock += ' \\';
-      (await this.genZshFlagArguments(flags)).split('\n').forEach((f) => {
-        argumentsListBlock += `\n              ${f}`;
-      });
-    }
-
-    return util.format(topicCompFunc, `${this.genZshValuesBlock(subArgs)}${argumentsListBlock}`, argsBlock);
+    return util.format(topicCompFunc, await this.genZshValuesBlock({ id, subArgs }), argsBlock);
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering

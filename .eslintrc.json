@@ -10,6 +10,7 @@
   "extends": ["eslint-config-salesforce-typescript", "plugin:sf-plugin/migration", "plugin:prettier/recommended"],
   "rules": {
     "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "sf-plugin/no-missing-messages": "off",
     "header/header": [
       2,
       "block",
