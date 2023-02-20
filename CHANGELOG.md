@@ -1,3 +1,10 @@
+## [2.8.1](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.8.0...v2.8.1) (2023-02-20)
+
+
+### Bug Fixes
+
+* fix command options ([d232724](https://github.com/jayree/sfdx-autocomplete-plugin/commit/d232724e45607e44e8f5881dfcbaf600fa9b4c09))
+
 # [2.8.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.7.0...v2.8.0) (2023-02-20)
 
 
