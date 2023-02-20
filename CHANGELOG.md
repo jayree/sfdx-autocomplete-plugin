@@ -1,3 +1,15 @@
+# [2.8.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.7.0...v2.8.0) (2023-02-20)
+
+
+### Bug Fixes
+
+* fix command and subcommand completion ([d0376c8](https://github.com/jayree/sfdx-autocomplete-plugin/commit/d0376c8798382f88988e32892bb5ca07b5733705))
+
+
+### Features
+
+* reintroduce target-org completion for spaced commands ([f8b214d](https://github.com/jayree/sfdx-autocomplete-plugin/commit/f8b214d9015ea06b654b9739162d76e87136697b))
+
 # [2.7.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.6.1...v2.7.0) (2023-02-16)
 
 
