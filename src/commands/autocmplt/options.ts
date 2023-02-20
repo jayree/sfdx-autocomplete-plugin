@@ -197,7 +197,7 @@ export default class Options extends AutocompleteBase {
       const { name, flag } = this.findFlagFromWildArg(argvFlag, klass);
       if (!flag) this.throwError(`${argvFlag} is not a valid flag for ${id}`);
       cacheKey = name || flag.name;
-      if (flag.type === 'option') {
+      if (flag.type === 'option' && flag.options) {
         cacheCompletion = {
           skipCache: true,
 
