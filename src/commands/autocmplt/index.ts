@@ -8,7 +8,7 @@ import path from 'node:path';
 import { Flags } from '@salesforce/sf-plugins-core';
 import { Args } from '@oclif/core';
 import chalk from 'chalk';
-import { Completion, targetUserNameCompletion } from '../../completions.js';
+import { Completion, CompletionLookup } from '../../completions.js';
 
 import { AutocompleteBase } from '../../base.js';
 import { updateCache } from '../../cache.js';
@@ -35,7 +35,7 @@ export default class Index extends AutocompleteBase {
     this.errorIfNotSupportedShell(shell);
     this.spinner.start(`${chalk.bold('Building the autocomplete cache')}`);
     await Create.run([], this.config);
-    await this.updateCache(targetUserNameCompletion, 'targetusername');
+    await this.updateCache(CompletionLookup.targetUserNameCompletion, 'targetusername');
     this.spinner.stop();
 
     if (!flags['refresh-cache']) {

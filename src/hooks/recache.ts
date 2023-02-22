@@ -8,7 +8,7 @@ import path from 'node:path';
 import { Hook } from '@oclif/core';
 import { Ux } from '@salesforce/sf-plugins-core';
 import fs from 'fs-extra';
-import { targetUserNameCompletion, Completion } from '../completions.js';
+import { Completion, CompletionLookup } from '../completions.js';
 
 import { updateCache } from '../cache.js';
 import acCreate from '../commands/autocmplt/create.js';
@@ -35,7 +35,7 @@ export const completions: Hook<'update'> = async function () {
     void acCreate.run([], this.config);
 
     try {
-      void update(targetUserNameCompletion, 'targetusername');
+      void update(CompletionLookup.targetUserNameCompletion, 'targetusername');
     } catch (err) {
       this.debug((err as Error).message);
     }

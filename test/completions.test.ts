@@ -6,12 +6,12 @@
  */
 import { expect } from 'chai';
 
-import { CompletionLookup, CompletionMapping } from '../src/completions.js';
+import { CompletionLookup } from '../src/completions.js';
 
 describe('CompletionLookup', () => {
   it('finds completion', async () => {
-    const c = new CompletionLookup('app').run();
-    expect(c).to.eq(CompletionMapping.app);
+    const c = new CompletionLookup('targetusername').run();
+    expect(c).to.eq(new CompletionLookup().CompletionMapping.targetusername);
   });
 
   it('does not find foo completion', async () => {

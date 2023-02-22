@@ -17,49 +17,61 @@ export type Completion = {
 const oneDay = 60 * 60 * 24;
 
 // eslint-disable-next-line no-underscore-dangle
-let _activeAliasOrUsername: string[];
-
+let _activeAliasOrUsername: string[] = [];
 export class CompletionLookup {
-  public constructor(private readonly name: string) {}
+  public static readonly targetUserNameCompletion: Completion = {
+    cacheDuration: oneDay,
+    options: async (): Promise<string[]> => {
+      if (_activeAliasOrUsername.length) return _activeAliasOrUsername;
+      const info = await StateAggregator.create();
+      const aliases = info.aliases.getAll();
+      const activeAliasOrUsername: string[] = [];
+      for await (const aliasOrUsername of [...Object.keys(aliases), ...new Set(Object.values(aliases))]) {
+        try {
+          await (await Org.create({ aliasOrUsername })).refreshAuth();
+          activeAliasOrUsername.push(aliasOrUsername);
+        } catch (error) {
+          /* empty */
+        }
+      }
+      _activeAliasOrUsername = activeAliasOrUsername;
+
+      return activeAliasOrUsername;
+    },
+  };
+
+  public static readonly instanceurlCompletion: Completion = {
+    skipCache: true,
+
+    // eslint-disable-next-line @typescript-eslint/require-await
+    options: async () => ['https\\://test.salesforce.com', 'https\\://login.salesforce.com'],
+  };
+
+  public static readonly instanceurlCompletionColon: Completion = {
+    skipCache: true,
+
+    // eslint-disable-next-line @typescript-eslint/require-await
+    options: async () => ['https://test.salesforce.com', 'https://login.salesforce.com'],
+  };
+
+  public readonly CompletionMapping: { [key: string]: Completion } = {
+    targetusername: CompletionLookup.targetUserNameCompletion,
+    'target-org': CompletionLookup.targetUserNameCompletion,
+    targetdevhubusername: CompletionLookup.targetUserNameCompletion,
+    'target-hub-org': CompletionLookup.targetUserNameCompletion,
+    instanceurl:
+      this.topicSeparator === ' '
+        ? CompletionLookup.instanceurlCompletion
+        : CompletionLookup.instanceurlCompletionColon,
+    'instance-url':
+      this.topicSeparator === ' '
+        ? CompletionLookup.instanceurlCompletion
+        : CompletionLookup.instanceurlCompletionColon,
+  };
+
+  public constructor(private readonly name?: string, private readonly topicSeparator = ' ') {}
 
   public run(): Completion | undefined {
-    return CompletionMapping[this.name];
+    return this.CompletionMapping[this.name];
   }
 }
-
-export const instanceurlCompletion: Completion = {
-  skipCache: true,
-
-  // eslint-disable-next-line @typescript-eslint/require-await
-  options: async () => ['https://test.salesforce.com', 'https://login.salesforce.com'],
-};
-
-export const targetUserNameCompletion: Completion = {
-  cacheDuration: oneDay,
-  options: async (): Promise<string[]> => {
-    if (_activeAliasOrUsername) return _activeAliasOrUsername;
-    const info = await StateAggregator.create();
-    const aliases = info.aliases.getAll();
-    const activeAliasOrUsername: string[] = [];
-    for await (const aliasOrUsername of [...Object.keys(aliases), ...new Set(Object.values(aliases))]) {
-      try {
-        await (await Org.create({ aliasOrUsername })).refreshAuth();
-        activeAliasOrUsername.push(aliasOrUsername);
-      } catch (error) {
-        /* empty */
-      }
-    }
-    _activeAliasOrUsername = activeAliasOrUsername;
-
-    return activeAliasOrUsername;
-  },
-};
-
-export const CompletionMapping: { [key: string]: Completion } = {
-  targetusername: targetUserNameCompletion,
-  'target-org': targetUserNameCompletion,
-  targetdevhubusername: targetUserNameCompletion,
-  'target-hub-org': targetUserNameCompletion,
-  instanceurl: instanceurlCompletion,
-  'instance-url': instanceurlCompletion,
-};

@@ -187,7 +187,7 @@ _${this.config.bin}
         flagSpec += `"[${f.summary}]`;
 
         let options = f.options;
-        const cacheCompletion = new CompletionLookup(f.name).run();
+        const cacheCompletion = new CompletionLookup(f.name, ' ').run();
         if (cacheCompletion) {
           options = await cacheCompletion.options();
         }

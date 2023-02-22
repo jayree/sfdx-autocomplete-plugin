@@ -62,7 +62,7 @@ export abstract class AutocompleteBase extends SfCommand<void> {
 
   // eslint-disable-next-line class-methods-use-this
   public findCompletion(name: string): Completion | undefined {
-    return new CompletionLookup(name).run();
+    return new CompletionLookup(name, ':').run();
   }
 
   protected async fetchOptions(cache: { cacheCompletion: Completion; cacheKey: string }): Promise<string> {
