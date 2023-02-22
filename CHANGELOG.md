@@ -1,3 +1,10 @@
+## [2.8.3](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.8.2...v2.8.3) (2023-02-22)
+
+
+### Bug Fixes
+
+* fix instance-url completion ([5ffbbbd](https://github.com/jayree/sfdx-autocomplete-plugin/commit/5ffbbbd580f5023b70be02ebbc8cfb8e1075f831))
+
 ## [2.8.2](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.8.1...v2.8.2) (2023-02-20)
 
 
