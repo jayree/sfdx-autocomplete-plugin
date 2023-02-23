@@ -54,19 +54,22 @@ index 2e6bae4..4253f30 100644
 +  "node-option": ["experimental-specifier-resolution=node", "loader=ts-node/esm"]
  }
 diff --git a/node_modules/@salesforce/dev-scripts/files/tsconfig-strict.json b/node_modules/@salesforce/dev-scripts/files/tsconfig-strict.json
-index d4f6ee8..7e65dc8 100644
+index d4f6ee8..3ddeeee 100644
 --- a/node_modules/@salesforce/dev-scripts/files/tsconfig-strict.json
 +++ b/node_modules/@salesforce/dev-scripts/files/tsconfig-strict.json
-@@ -5,7 +5,11 @@
+@@ -5,7 +5,14 @@
    "extends": "@salesforce/dev-config/tsconfig-strict",
    "compilerOptions": {
      "outDir": "lib",
 -    "incremental": true
-+    "module": "node16",
-+    "moduleResolution": "node16",
++    "module": "ES2020",
++    "allowSyntheticDefaultImports": true,
 +    "skipLibCheck": true,
 +    "incremental": true,
 +    "tsBuildInfoFile": ".tsbuildinfo"
++  },
++  "ts-node": {
++    "esm": true
    },
    "include": ["./src/**/*.ts"]
  }
@@ -102,7 +105,7 @@ index f4f0945..90c250a 100644
    "include": ["./src/**/*.ts"]
  }
 diff --git a/node_modules/@salesforce/dev-scripts/package.json b/node_modules/@salesforce/dev-scripts/package.json
-index aac690f..a58dee7 100644
+index 399495d..5e128df 100644
 --- a/node_modules/@salesforce/dev-scripts/package.json
 +++ b/node_modules/@salesforce/dev-scripts/package.json
 @@ -40,6 +40,7 @@
@@ -114,47 +117,43 @@ index aac690f..a58dee7 100644
      "chalk": "^4.0.0",
      "cosmiconfig": "^7.0.0",
 diff --git a/node_modules/@salesforce/dev-scripts/utils/sf-config.js b/node_modules/@salesforce/dev-scripts/utils/sf-config.js
-index 4c116b8..b69cc44 100644
+index fa7c4f9..51d993d 100644
 --- a/node_modules/@salesforce/dev-scripts/utils/sf-config.js
 +++ b/node_modules/@salesforce/dev-scripts/utils/sf-config.js
-@@ -31,17 +31,17 @@ const PACKAGE_DEFAULTS = {
+@@ -31,7 +31,7 @@ const PACKAGE_DEFAULTS = {
        dependencies: ['compile', 'lint'],
      },
      compile: {
 -      command: 'tsc -p . --pretty --incremental',
 +      command: 'tsc --build --pretty',
        files: ['src/**/*.ts', 'tsconfig.json', 'messages/**'],
--      output: ['lib/**', '*.tsbuildinfo'],
-+      output: ['lib/**', '.tsbuildinfo'],
+       output: ['lib/**', '*.tsbuildinfo'],
        clean: 'if-file-deleted',
-     },
-     format: {
-       command: 'prettier --write "+(src|test|schemas)/**/*.+(ts|js|json)|command-snapshot.json"',
+@@ -42,7 +42,7 @@ const PACKAGE_DEFAULTS = {
+       output: [],
      },
      lint: {
 -      command: 'eslint src test --color --cache --cache-location .eslintcache',
--      files: ['src/**/*.ts', 'test/**/*.ts', 'messages/**', '.eslintignore', '.eslintrc.js'],
 +      command: 'eslint --color --cache --cache-location .eslintcache .',
-+      files: ['src/**/*.ts', 'test/**/*.ts', 'messages/**', '.eslintignore', '.eslintrc.*'],
+       files: ['src/**/*.ts', 'test/**/*.ts', 'messages/**', '.eslint*'],
        output: [],
      },
-     'test:compile': {
-@@ -53,7 +53,7 @@ const PACKAGE_DEFAULTS = {
+@@ -56,7 +56,7 @@ const PACKAGE_DEFAULTS = {
        dependencies: ['test:only', 'test:compile'],
      },
      'test:only': {
 -      command: 'nyc mocha "test/**/*.test.ts"',
 +      command: 'c8 mocha "test/**/*.test.ts"',
-       files: ['test/**/*.ts', 'src/**/*.ts', 'tsconfig.json', 'test/tsconfig.json'],
+       files: ['test/**/*.ts', 'src/**/*.ts', 'tsconfig.json', '.mocha*', 'test/tsconfig.json', '!*.nut.ts', '.nycrc'],
        output: [],
      },
-@@ -70,18 +70,18 @@ const PLUGIN_DEFAULTS = {
+@@ -76,18 +76,18 @@ const PLUGIN_DEFAULTS = {
    wireit: {
      ...PACKAGE_DEFAULTS.wireit,
      'test:command-reference': {
 -      command: `"./bin/dev" commandreference:generate --erroronwarnings`,
 +      command: `"./bin/dev.js" commandreference:generate --erroronwarnings`,
-       files: ['src/**/*.ts', 'messages/**'],
+       files: ['src/**/*.ts', 'messages/**', 'package.json'],
        output: ['tmp/root'],
      },
      'test:deprecation-policy': {
@@ -170,7 +169,7 @@ index 4c116b8..b69cc44 100644
        files: ['src/**/*.ts', 'schemas'],
        output: [],
      },
-@@ -118,7 +118,7 @@ const resolveConfig = (path) => {
+@@ -124,7 +124,7 @@ const resolveConfig = (path) => {
    const configFromFile = (result && result.config) || {};
  
    if (configFromFile.test?.testsPath) {
@@ -179,7 +178,7 @@ index 4c116b8..b69cc44 100644
    }
  
    // Allow users to override certain scripts
-@@ -140,6 +140,8 @@ const resolveConfig = (path) => {
+@@ -146,6 +146,8 @@ const resolveConfig = (path) => {
    // Remove excluded items
    excludeScripts.forEach((scriptName) => {
      delete config.scripts[scriptName];

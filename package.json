@@ -6,9 +6,9 @@
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "type": "module",
   "dependencies": {
-    "@oclif/core": "^2.1.7",
-    "@salesforce/core": "^3.33.1",
-    "@salesforce/sf-plugins-core": "^2.1.2",
+    "@oclif/core": "^2.3.0",
+    "@salesforce/core": "^3.33.4",
+    "@salesforce/sf-plugins-core": "^2.2.1",
     "chalk": "^5.2.0",
     "debug": "^4.3.4",
     "fs-extra": "^11.1.0",
@@ -19,12 +19,12 @@
     "@oclif/plugin-help": "^5.2.5",
     "@oclif/test": "^2.3.7",
     "@salesforce/dev-config": "^3.1.0",
-    "@salesforce/dev-scripts": "^4.0.0-beta.9",
+    "@salesforce/dev-scripts": "^4.1.0",
     "@salesforce/prettier-config": "^0.0.2",
     "@types/debug": "^4.1.7",
     "@types/fs-extra": "^11.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "@typescript-eslint/parser": "^5.52.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
     "c8": "^7.13.0",
     "chai": "^4.3.7",
     "eslint": "^8.34.0",
@@ -40,7 +40,7 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "mocha": "^10.2.0",
-    "oclif": "^3.6.5",
+    "oclif": "^3.7.0",
     "patch-package": "^6.5.1",
     "prettier": "^2.8.4",
     "pretty-quick": "^3.1.3",
@@ -105,9 +105,6 @@
     "prepack": "sf-prepack",
     "prepare": "patch-package && sf-install",
     "test": "wireit",
-    "test:compile": "wireit",
-    "test:deprecation-policy": "wireit",
-    "test:json-schema": "wireit",
     "test:only": "wireit",
     "version": "oclif readme"
   },
@@ -133,12 +130,20 @@
       ],
       "output": [
         "lib/**",
-        ".tsbuildinfo"
+        "*.tsbuildinfo"
       ],
       "clean": "if-file-deleted"
     },
     "format": {
-      "command": "prettier --write \"+(src|test|schemas)/**/*.+(ts|js|json)|command-snapshot.json\""
+      "command": "prettier --write \"+(src|test|schemas)/**/*.+(ts|js|json)|command-snapshot.json\"",
+      "files": [
+        "src/**/*.ts",
+        "test/**/*.ts",
+        "schemas/**/*.json",
+        "command-snapshot.json",
+        ".prettier*"
+      ],
+      "output": []
     },
     "lint": {
       "command": "eslint --color --cache --cache-location .eslintcache .",
@@ -146,8 +151,7 @@
         "src/**/*.ts",
         "test/**/*.ts",
         "messages/**",
-        ".eslintignore",
-        ".eslintrc.*"
+        ".eslint*"
       ],
       "output": []
     },
@@ -175,7 +179,10 @@
         "test/**/*.ts",
         "src/**/*.ts",
         "tsconfig.json",
-        "test/tsconfig.json"
+        ".mocha*",
+        "test/tsconfig.json",
+        "!*.nut.ts",
+        ".nycrc"
       ],
       "output": []
     },
