@@ -4,6 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+/* eslint-disable no-underscore-dangle */
 import util from 'node:util';
 import { Config, Interfaces, Command } from '@oclif/core';
 import { CompletionLookup } from '../completions.js';
@@ -52,7 +53,7 @@ export default class ZshCompWithSpaces {
 
   private commands: CommandCompletion[];
 
-  private coTopics?: string[];
+  private coTopics: string[];
 
   public constructor(config: Config) {
     this.config = config;
@@ -83,7 +84,7 @@ export default class ZshCompWithSpaces {
       let caseBlock = 'case $line[1] in\n';
 
       for await (const arg of firstArgs) {
-        if (this.coTopics?.includes(arg.id)) {
+        if (this.coTopics.includes(arg.id)) {
           // coTopics already have a completion function.
           caseBlock += `        ${arg.id})\n          _${this.config.bin}_${arg.id}\n          ;;\n`;
         } else {
@@ -124,7 +125,7 @@ _${this.config.bin}() {
 
   case "$state" in
     cmds)
-      ${await this.genZshValuesBlock({ subArgs: firstArgs })}
+      ${this.genZshValuesBlock({ subArgs: firstArgs })}
       ;;
     args)
       ${await mainArgsCaseBlock()}
@@ -214,7 +215,6 @@ _${this.config.bin}
     return argumentsBlock;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   private async genZshFlagArgumentsBlock(flags?: CommandFlags): Promise<string> {
     let argumentsBlock = '_arguments -S \\';
 
@@ -225,11 +225,7 @@ _${this.config.bin}
     return argumentsBlock;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  private async genZshValuesBlock(options: {
-    id?: string;
-    subArgs: Array<{ id: string; summary?: string }>;
-  }): Promise<string> {
+  private genZshValuesBlock(options: { id?: string; subArgs: Array<{ id: string; summary?: string }> }): string {
     let valuesBlock = '_values "completions"';
     const { id, subArgs } = options;
 
@@ -241,10 +237,7 @@ _${this.config.bin}
       const cflags = this.commands.find((c) => c.id === id)?.flags;
 
       if (cflags) {
-        valuesBlock += ' \\';
-        (await this.genZshFlagArguments(cflags)).split('\n').forEach((f) => {
-          valuesBlock += `\n              ${f}`;
-        });
+        valuesBlock += ' \\\n              "${flags[@]}"';
       }
     }
 
@@ -255,6 +248,90 @@ _${this.config.bin}
     const underscoreSepId = id.replace(/:/g, '_');
     const depth = id.split(':').length;
 
+    const isCotopic = this.coTopics.includes(id);
+
+    let flags = '';
+
+    if (id) {
+      const cflags = this.commands.find((c) => c.id === id)?.flags;
+
+      if (cflags) {
+        flags += '\n';
+        (await this.genZshFlagArguments(cflags)).split('\n').forEach((f) => {
+          flags += `    ${f}\n`;
+        });
+        flags += '  ';
+      }
+    }
+
+    if (isCotopic) {
+      const coTopicCompFunc = `_${this.config.bin}_${underscoreSepId}() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a flags=(%s)
+
+  _arguments -C "1: :->cmds" "*: :->args"
+
+  case "$state" in
+    cmds)
+      %s
+      ;;
+    args)
+      case $line[1] in%s
+        *)
+          _arguments -S \\
+                     "\${flags[@]}"
+          ;;
+      esac
+      ;;
+  esac
+}
+`;
+      const subArgs: Array<{ id: string; summary?: string }> = [];
+
+      let argsBlock = '';
+
+      this.topics
+        .filter((t) => t.name.startsWith(id + ':') && t.name.split(':').length === depth + 1)
+        .forEach((t) => {
+          const subArg = t.name.split(':')[depth];
+
+          subArgs.push({
+            id: subArg,
+            summary: t.description,
+          });
+
+          argsBlock += util.format(
+            '\n        "%s")\n          %s\n        ;;',
+            subArg,
+            `_${this.config.bin}_${underscoreSepId}_${subArg}`
+          );
+        });
+
+      for await (const c of this.commands.filter(
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        (c) => c.id.startsWith(id + ':') && c.id.split(':').length === depth + 1
+      )) {
+        if (!this.coTopics?.includes(c.id)) {
+          const subArg = c.id.split(':')[depth];
+
+          subArgs.push({
+            id: subArg,
+            summary: c.summary,
+          });
+
+          const block = await this.genZshFlagArgumentsBlock(c.flags);
+          argsBlock += util.format(
+            '\n        "%s")\n          _arguments -C "*::arg:->args"\n          %s\n          ;;',
+            subArg,
+            block
+          );
+        }
+      }
+
+      return util.format(coTopicCompFunc, flags, this.genZshValuesBlock({ id, subArgs }), argsBlock);
+    }
     let argsBlock = '';
 
     const subArgs: Array<{ id: string; summary?: string }> = [];
@@ -269,7 +346,7 @@ _${this.config.bin}
         });
 
         argsBlock += util.format(
-          '"%s")\n          %s\n        ;;',
+          '\n        "%s")\n          %s\n        ;;',
           subArg,
           `_${this.config.bin}_${underscoreSepId}_${subArg}`
         );
@@ -288,7 +365,11 @@ _${this.config.bin}
         });
 
         const block = await this.genZshFlagArgumentsBlock(c.flags);
-        argsBlock += util.format('"%s")\n          %s\n          ;;', subArg, block);
+        argsBlock += util.format(
+          `\n        "%s")${flags ? '\n          _arguments -C "*::arg:->args"' : ''}\n          %s\n          ;;`,
+          subArg,
+          block
+        );
       }
     }
 
@@ -303,15 +384,13 @@ _${this.config.bin}
       %s
       ;;
     args)
-      case $line[1] in
-        %s
+      case $line[1] in%s
       esac
       ;;
   esac
 }
 `;
-
-    return util.format(topicCompFunc, await this.genZshValuesBlock({ id, subArgs }), argsBlock);
+    return util.format(topicCompFunc, this.genZshValuesBlock({ subArgs }), argsBlock);
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering

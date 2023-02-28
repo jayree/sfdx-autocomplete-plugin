@@ -243,25 +243,34 @@ _test-cli_deploy() {
   local context state state_descr line
   typeset -A opt_args
 
-  _arguments -C "1: :->cmds" "*::arg:->args"
+  local -a flags=(
+    "*"{-f,--file}"[]:file:_files" \\
+    --output-dir"[]:dir:_files -/" \\
+    "(-a --api-version)"{-a,--api-version}"[]:" \\
+    --json"[Format output as json.]" \\
+    "(-i --ignore-errors)"{-i,--ignore-errors}"[Ignore errors.]" \\
+    --help"[Show help for command]"
+  )
+
+  _arguments -C "1: :->cmds" "*: :->args"
 
   case "$state" in
     cmds)
       _values "completions" \\
               "functions[Deploy a function.]" \\
-              "*"{-f,--file}"[]:file:_files" \\
-              --output-dir"[]:dir:_files -/" \\
-              "(-a --api-version)"{-a,--api-version}"[]:" \\
-              --json"[Format output as json.]" \\
-              "(-i --ignore-errors)"{-i,--ignore-errors}"[Ignore errors.]" \\
-              --help"[Show help for command]"
+              "\${flags[@]}"
       ;;
     args)
       case $line[1] in
         "functions")
+          _arguments -C "*::arg:->args"
           _arguments -S \\
                      "(-b --branch)"{-b,--branch}"[]:" \\
                      --help"[Show help for command]"
+          ;;
+        *)
+          _arguments -S \\
+                     "\${flags[@]}"
           ;;
       esac
       ;;

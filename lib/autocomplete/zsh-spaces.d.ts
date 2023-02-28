@@ -3,7 +3,7 @@ export default class ZshCompWithSpaces {
     protected config: Config;
     private topics;
     private commands;
-    private coTopics?;
+    private coTopics;
     constructor(config: Config);
     generate(): Promise<string>;
     private genZshFlagArguments;
