@@ -105,10 +105,10 @@ index f4f0945..90c250a 100644
    "include": ["./src/**/*.ts"]
  }
 diff --git a/node_modules/@salesforce/dev-scripts/package.json b/node_modules/@salesforce/dev-scripts/package.json
-index 399495d..5e128df 100644
+index 15a2d3d..8f510f6 100644
 --- a/node_modules/@salesforce/dev-scripts/package.json
 +++ b/node_modules/@salesforce/dev-scripts/package.json
-@@ -40,6 +40,7 @@
+@@ -39,6 +39,7 @@
      "@types/mocha": "^9.0.0",
      "@types/node": "^15.6.1",
      "@types/sinon": "10.0.11",
@@ -117,7 +117,7 @@ index 399495d..5e128df 100644
      "chalk": "^4.0.0",
      "cosmiconfig": "^7.0.0",
 diff --git a/node_modules/@salesforce/dev-scripts/utils/sf-config.js b/node_modules/@salesforce/dev-scripts/utils/sf-config.js
-index fa7c4f9..51d993d 100644
+index 8cf8b15..f93fa44 100644
 --- a/node_modules/@salesforce/dev-scripts/utils/sf-config.js
 +++ b/node_modules/@salesforce/dev-scripts/utils/sf-config.js
 @@ -31,7 +31,7 @@ const PACKAGE_DEFAULTS = {
@@ -144,10 +144,10 @@ index fa7c4f9..51d993d 100644
      'test:only': {
 -      command: 'nyc mocha "test/**/*.test.ts"',
 +      command: 'c8 mocha "test/**/*.test.ts"',
-       files: ['test/**/*.ts', 'src/**/*.ts', 'tsconfig.json', '.mocha*', 'test/tsconfig.json', '!*.nut.ts', '.nycrc'],
-       output: [],
-     },
-@@ -76,18 +76,18 @@ const PLUGIN_DEFAULTS = {
+       // things that use `chalk` might not output colors with how wireit uses spawn and gha treats that as non-tty
+       // see https://github.com/chalk/supports-color/issues/106
+       env: {
+@@ -81,18 +81,18 @@ const PLUGIN_DEFAULTS = {
    wireit: {
      ...PACKAGE_DEFAULTS.wireit,
      'test:command-reference': {
@@ -169,7 +169,7 @@ index fa7c4f9..51d993d 100644
        files: ['src/**/*.ts', 'schemas'],
        output: [],
      },
-@@ -124,7 +124,7 @@ const resolveConfig = (path) => {
+@@ -129,7 +129,7 @@ const resolveConfig = (path) => {
    const configFromFile = (result && result.config) || {};
  
    if (configFromFile.test?.testsPath) {
@@ -178,7 +178,7 @@ index fa7c4f9..51d993d 100644
    }
  
    // Allow users to override certain scripts
-@@ -146,6 +146,8 @@ const resolveConfig = (path) => {
+@@ -151,6 +151,8 @@ const resolveConfig = (path) => {
    // Remove excluded items
    excludeScripts.forEach((scriptName) => {
      delete config.scripts[scriptName];
