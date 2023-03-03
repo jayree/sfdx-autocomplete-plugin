@@ -260,7 +260,8 @@ bindkey "^I" expand-or-complete-with-dots`;
         : bashAutocompleteWithSpaces;
     return bashScript
       .replace(/<CLI_BIN>/g, cliBin)
-      .replace(/<BASH_COMMANDS_WITH_FLAGS_LIST>/g, this.bashCommandsWithFlagsList);
+      .replace(/<BASH_COMMANDS_WITH_FLAGS_LIST>/g, this.bashCommandsWithFlagsList)
+      .replace(/<CLI_BINENV>/g, this.cliBinEnvVar);
   }
 
   private get zshCompletionFunction(): string {
