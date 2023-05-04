@@ -1,3 +1,15 @@
+# [2.9.0](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.8.4...v2.9.0) (2023-05-04)
+
+
+### Bug Fixes
+
+* fix bash autocomplete ([4cd0add](https://github.com/jayree/sfdx-autocomplete-plugin/commit/4cd0add32cbbf7fb314ba7a35125eac3a380eb4c))
+
+
+### Features
+
+* add dual mode for sf and sfdx ([06996a8](https://github.com/jayree/sfdx-autocomplete-plugin/commit/06996a8a46f6db08d553f8cb5748a684f71c0b2e))
+
 ## [2.8.4](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.8.3...v2.8.4) (2023-03-02)
 
 
