@@ -156,7 +156,7 @@ bindkey "^I" expand-or-complete-with-dots`;
 
   private get zshCompletionFunctionPath(): string {
     // <cachedir>/autocomplete/functions/zsh/_<bin>
-    return path.join(this.zshFunctionsDir, `_${this.cliBin}`);
+    return this.zshFunctionsDir;
   }
 
   private get bashCompletionFunctionPath(): string {
@@ -377,10 +377,17 @@ ${cmdsWithDesc.join('\n')}
       const supportSpaces = this.config.topicSeparator === ' ';
 
       if (process.env.OCLIF_AUTOCOMPLETE_TOPIC_SEPARATOR === 'colon' || !supportSpaces) {
-        await fs.writeFile(this.zshCompletionFunctionPath, this.zshCompletionFunction);
+        await fs.writeFile(path.join(this.zshCompletionFunctionPath, `_${this.cliBin}`), this.zshCompletionFunction);
       } else {
         const zshCompWithSpaces = new ZshCompWithSpaces(this.config);
-        await fs.writeFile(this.zshCompletionFunctionPath, await zshCompWithSpaces.generate());
+        await fs.writeFile(
+          path.join(this.zshCompletionFunctionPath, `_${this.cliBin}`),
+          await zshCompWithSpaces.generate(this.config.bin)
+        );
+        await fs.writeFile(
+          path.join(this.zshCompletionFunctionPath, `_sfdx`),
+          await zshCompWithSpaces.generate('sfdx')
+        );
       }
     }
     if (this.config.shell === 'fish') {
@@ -422,7 +429,7 @@ end`);
     for await (const command of this.commands) {
       completions.push(
         `complete -f -c ${cliBin} -n '__fish_${cliBin}_needs_command' -a ${command.id} -d "${
-          command.description.split('\n')[0]
+          command.description?.split('\n')[0]
         }"`
       );
       const flags: {
@@ -434,12 +441,12 @@ end`);
         const f = flags[flag];
         const shortFlag = f.char ? `-s ${f.char}` : '';
         const description = `-d "${sanitizeDescription(f.summary || f.description)}"`;
-        let options = f.type === 'option' ? `-r -a "${f.options.join(' ')}"` : '';
+        let options = f.type === 'option' ? `-r -a "${f.options?.join(' ')}"` : '';
         if (options.length === 0) {
           const cacheKey: string = f.name;
           const cacheCompletion = this.findCompletion(cacheKey);
           if (cacheCompletion) {
-            options = await this.fetchOptions({ cacheCompletion, cacheKey });
+            options = (await this.fetchOptions({ cacheCompletion, cacheKey })) as string;
             options = `-r -a "${options.split('\n').join(' ')}"`;
           }
         }

@@ -13,6 +13,6 @@ export declare class CompletionLookup {
     readonly CompletionMapping: {
         [key: string]: Completion;
     };
-    constructor(name?: string, topicSeparator?: string);
+    constructor(name?: string | undefined, topicSeparator?: string);
     run(): Completion | undefined;
 }

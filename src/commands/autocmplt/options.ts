@@ -8,6 +8,20 @@
 import { Args, Command } from '@oclif/core';
 import { AutocompleteBase } from '../../base.js';
 import { Completion } from '../../completions.js';
+
+type Flags = {
+  flag: Command.Flag.Cached;
+  name: string;
+};
+
+type CommandState = {
+  id: string;
+  klass: Command.Class;
+  argsIndex: number;
+  curPositionIsFlag: boolean;
+  curPositionIsFlagValue: boolean;
+  slicedArgv: string[];
+};
 export default class Options extends AutocompleteBase {
   public static aliases = ['autocomplete:options'];
 
@@ -36,7 +50,7 @@ export default class Options extends AutocompleteBase {
 
     // ex: heroku autocomplete:options 'heroku addons:destroy -a myapp myaddon'
     try {
-      const commandStateVars = await this.processCommandLine();
+      const commandStateVars = (await this.processCommandLine()) as CommandState;
       const completion = this.determineCompletion(commandStateVars);
       const options = await this.fetchOptions(completion);
       if (options) this.log(options);
@@ -47,12 +61,11 @@ export default class Options extends AutocompleteBase {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public findFlagFromWildArg(wild: string, klass: Command.Class): { flag: Command.Flag.Cached; name: string } {
+  public findFlagFromWildArg(wild: string, klass: Command.Class): Flags {
     let name = wild.replace(/^-+/, '');
     name = name.replace(/=(.+)?$/, '');
 
-    const unknown = { flag: undefined, name: undefined };
-    if (!klass.flags) return unknown;
+    if (!klass.flags) return {} as unknown as Flags;
     const cFlags = klass.flags;
 
     let flag = cFlags[name];
@@ -61,7 +74,7 @@ export default class Options extends AutocompleteBase {
     name = Object.keys(cFlags).find((k: string) => cFlags[k].char === name) || 'undefinedcommand';
     flag = cFlags?.[name];
     if (flag) return { name, flag };
-    return unknown;
+    return {} as unknown as Flags;
   }
 
   public determineCmdState(argv: string[], klass: Command.Class): [number, boolean, boolean] {
@@ -143,14 +156,7 @@ export default class Options extends AutocompleteBase {
     return [argsIndex, argIsFlag, argIsFlagValue];
   }
 
-  private async processCommandLine(): Promise<{
-    id: string;
-    klass: Command.Class;
-    argsIndex: number;
-    curPositionIsFlag: boolean;
-    curPositionIsFlagValue: boolean;
-    slicedArgv: string[];
-  }> {
+  private async processCommandLine(): Promise<CommandState | undefined> {
     // find command id
     const commandLineToComplete = this.argv[0].split(' ');
     const id = commandLineToComplete[1];
@@ -185,8 +191,8 @@ export default class Options extends AutocompleteBase {
   }): { cacheKey: string; cacheCompletion: Completion } {
     const { id, klass, argsIndex, curPositionIsFlag, curPositionIsFlagValue, slicedArgv } = commandStateVars;
     // setup empty cache completion vars to assign
-    let cacheKey: string;
-    let cacheCompletion: Completion;
+    let cacheKey!: string;
+    let cacheCompletion!: Completion;
 
     // completing a flag/value? else completing an arg
     if (curPositionIsFlag || curPositionIsFlagValue) {
@@ -202,7 +208,7 @@ export default class Options extends AutocompleteBase {
           skipCache: true,
 
           // eslint-disable-next-line @typescript-eslint/require-await
-          options: async (): Promise<string[]> => flag.options,
+          options: async (): Promise<string[]> => flag.options as string[],
         };
       }
     } else {
@@ -210,7 +216,7 @@ export default class Options extends AutocompleteBase {
       // variable arg (strict: false)
       if (!klass.strict) {
         cacheKey = cmdArgs[0]?.name.toLowerCase();
-        cacheCompletion = this.findCompletion(cacheKey);
+        cacheCompletion = this.findCompletion(cacheKey) as Completion;
         if (!cacheCompletion) {
           this.throwError(`Cannot complete variable arg position for ${id}`);
         }
@@ -224,7 +230,7 @@ export default class Options extends AutocompleteBase {
 
     // try to auto-populate the completion object
     if (!cacheCompletion) {
-      cacheCompletion = this.findCompletion(cacheKey);
+      cacheCompletion = this.findCompletion(cacheKey) as Completion;
     }
     return { cacheKey, cacheCompletion };
   }

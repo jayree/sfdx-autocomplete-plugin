@@ -48,9 +48,9 @@ describe('AutocompleteOptions', () => {
   describe('#findFlagFromWildArg', () => {
     it('finds flag from long and short name', () => {
       let output = cmd.findFlagFromWildArg('--app=my-app', TestCommand);
-      expect(output.name).to.eq('app');
+      expect(output?.name).to.eq('app');
       output = cmd.findFlagFromWildArg('-a', TestCommand);
-      expect(output.name).to.eq('app');
+      expect(output?.name).to.eq('app');
     });
 
     it('returns empty', () => {

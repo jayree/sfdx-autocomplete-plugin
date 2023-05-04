@@ -14,7 +14,7 @@ describe('autocmplt:index', () => {
   test
     .stdout()
     .command(['autocmplt', 'bash'])
-    .it('provides bash instructions', (ctx) => {
+    .it('provides bash instructions', (ctx: { stdout: string }) => {
       expect(ctx.stdout).to.contain(`
 Setup Instructions for SFDX CLI Autocomplete ---
 
@@ -36,7 +36,7 @@ Enjoy!
   test
     .stdout()
     .command(['autocmplt', 'zsh'])
-    .it('provides zsh instructions', (ctx) => {
+    .it('provides zsh instructions', (ctx: { stdout: string }) => {
       expect(ctx.stdout).to.contain(`
 Setup Instructions for SFDX CLI Autocomplete ---
 
@@ -58,7 +58,7 @@ Enjoy!
   test
     .stdout()
     .command(['autocmplt', 'fish'])
-    .it('provides fish instructions', (ctx) => {
+    .it('provides fish instructions', (ctx: { stdout: string }) => {
       expect(ctx.stdout).to.contain(`
 Setup Instructions for SFDX CLI Autocomplete ---
 

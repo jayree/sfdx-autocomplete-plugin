@@ -194,7 +194,7 @@ describe('zsh completion with spaces', () => {
   it('generates a valid completion file.', async () => {
     config.bin = 'test-cli';
     const zshCompWithSpaces = new ZshCompWithSpaces(config);
-    expect(await zshCompWithSpaces.generate()).to.equal(`#compdef test-cli
+    expect(await zshCompWithSpaces.generate(config.bin)).to.equal(`#compdef test-cli
 
 _test-cli_app() {
   local context state state_descr line

@@ -29,7 +29,7 @@ export class CompletionLookup {
       for await (const aliasOrUsername of [...Object.keys(aliases), ...new Set(Object.values(aliases))]) {
         try {
           await (await Org.create({ aliasOrUsername })).refreshAuth();
-          activeAliasOrUsername.push(aliasOrUsername);
+          activeAliasOrUsername.push(aliasOrUsername as string);
         } catch (error) {
           /* empty */
         }
@@ -72,6 +72,6 @@ export class CompletionLookup {
   public constructor(private readonly name?: string, private readonly topicSeparator = ' ') {}
 
   public run(): Completion | undefined {
-    return this.CompletionMapping[this.name];
+    return this.CompletionMapping[this.name as string];
   }
 }

@@ -6,52 +6,52 @@
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "type": "module",
   "dependencies": {
-    "@oclif/core": "^2.4.0",
-    "@salesforce/core": "^3.33.6",
-    "@salesforce/sf-plugins-core": "^2.2.4",
+    "@oclif/core": "^2.8.5",
+    "@salesforce/core": "^3.36.0",
+    "@salesforce/sf-plugins-core": "^2.4.2",
     "chalk": "^5.2.0",
     "debug": "^4.3.4",
-    "fs-extra": "^11.1.0",
+    "fs-extra": "^11.1.1",
     "tslib": "^2.5.0"
   },
   "devDependencies": {
-    "@oclif/plugin-command-snapshot": "^3.3.7",
-    "@oclif/plugin-help": "^5.2.6",
-    "@oclif/test": "^2.3.8",
-    "@salesforce/dev-config": "^3.1.0",
-    "@salesforce/dev-scripts": "^4.1.2",
+    "@oclif/plugin-command-snapshot": "^3.3.13",
+    "@oclif/plugin-help": "^5.2.9",
+    "@oclif/test": "^2.3.17",
+    "@salesforce/dev-config": "^4.0.1",
+    "@salesforce/dev-scripts": "^5.0.1",
     "@salesforce/prettier-config": "^0.0.2",
     "@types/debug": "^4.1.7",
     "@types/fs-extra": "^11.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.54.0",
-    "@typescript-eslint/parser": "^5.54.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
     "c8": "^7.13.0",
     "chai": "^4.3.7",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-config-salesforce": "^1.1.1",
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-salesforce": "^2.0.1",
     "eslint-config-salesforce-license": "^0.2.0",
     "eslint-config-salesforce-typescript": "^1.1.1",
     "eslint-plugin-header": "^3.1.1",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsdoc": "^40.0.1",
+    "eslint-plugin-jsdoc": "^43.1.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-sf-plugin": "^1.9.2",
+    "eslint-plugin-sf-plugin": "^1.15.1",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "mocha": "^10.2.0",
-    "oclif": "^3.7.0",
-    "patch-package": "^6.5.1",
-    "prettier": "^2.8.4",
+    "oclif": "^3.9.0",
+    "patch-package": "^7.0.0",
+    "prettier": "^2.8.8",
     "pretty-quick": "^3.1.3",
     "shx": "^0.3.4",
-    "sinon": "^15.0.1",
+    "sinon": "^15.0.4",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.4",
     "wireit": "^0.9.5"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   },
   "files": [
     "/lib",
@@ -125,7 +125,7 @@
       "command": "tsc --build --pretty",
       "files": [
         "src/**/*.ts",
-        "tsconfig.json",
+        "**/tsconfig.json",
         "messages/**"
       ],
       "output": [
@@ -151,7 +151,8 @@
         "src/**/*.ts",
         "test/**/*.ts",
         "messages/**",
-        ".eslint*"
+        "**/.eslint*",
+        "**/tsconfig.json"
       ],
       "output": []
     },
@@ -159,8 +160,7 @@
       "command": "tsc -p \"./test\" --pretty",
       "files": [
         "test/**/*.ts",
-        "tsconfig.json",
-        "test/tsconfig.json"
+        "**/tsconfig.json"
       ],
       "output": []
     },
@@ -181,9 +181,8 @@
       "files": [
         "test/**/*.ts",
         "src/**/*.ts",
-        "tsconfig.json",
+        "**/tsconfig.json",
         ".mocha*",
-        "test/tsconfig.json",
         "!*.nut.ts",
         ".nycrc"
       ],

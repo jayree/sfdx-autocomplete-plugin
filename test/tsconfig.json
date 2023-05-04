@@ -1,7 +1,7 @@
 {
   "extends": "@salesforce/dev-config/tsconfig-test",
   "compilerOptions": {
-    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "module": "ES2020",
     "skipLibCheck": true
   },

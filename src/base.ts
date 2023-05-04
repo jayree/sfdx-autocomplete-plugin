@@ -65,7 +65,7 @@ export abstract class AutocompleteBase extends SfCommand<void> {
     return new CompletionLookup(name, ':').run();
   }
 
-  protected async fetchOptions(cache: { cacheCompletion: Completion; cacheKey: string }): Promise<string> {
+  protected async fetchOptions(cache: { cacheCompletion: Completion; cacheKey: string }): Promise<string | undefined> {
     const { cacheCompletion, cacheKey } = cache;
     // build/retrieve & return options cache
     if (cacheCompletion?.options) {

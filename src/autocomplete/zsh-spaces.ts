@@ -62,7 +62,7 @@ export default class ZshCompWithSpaces {
     this.coTopics = this.getCoTopics();
   }
 
-  public async generate(): Promise<string> {
+  public async generate(bin: string): Promise<string> {
     const firstArgs: Array<{ id: string; summary?: string }> = [];
 
     this.topics.forEach((t) => {
@@ -86,7 +86,7 @@ export default class ZshCompWithSpaces {
       for await (const arg of firstArgs) {
         if (this.coTopics.includes(arg.id)) {
           // coTopics already have a completion function.
-          caseBlock += `\n        ${arg.id})\n          _arguments -C "*::arg:->args"\n          _${this.config.bin}_${arg.id}\n          ;;`;
+          caseBlock += `\n        ${arg.id})\n          _arguments -C "*::arg:->args"\n          _${bin}_${arg.id}\n          ;;`;
         } else {
           const cmd = this.commands.find((c) => c.id === arg.id);
 
@@ -102,7 +102,7 @@ export default class ZshCompWithSpaces {
             }
           } else {
             // it's a topic, redirect to its completion function.
-            caseBlock += `\n        ${arg.id})\n          _arguments -C "*::arg:->args"\n          _${this.config.bin}_${arg.id}\n          ;;`;
+            caseBlock += `\n        ${arg.id})\n          _arguments -C "*::arg:->args"\n          _${bin}_${arg.id}\n          ;;`;
           }
         }
       }
@@ -115,12 +115,12 @@ export default class ZshCompWithSpaces {
 
     let zshTopicsComp = '';
     for await (const t of this.topics) {
-      zshTopicsComp += `\n${await this.genZshTopicCompFun(t.name)}`;
+      zshTopicsComp += `\n${await this.genZshTopicCompFun(bin, t.name)}`;
     }
 
-    const compFunc = `#compdef ${this.config.bin}
+    const compFunc = `#compdef ${bin}
 ${zshTopicsComp}
-_${this.config.bin}() {
+_${bin}() {
   local context state state_descr line
   typeset -A opt_args
 
@@ -144,7 +144,7 @@ _${this.config.bin}() {
   esac
 }
 
-_${this.config.bin}
+_${bin}
 `;
     return util.format(compFunc, flags, this.genZshValuesBlock(firstArgs), await mainArgsCaseBlock());
   }
@@ -156,7 +156,7 @@ _${this.config.bin}
     const argumentsArray: string[] = [];
 
     for await (const flagName of flagNames) {
-      const f = flags[flagName];
+      const f = flags?.[flagName] as Command.Flag.Cached;
 
       // skip hidden flags
       if (f.hidden) continue;
@@ -241,7 +241,7 @@ _${this.config.bin}
     return valuesBlock;
   }
 
-  private async genZshTopicCompFun(id: string): Promise<string> {
+  private async genZshTopicCompFun(bin: string, id: string): Promise<string> {
     const underscoreSepId = id.replace(/:/g, '_');
     const depth = id.split(':').length;
 
@@ -270,7 +270,7 @@ _${this.config.bin}
         argsBlock += util.format(
           '\n        "%s")\n          _arguments -C "*::arg:->args"\n          %s\n        ;;',
           subArg,
-          `_${this.config.bin}_${underscoreSepId}_${subArg}`
+          `_${bin}_${underscoreSepId}_${subArg}`
         );
       });
 
@@ -295,7 +295,7 @@ _${this.config.bin}
       }
     }
 
-    const topicCompFunc = `_${this.config.bin}_${underscoreSepId}() {
+    const topicCompFunc = `_${bin}_${underscoreSepId}() {
   local context state state_descr line
   typeset -A opt_args
 

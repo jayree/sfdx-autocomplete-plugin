@@ -9,6 +9,7 @@
   "plugins": ["eslint-plugin-header"],
   "extends": ["eslint-config-salesforce-typescript", "plugin:sf-plugin/migration", "plugin:prettier/recommended"],
   "rules": {
+    "jsdoc/newline-after-description": "off",
     "@typescript-eslint/prefer-nullish-coalescing": "off",
     "sf-plugin/no-missing-messages": "off",
     "header/header": [

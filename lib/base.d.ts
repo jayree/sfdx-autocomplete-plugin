@@ -20,5 +20,5 @@ export declare abstract class AutocompleteBase extends SfCommand<void> {
     protected fetchOptions(cache: {
         cacheCompletion: Completion;
         cacheKey: string;
-    }): Promise<string>;
+    }): Promise<string | undefined>;
 }
