@@ -1,17 +1,21 @@
 name: test-and-release
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
+
 jobs:
   release:
     name: test-and-release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
       - name: Install dependencies
@@ -22,7 +26,7 @@ jobs:
         run: yarn test
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm install -global semantic-release https://github.com/jayree/semantic-release/raw/master/oclif-semantic-release-v3.1.5.tgz
