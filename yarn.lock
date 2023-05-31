@@ -737,18 +737,18 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/plugin-command-snapshot@^3.3.13":
-  version "3.3.13"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-3.3.13.tgz#1b200d565c0d7f223d633c27e580232977c23332"
-  integrity sha512-oFOXYGJ/DNp6VKwVlyynL7DG09CflXxTFRt2xVatupQKx4+2/otsGHENYwZv0RUpQalWCXWTu+8iEGZOXTgN2A==
+"@oclif/plugin-command-snapshot@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-4.0.2.tgz#236fa8a402db63ffc9ed437aa6d2555026de4040"
+  integrity sha512-pYjiZifZIRpnpm+vdmyItkAcjFDGkP2XuV+i+5H8midzSawomJxphi/p00cjEauQTn5MnaMcAFIuVTDbI0ZiDQ==
   dependencies:
-    "@oclif/core" "^2.8.2"
+    "@oclif/core" "^2.8.5"
     chalk "^4.1.2"
     just-diff "^5.2.0"
     lodash "^4.17.21"
-    semver "^7.5.0"
+    semver "^7.5.1"
     ts-json-schema-generator "^1.2.0"
-    tslib "^2.5.0"
+    tslib "^2.5.2"
 
 "@oclif/plugin-help@^5.1.19", "@oclif/plugin-help@^5.2.9":
   version "5.2.9"
