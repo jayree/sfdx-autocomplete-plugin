@@ -3,30 +3,40 @@
     "command": "autocmplt",
     "plugin": "sfdx-autocmplt",
     "flags": ["refresh-cache"],
-    "alias": []
+    "alias": [],
+    "flagChars": ["r"],
+    "flagAliases": []
   },
   {
     "command": "autocmplt:create",
     "plugin": "sfdx-autocmplt",
     "flags": [],
-    "alias": ["autocomplete:create"]
+    "alias": ["autocomplete:create"],
+    "flagChars": [],
+    "flagAliases": []
   },
   {
     "command": "autocmplt:doctor",
     "plugin": "sfdx-autocmplt",
     "flags": ["debug"],
-    "alias": ["autocomplete:doctor"]
+    "alias": ["autocomplete:doctor"],
+    "flagChars": [],
+    "flagAliases": []
   },
   {
     "command": "autocmplt:options",
     "plugin": "sfdx-autocmplt",
     "flags": [],
-    "alias": ["autocomplete:options"]
+    "alias": ["autocomplete:options"],
+    "flagChars": [],
+    "flagAliases": []
   },
   {
     "command": "autocmplt:script",
     "plugin": "sfdx-autocmplt",
     "flags": [],
-    "alias": ["autocomplete:script"]
+    "alias": ["autocomplete:script"],
+    "flagChars": [],
+    "flagAliases": []
   }
 ]
