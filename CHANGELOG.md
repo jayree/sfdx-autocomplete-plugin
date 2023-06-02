@@ -1,3 +1,10 @@
+## [2.9.3](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.2...v2.9.3) (2023-06-02)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/core from 4.0.1 to 4.1.0 ([#251](https://github.com/jayree/sfdx-autocomplete-plugin/issues/251)) ([05ae8a6](https://github.com/jayree/sfdx-autocomplete-plugin/commit/05ae8a64b52a458c98514e5563ad45d5ea462503))
+
 ## [2.9.2](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.1...v2.9.2) (2023-05-31)
 
 
