@@ -1,3 +1,10 @@
+## [2.9.9](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.8...v2.9.9) (2023-07-10)
+
+
+### Bug Fixes
+
+* **deps:** bump tough-cookie from 4.1.2 to 4.1.3 ([#303](https://github.com/jayree/sfdx-autocomplete-plugin/issues/303)) ([67c8d5e](https://github.com/jayree/sfdx-autocomplete-plugin/commit/67c8d5e4b339bedb7215f09ad46328a4eb66bdba))
+
 ## [2.9.8](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.7...v2.9.8) (2023-07-07)
 
 
