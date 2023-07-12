@@ -1,3 +1,10 @@
+## [2.9.10](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.9...v2.9.10) (2023-07-12)
+
+
+### Bug Fixes
+
+* **deps:** bump semver from 5.7.1 to 5.7.2 ([#305](https://github.com/jayree/sfdx-autocomplete-plugin/issues/305)) ([5311ac9](https://github.com/jayree/sfdx-autocomplete-plugin/commit/5311ac9e15af8af15f88f6122016d6522c6f16fa))
+
 ## [2.9.9](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.8...v2.9.9) (2023-07-10)
 
 
