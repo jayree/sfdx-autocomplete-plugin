@@ -34,8 +34,8 @@ export default class Script extends AutocompleteBase {
     this.log(
       `${this.prefix}${bin}_AC_${shellUpcase}_SETUP_PATH=${path.join(
         this.autocompleteCacheDir,
-        `${shell}_setup`
-      )} && test -f $${bin}_AC_${shellUpcase}_SETUP_PATH && source $${bin}_AC_${shellUpcase}_SETUP_PATH;`
+        `${shell}_setup`,
+      )} && test -f $${bin}_AC_${shellUpcase}_SETUP_PATH && source $${bin}_AC_${shellUpcase}_SETUP_PATH;`,
     );
   }
 }

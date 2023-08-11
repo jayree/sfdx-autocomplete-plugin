@@ -29,7 +29,7 @@ export async function fetchCache(
   skipCache: boolean,
   options: {
     cacheFn: () => Promise<string[]>;
-  }
+  },
 ): Promise<string[]> {
   const cachePresent = fs.existsSync(cachePath);
   if (cachePresent && !skipCache && !_isStale(cachePath, cacheDuration)) {

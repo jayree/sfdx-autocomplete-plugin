@@ -97,7 +97,7 @@ export default class ZshCompWithSpaces {
               caseBlock += `\n        ${
                 arg.id
               })\n          _arguments -C "*::arg:->args"\n          ${await this.genZshFlagArgumentsBlock(
-                cmd.flags
+                cmd.flags,
               )}         ;;`;
             }
           } else {
@@ -270,13 +270,13 @@ _${bin}
         argsBlock += util.format(
           '\n        "%s")\n          _arguments -C "*::arg:->args"\n          %s\n        ;;',
           subArg,
-          `_${bin}_${underscoreSepId}_${subArg}`
+          `_${bin}_${underscoreSepId}_${subArg}`,
         );
       });
 
     for await (const c of this.commands.filter(
       // eslint-disable-next-line @typescript-eslint/no-shadow
-      (c) => c.id.startsWith(id + ':') && c.id.split(':').length === depth + 1
+      (c) => c.id.startsWith(id + ':') && c.id.split(':').length === depth + 1,
     )) {
       if (!this.coTopics?.includes(c.id)) {
         const subArg = c.id.split(':')[depth];
@@ -290,7 +290,7 @@ _${bin}
         argsBlock += util.format(
           '\n        "%s")\n          _arguments -C "*::arg:->args"\n          %s\n          ;;',
           subArg,
-          block
+          block,
         );
       }
     }
