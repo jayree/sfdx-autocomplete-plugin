@@ -324,7 +324,7 @@ bindkey "^I" expand-or-complete-with-dots`;
         const help = isBoolean ? '(switch) ' : hasCompletion ? '(autocomplete) ' : '';
         const multiple = isOption && f.multiple ? '*' : '';
         const completion = `${multiple}--${name}[${help}${sanitizeDescription(
-          f.summary || f.description
+          f.summary || f.description,
         )}]${cachecompl}`;
         return `"${completion}"`;
       })
@@ -382,11 +382,11 @@ ${cmdsWithDesc.join('\n')}
         const zshCompWithSpaces = new ZshCompWithSpaces(this.config);
         await fs.writeFile(
           path.join(this.zshCompletionFunctionPath, `_${this.cliBin}`),
-          await zshCompWithSpaces.generate(this.config.bin)
+          await zshCompWithSpaces.generate(this.config.bin),
         );
         await fs.writeFile(
           path.join(this.zshCompletionFunctionPath, `_sfdx`),
-          await zshCompWithSpaces.generate('sfdx')
+          await zshCompWithSpaces.generate('sfdx'),
         );
       }
     }
@@ -428,9 +428,9 @@ end`);
 
     for await (const command of this.commands) {
       completions.push(
-        `complete -f -c ${cliBin} -n '__fish_${cliBin}_needs_command' -a ${command.id} -d "${
-          command.description?.split('\n')[0]
-        }"`
+        `complete -f -c ${cliBin} -n '__fish_${cliBin}_needs_command' -a ${command.id} -d "${command.description?.split(
+          '\n',
+        )[0]}"`,
       );
       const flags: {
         [name: string]: Command.Flag.Cached;
@@ -451,7 +451,7 @@ end`);
           }
         }
         completions.push(
-          `complete -f -c ${cliBin} -n ' __fish_${cliBin}_using_command ${command.id}' -l ${flag} ${shortFlag} ${options} ${description}`
+          `complete -f -c ${cliBin} -n ' __fish_${cliBin}_using_command ${command.id}' -l ${flag} ${shortFlag} ${options} ${description}`,
         );
       }
     }
