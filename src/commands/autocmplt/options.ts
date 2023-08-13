@@ -71,7 +71,7 @@ export default class Options extends AutocompleteBase {
     let flag = cFlags[name];
     if (flag) return { name, flag };
 
-    name = Object.keys(cFlags).find((k: string) => cFlags[k].char === name) || 'undefinedcommand';
+    name = Object.keys(cFlags).find((k: string) => cFlags[k].char === name) ?? 'undefinedcommand';
     flag = cFlags?.[name];
     if (flag) return { name, flag };
     return {} as unknown as Flags;

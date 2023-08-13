@@ -206,7 +206,7 @@ bindkey "^I" expand-or-complete-with-dots`;
         try {
           if (c.hidden) return;
           if (c.pluginName === '@oclif/plugin-autocomplete') return;
-          const description = sanitizeDescription(c.summary || c.description || '');
+          const description = sanitizeDescription(c.summary ?? c.description ?? '');
           const flags = c.flags;
           const hidden = c.hidden;
           const args = c.args;
@@ -324,7 +324,7 @@ bindkey "^I" expand-or-complete-with-dots`;
         const help = isBoolean ? '(switch) ' : hasCompletion ? '(autocomplete) ' : '';
         const multiple = isOption && f.multiple ? '*' : '';
         const completion = `${multiple}--${name}[${help}${sanitizeDescription(
-          f.summary || f.description,
+          f.summary ?? f.description,
         )}]${cachecompl}`;
         return `"${completion}"`;
       })
@@ -440,7 +440,7 @@ end`);
       for await (const flag of fl) {
         const f = flags[flag];
         const shortFlag = f.char ? `-s ${f.char}` : '';
-        const description = `-d "${sanitizeDescription(f.summary || f.description)}"`;
+        const description = `-d "${sanitizeDescription(f.summary ?? f.description)}"`;
         let options = f.type === 'option' ? `-r -a "${f.options?.join(' ')}"` : '';
         if (options.length === 0) {
           const cacheKey: string = f.name;

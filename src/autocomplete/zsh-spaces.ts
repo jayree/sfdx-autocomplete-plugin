@@ -161,7 +161,7 @@ _${bin}
       // skip hidden flags
       if (f.hidden) continue;
 
-      f.summary = sanitizeSummary(f.summary || f.description);
+      f.summary = sanitizeSummary(f.summary ?? f.description);
 
       let flagSpec = '';
 
@@ -371,7 +371,7 @@ _${bin}
     this.config.plugins.forEach((p) => {
       p.commands.forEach((c) => {
         if (c.hidden) return;
-        const summary = sanitizeSummary(c.summary || c.description);
+        const summary = sanitizeSummary(c.summary ?? c.description);
         const flags = c.flags;
         cmds.push({
           id: c.id,
