@@ -34,7 +34,7 @@ export default class Doctor extends AutocompleteBase {
 
   public async run(): Promise<void> {
     const { args, flags } = await this.parse(Doctor);
-    const shell: string = args.shell || this.config.shell;
+    const shell: string = args.shell ?? this.config.shell;
     this.errorIfNotSupportedShell(shell);
 
     const data = [];
@@ -55,7 +55,7 @@ export default class Doctor extends AutocompleteBase {
 
     // check shell shim source env var
     // i.e. BIN_AC_<shell>_SETUP_PATH
-    const shellProfilePath = join(process.env.HOME || '', shell === 'zsh' ? '.zshrc' : '.bashrc');
+    const shellProfilePath = join(process.env.HOME ?? '', shell === 'zsh' ? '.zshrc' : '.bashrc');
     const shellProfile = fs.readFileSync(shellProfilePath);
     const regex = /AC_\w+_SETUP_PATH/;
     const shimVlaue = regex.exec(shellProfile.toString()) ? 'present' : 'missing';

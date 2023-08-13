@@ -71,12 +71,12 @@ export abstract class AutocompleteBase extends SfCommand<void> {
     if (cacheCompletion?.options) {
       // use cacheKey function or fallback to arg/flag name
       const ckey = cacheCompletion.cacheKey ? await cacheCompletion.cacheKey() : null;
-      const key: string = ckey || cacheKey || 'unknown_key_error';
+      const key: string = (ckey ?? cacheKey) || 'unknown_key_error';
       const flagCachePath = path.join(this.completionsCacheDir, key);
 
       // build/retrieve cache
-      const duration: number = cacheCompletion.cacheDuration || 60 * 60 * 24; // 1 day
-      const skip: boolean = cacheCompletion.skipCache || false;
+      const duration: number = cacheCompletion.cacheDuration ?? 60 * 60 * 24; // 1 day
+      const skip: boolean = cacheCompletion.skipCache ?? false;
       const opts = { cacheFn: (): Promise<string[]> => cacheCompletion.options() };
       const options = (await fetchCache(flagCachePath, duration, skip, opts)) || [];
 

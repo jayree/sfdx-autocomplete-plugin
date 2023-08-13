@@ -31,7 +31,7 @@ export default class Index extends AutocompleteBase {
 
   public async run(): Promise<void> {
     const { args, flags } = await this.parse(Index);
-    const shell: string = args.shell || this.config.shell;
+    const shell: string = args.shell ?? this.config.shell;
     this.errorIfNotSupportedShell(shell);
     this.spinner.start(`${chalk.bold('Building the autocomplete cache')}`);
     await Create.run([], this.config);
