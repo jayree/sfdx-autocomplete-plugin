@@ -100,7 +100,7 @@ export default class Doctor extends AutocompleteBase {
         name: {},
         value: {},
       },
-      { 'no-header': true }
+      { 'no-header': true },
     );
 
     if (flags.debug) this.printList();

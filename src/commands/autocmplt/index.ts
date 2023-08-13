@@ -43,7 +43,7 @@ export default class Index extends AutocompleteBase {
       const bashNote =
         'If your terminal starts as a login shell you may need to print the init script into ~/.bash_profile or ~/.profile.';
       const zshNote = `After sourcing, you can run \`${chalk.cyan(
-        '$ compaudit -D'
+        '$ compaudit -D',
       )}\` to ensure no permissions conflicts are present`;
       const fishNote = 'This assumes your Fish configuration is stored at ~/.config/fish/config.fish';
       const note = shell === 'zsh' ? zshNote : shell === 'bash' ? bashNote : fishNote;
@@ -56,7 +56,7 @@ ${chalk.cyan('$ source ~/.config/fish/config.fish')}`
 ${chalk.cyan(
   `$ printf "$(${bin} autocmplt:script ${shell})" >> ~/.${shell}rc; ${
     shell === 'zsh' ? 'exec zsh' : `source ~/.${shell}rc`
-  }`
+  }`,
 )}`;
 
       this.log(`

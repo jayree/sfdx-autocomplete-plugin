@@ -12,8 +12,8 @@ export const prerun: Hook<'prerun'> = async function (options) {
   if (options.Command.id === 'autocomplete') {
     process.stderr.write(
       `${chalk.bold.yellow('Warning:')} 'sfdx-autocmplt' plugin detected!\n${chalk.dim(
-        "Use 'sfdx autocmplt' for improved auto-completion."
-      )}\n`
+        "Use 'sfdx autocmplt' for improved auto-completion.",
+      )}\n`,
     );
     process.exit(1);
   }

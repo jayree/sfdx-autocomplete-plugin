@@ -69,7 +69,10 @@ export class CompletionLookup {
         : CompletionLookup.instanceurlCompletionColon,
   };
 
-  public constructor(private readonly name?: string, private readonly topicSeparator = ' ') {}
+  public constructor(
+    private readonly name?: string,
+    private readonly topicSeparator = ' ',
+  ) {}
 
   public run(): Completion | undefined {
     return this.CompletionMapping[this.name as string];
