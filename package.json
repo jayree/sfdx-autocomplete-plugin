@@ -17,7 +17,7 @@
     "@oclif/plugin-help": "^5.2.18",
     "@oclif/test": "^2.5.1",
     "@salesforce/dev-config": "^4.0.1",
-    "@salesforce/dev-scripts": "^5.7.0",
+    "@salesforce/dev-scripts": "^5.8.0",
     "@salesforce/prettier-config": "^0.0.3",
     "@types/debug": "^4.1.8",
     "@types/fs-extra": "^11.0.1",
