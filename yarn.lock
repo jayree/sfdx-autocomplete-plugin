@@ -784,13 +784,13 @@
     lodash "^4.17.21"
     semver "^7.5.4"
 
-"@oclif/test@^2.4.7":
-  version "2.4.7"
-  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-2.4.7.tgz#4372270157aa6598c0d1b61349b2eff4e2003193"
-  integrity sha512-r18sKGNUm/VGQ8BkSF9Kn7QeMGjGMDUrLxTDPzL5ERaBF5YSi+O9CT3mKhcFdrMwGnCqPVvlAdX4U/6gtYPy1A==
+"@oclif/test@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-2.5.1.tgz#75531da3beb0ad80f17544cba6f3e61bacacecb0"
+  integrity sha512-lqkhze4ijrBg1MmnVIbxk9rvsD8NiR3ISJ2SiM43tYTCVY6eY+up9p/IjD8i9ZoT/7khnfA/Jxhq0OYOjRYvuw==
   dependencies:
     "@oclif/core" "^2.11.10"
-    fancy-test "^2.0.34"
+    fancy-test "^2.0.35"
 
 "@octokit/auth-token@^2.4.4":
   version "2.5.0"
@@ -3002,10 +3002,10 @@ eslint-plugin-jsdoc@^43.0.5:
     semver "^7.5.0"
     spdx-expression-parse "^3.0.1"
 
-eslint-plugin-jsdoc@^46.5.0:
-  version "46.5.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-46.5.0.tgz#02e7945701a01fab76e7ced850d4d1eea63c23c0"
-  integrity sha512-aulXdA4I1dyWpzyS1Nh/GNoS6PavzeucxEapnMR4JUERowWvaEk2Y4A5irpHAcdXtBBHLVe8WIhdXNjoAlGQgA==
+eslint-plugin-jsdoc@^46.5.1:
+  version "46.5.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-46.5.1.tgz#79be44c9f7b3bbc52917cae12f356979b7d58e8a"
+  integrity sha512-CPbvKprmEuJYoxMj5g8gXfPqUGgcqMM6jpH06Kp4pn5Uy5MrPkFKzoD7UFp2E4RBzfXbJz1+TeuEivwFVMkXBg==
   dependencies:
     "@es-joy/jsdoccomment" "~0.40.1"
     are-docs-informative "^0.0.2"
@@ -3219,10 +3219,10 @@ external-editor@^3.0.3:
     iconv-lite "^0.4.24"
     tmp "^0.0.33"
 
-fancy-test@^2.0.34:
-  version "2.0.35"
-  resolved "https://registry.yarnpkg.com/fancy-test/-/fancy-test-2.0.35.tgz#18c0ccd767a7332bea186369a7e7a79a3b4582bb"
-  integrity sha512-XE0L7yAFOKY2jDnkBDDQ3JBD7xbBFwAFl1Z/5WNKBeVNlaEP08wuRTPE3xj2k+fnUp2CMUfD+6aiIS+4pcrjwg==
+fancy-test@^2.0.35:
+  version "2.0.37"
+  resolved "https://registry.yarnpkg.com/fancy-test/-/fancy-test-2.0.37.tgz#7cfd18fcaaa76cd2d72636dda00f6f3fae053187"
+  integrity sha512-lCicyu0gzcWNR0x5LyRNGjBNJfrl+C9rKOaC6nJcyPUXvMhZkMVwsCIDuMPaEET0sD8vSliyAipnQ7RZUgXujw==
   dependencies:
     "@types/chai" "*"
     "@types/lodash" "*"
@@ -5610,10 +5610,10 @@ object.values@^1.1.6:
     define-properties "^1.1.4"
     es-abstract "^1.20.4"
 
-oclif@^3.11.3:
-  version "3.11.3"
-  resolved "https://registry.yarnpkg.com/oclif/-/oclif-3.11.3.tgz#2cccb4f9fe34191812bfa4dda7740e737cef1715"
-  integrity sha512-6bUVTbTflu+IN9UnuIt5S4ba052oqLqsZF6zV2U8bx6ZH+hzgc3aXPTJ5JHU2MbDUg1B9PG5zHAbmvoX7V+16Q==
+oclif@^3.13.1:
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/oclif/-/oclif-3.13.1.tgz#b597df882dd3c42c30ba560f5066d6abd564d0ed"
+  integrity sha512-t4OqJjLK/xP3J1BlmQgkQVDn99F3CnN/RY/X6QbJXn7GfCdZ0LdJXt2zjYP+rQ1cxy9ejbNiwdo/TxVfXSYa6A==
   dependencies:
     "@oclif/core" "^2.11.4"
     "@oclif/plugin-help" "^5.2.14"
