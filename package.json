@@ -54,7 +54,8 @@
     "/lib",
     "/oclif.manifest.json",
     "/bin/is-sfdx.js",
-    "/schemas"
+    "/schemas",
+    "/oclif.lock"
   ],
   "homepage": "https://github.com/jayree/sfdx-autocomplete-plugin",
   "keywords": [
