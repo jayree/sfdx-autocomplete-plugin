@@ -1,3 +1,11 @@
+## [2.9.19](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.18...v2.9.19) (2023-09-22)
+
+
+### Bug Fixes
+
+* add oclif.lock ([d378c37](https://github.com/jayree/sfdx-autocomplete-plugin/commit/d378c37a29b551cbdbc148b93a5c497d5eae11df))
+* **deps:** bump @salesforce/sf-plugins-core from 3.1.22 to 3.1.23 ([#414](https://github.com/jayree/sfdx-autocomplete-plugin/issues/414)) ([7f95074](https://github.com/jayree/sfdx-autocomplete-plugin/commit/7f95074a0044522bebfe544da1b88ded387cf631))
+
 ## [2.9.18](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.17...v2.9.18) (2023-09-08)
 
 
