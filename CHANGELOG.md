@@ -1,3 +1,10 @@
+## [2.9.20](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.19...v2.9.20) (2023-09-28)
+
+
+### Bug Fixes
+
+* **deps:** bump get-func-name from 2.0.0 to 2.0.2 ([#415](https://github.com/jayree/sfdx-autocomplete-plugin/issues/415)) ([10340e3](https://github.com/jayree/sfdx-autocomplete-plugin/commit/10340e3c8e8c07f8c272aaaca707abe567e9a910))
+
 ## [2.9.19](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.18...v2.9.19) (2023-09-22)
 
 
