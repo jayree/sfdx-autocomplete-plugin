@@ -19,7 +19,7 @@
     "@salesforce/dev-config": "^4.0.1",
     "@salesforce/dev-scripts": "^5.10.0",
     "@salesforce/prettier-config": "^0.0.3",
-    "@types/debug": "^4.1.8",
+    "@types/debug": "^4.1.9",
     "@types/fs-extra": "^11.0.2",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
