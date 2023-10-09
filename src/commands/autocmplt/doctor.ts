@@ -111,7 +111,7 @@ export default class Doctor extends AutocompleteBase {
     const header = 'Completable Commands';
     this.log(header);
     this.log('='.repeat(header.length));
-    this.config.plugins.map((p) => {
+    this.config.getPluginsList().map((p) => {
       p.commands.map((c) => {
         try {
           if (c.hidden) {

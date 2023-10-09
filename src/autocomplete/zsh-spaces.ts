@@ -368,7 +368,7 @@ _${bin}
   private getCommands(): CommandCompletion[] {
     const cmds: CommandCompletion[] = [];
 
-    this.config.plugins.forEach((p) => {
+    this.config.getPluginsList().forEach((p) => {
       p.commands.forEach((c) => {
         if (c.hidden) return;
         const summary = sanitizeSummary(c.summary ?? c.description);

@@ -198,7 +198,7 @@ bindkey "^I" expand-or-complete-with-dots`;
     // eslint-disable-next-line no-underscore-dangle
     if (this._commands) return this._commands;
 
-    const plugins = this.config.plugins;
+    const plugins = this.config.getPluginsList();
     const commands: Command.Cached[] = [];
 
     plugins.forEach((p) => {
