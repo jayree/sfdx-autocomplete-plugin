@@ -1,3 +1,10 @@
+## [2.9.22](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.21...v2.9.22) (2023-10-10)
+
+
+### Bug Fixes
+
+* use getPluginsList ([d56289c](https://github.com/jayree/sfdx-autocomplete-plugin/commit/d56289c06a85dbd96081664519c8e07157828dc5))
+
 ## [2.9.21](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.20...v2.9.21) (2023-09-29)
 
 
