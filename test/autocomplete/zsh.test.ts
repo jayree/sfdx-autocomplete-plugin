@@ -167,9 +167,10 @@ const pluginA: IPlugin = {
   ],
   valid: true,
   tag: 'tag',
+  hasManifest: true,
+  isRoot: true,
+  moduleType: 'commonjs',
 };
-
-const plugins: IPlugin[] = [pluginA];
 
 describe('zsh completion with spaces', () => {
   const root = path.resolve(__dirname, '../../package.json');
@@ -177,11 +178,11 @@ describe('zsh completion with spaces', () => {
 
   before(async () => {
     await config.load();
-    /* eslint-disable require-atomic-updates */
-    config.plugins = plugins;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    config.plugins = new Map().set(pluginA.name, pluginA);
     config.pjson.oclif.plugins = ['@My/pluginb'];
     config.pjson.dependencies = { '@My/pluginb': '0.0.0' };
-    for (const plugin of config.plugins) {
+    for (const plugin of config.getPluginsList()) {
       // @ts-expect-error private method
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       config.loadCommands(plugin);
