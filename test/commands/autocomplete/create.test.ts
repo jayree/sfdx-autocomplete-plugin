@@ -7,9 +7,8 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Config, Plugin, Command } from '@oclif/core';
-import { loadJSON } from '@oclif/core/lib/config/util.js';
+import { readJson } from '@oclif/core/lib/util/fs.js';
 import { expect } from 'chai';
-import { Manifest } from '@oclif/core/lib/interfaces';
 
 // eslint-disable-next-line no-underscore-dangle
 const __filename = fileURLToPath(import.meta.url);
@@ -55,10 +54,12 @@ describe('Create', () => {
     before(async () => {
       await config.load();
       cmd = new Create([], config);
-      plugin = new Plugin({ root });
-      cmd.config.plugins = [plugin];
+      plugin = new Plugin({ isRoot: true, root });
+      const plugins = new Map().set(plugin.name, plugin);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      cmd.config.plugins = plugins;
       await plugin.load();
-      plugin.manifest = (await loadJSON(resolve(__dirname, '../../../test/test.oclif.manifest.json'))) as Manifest;
+      plugin.manifest = await readJson(resolve(__dirname, '../../../test/test.oclif.manifest.json'));
       plugin.commands = Object.entries(plugin.manifest.commands as { [s: string]: unknown }).map(([id, c]) => ({
         ...(c as Record<string, unknown>),
         load: async (): Promise<Command.Class> => plugin.findCommand(id, { must: true }) as unknown as Command.Class,
