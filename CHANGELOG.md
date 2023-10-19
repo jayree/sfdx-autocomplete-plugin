@@ -1,3 +1,10 @@
+## [2.9.24](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.23...v2.9.24) (2023-10-19)
+
+
+### Bug Fixes
+
+* **deps:** bump @babel/traverse from 7.21.5 to 7.23.2 ([#443](https://github.com/jayree/sfdx-autocomplete-plugin/issues/443)) ([1640d09](https://github.com/jayree/sfdx-autocomplete-plugin/commit/1640d09cbd2362464842e750545f8c3c7d1701e7))
+
 ## [2.9.23](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.22...v2.9.23) (2023-10-13)
 
 
