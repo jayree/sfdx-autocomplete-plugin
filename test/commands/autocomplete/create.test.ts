@@ -41,6 +41,7 @@ const cacheBuildFlagsTest: Command.Loadable = {
     return config as unknown as Command.Class;
   },
   hidden: false,
+  hiddenAliases: [],
   aliases: [],
   args: {},
 };

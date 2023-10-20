@@ -209,12 +209,14 @@ bindkey "^I" expand-or-complete-with-dots`;
           const description = sanitizeDescription(c.summary ?? c.description ?? '');
           const flags = c.flags;
           const hidden = c.hidden;
+          const hiddenAliases = c.hiddenAliases;
           const args = c.args;
           commands.push({
             id: c.id,
             description,
             flags,
             hidden,
+            hiddenAliases,
             aliases: c.aliases,
             args,
           });
@@ -224,6 +226,7 @@ bindkey "^I" expand-or-complete-with-dots`;
               description,
               flags,
               hidden,
+              hiddenAliases,
               aliases: [],
               args,
             });
