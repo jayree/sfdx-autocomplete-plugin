@@ -7,7 +7,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Config, Command } from '@oclif/core';
-import { Plugin as IPlugin, PJSON } from '@oclif/core/lib/interfaces';
+import { Plugin as IPlugin, PJSON, Options } from '@oclif/core/lib/interfaces';
 import { expect } from 'chai';
 import ZshCompWithSpaces from '../../src/autocomplete/zsh-spaces.js';
 
@@ -24,6 +24,8 @@ class MyCommandClass implements Command.Cached {
   public _base = '';
 
   public aliases: string[] = [];
+
+  public hiddenAliases: string[] = [];
 
   public hidden = false;
 
@@ -50,6 +52,7 @@ class MyCommandClass implements Command.Cached {
 const commandPluginA: Command.Loadable = {
   strict: false,
   aliases: [],
+  hiddenAliases: [],
   args: {},
   flags: {
     file: {
@@ -95,6 +98,7 @@ const commandPluginA: Command.Loadable = {
 const commandPluginB: Command.Loadable = {
   strict: false,
   aliases: [],
+  hiddenAliases: [],
   args: {},
   flags: {
     branch: {
@@ -117,6 +121,7 @@ const commandPluginB: Command.Loadable = {
 const commandPluginC: Command.Loadable = {
   strict: false,
   aliases: [],
+  hiddenAliases: [],
   args: {},
   flags: {},
   hidden: false,
@@ -132,6 +137,7 @@ const commandPluginC: Command.Loadable = {
 const commandPluginD: Command.Loadable = {
   strict: false,
   aliases: [],
+  hiddenAliases: [],
   args: {},
   flags: {},
   hidden: false,
@@ -156,6 +162,7 @@ const pluginA: IPlugin = {
   pjson: {} as PJSON.CLI,
   commandIDs: ['deploy'],
   root: '',
+  options: {} as Options,
   version: '0.0.0',
   type: 'core',
   hooks: {},
