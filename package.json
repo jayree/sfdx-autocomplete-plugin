@@ -21,7 +21,7 @@
     "@salesforce/dev-scripts": "^5.11.0",
     "@salesforce/prettier-config": "^0.0.3",
     "@types/debug": "^4.1.10",
-    "@types/fs-extra": "^11.0.2",
+    "@types/fs-extra": "^11.0.3",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "c8": "^8.0.1",
