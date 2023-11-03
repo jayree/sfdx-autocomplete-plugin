@@ -34,7 +34,7 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsdoc": "^46.8.2",
     "eslint-plugin-prettier": "^5.0.1",
-    "eslint-plugin-sf-plugin": "^1.16.12",
+    "eslint-plugin-sf-plugin": "^1.16.13",
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "mocha": "^10.2.0",
