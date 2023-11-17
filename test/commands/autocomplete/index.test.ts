@@ -6,7 +6,7 @@
  */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { createRequire } from 'module';
+import { createRequire } from 'node:module';
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const { expect, test } = createRequire(import.meta.url)('@oclif/test');
 

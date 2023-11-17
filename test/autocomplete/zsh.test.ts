@@ -157,6 +157,7 @@ const pluginA: IPlugin = {
   },
   name: '@My/plugina',
   alias: '@My/plugina',
+  commandsDir: '.',
   commands: [commandPluginA, commandPluginB, commandPluginC, commandPluginD],
   _base: '',
   pjson: {} as PJSON.CLI,
