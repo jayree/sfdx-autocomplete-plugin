@@ -1,5 +1,6 @@
 {
-  "exclude-scripts": ["docs", "test:command-reference"],
-  "exclude-files": ["LICENSE.txt", ".eslintrc.js", "test/.eslintrc.js"],
+  "exclude-scripts": ["test:command-reference"],
+  "exclude-files": ["LICENSE.txt"],
+  "devDepOverrides": ["prettier", "pretty-quick", "typedoc", "typedoc-plugin-missing-exports"],
   "strict": true
 }
