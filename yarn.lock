@@ -804,7 +804,7 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/core@^3.0.0", "@oclif/core@^3.0.4", "@oclif/core@^3.10.8", "@oclif/core@^3.11.0", "@oclif/core@^3.3.1":
+"@oclif/core@^3.0.4", "@oclif/core@^3.10.8", "@oclif/core@^3.11.0", "@oclif/core@^3.3.1":
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.11.0.tgz#dadfac39238af3b717e33b910dde1f1f0fd2105e"
   integrity sha512-9A2LhDQATf1vrRqPoO0gGuBrey0jt3kDafC+eazxTNWV2EvlEpgY2587iyrxPK/fL2xg7f+0mtxYaSHdO2k8eg==
@@ -1007,7 +1007,7 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
-"@salesforce/core@^5.3.1", "@salesforce/core@^5.3.20":
+"@salesforce/core@^5.3.20":
   version "5.3.20"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.3.20.tgz#4e934d4551bb70423cb1c4115615bc41cffca41e"
   integrity sha512-y+O6O2c8OYFDrAy2qsG+pAcNxoyL14nmBXcBRRcYA7Huj8ikK+aLJK84PuVAYdQz+hNwImQF+69IWtDkpK4Irg==
@@ -1026,6 +1026,30 @@
     jszip "3.10.1"
     pino "^8.16.0"
     pino-abstract-transport "^1.0.0"
+    pino-pretty "^10.2.3"
+    proper-lockfile "^4.1.2"
+    semver "^7.5.4"
+    ts-retry-promise "^0.7.1"
+
+"@salesforce/core@^6.1.0":
+  version "6.1.3"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-6.1.3.tgz#32e71846cad033e0d2b369ecf0fafb4f76d63ad7"
+  integrity sha512-M7EQ4+LSXU4ZqD4R5ttY4RqSaYNaNBGDG0KC51IdDfpGtL4kJXeQHdr5HfMfgyCyYNM9LqqfBS7zQTBY1rf+Yg==
+  dependencies:
+    "@salesforce/kit" "^3.0.15"
+    "@salesforce/schemas" "^1.6.1"
+    "@salesforce/ts-types" "^2.0.9"
+    "@types/semver" "^7.5.4"
+    ajv "^8.12.0"
+    change-case "^4.1.2"
+    faye "^1.4.0"
+    form-data "^4.0.0"
+    js2xmlparser "^4.0.1"
+    jsforce "^2.0.0-beta.28"
+    jsonwebtoken "9.0.2"
+    jszip "3.10.1"
+    pino "^8.16.1"
+    pino-abstract-transport "^1.1.0"
     pino-pretty "^10.2.3"
     proper-lockfile "^4.1.2"
     semver "^7.5.4"
@@ -1067,14 +1091,6 @@
     typescript "^4.9.5"
     wireit "^0.14.1"
 
-"@salesforce/kit@^3.0.13":
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/@salesforce/kit/-/kit-3.0.13.tgz#10b47ad6e0e27c3a9f97eb6a5cdcfffa9ba1f163"
-  integrity sha512-HLQ5L5bBi0tsMeH5ZHJAhHUpvNUNPQoNJt2O82Jf6C60GGsrlzwzQ5ONAHGNBgKSZ7HLr0UGL5xaA+hE9uOcgw==
-  dependencies:
-    "@salesforce/ts-types" "^2.0.8"
-    tslib "^2.6.2"
-
 "@salesforce/kit@^3.0.15":
   version "3.0.15"
   resolved "https://registry.yarnpkg.com/@salesforce/kit/-/kit-3.0.15.tgz#713df3f5767f874c70a2e731c7cb5ba677989559"
@@ -1093,24 +1109,18 @@
   resolved "https://registry.yarnpkg.com/@salesforce/schemas/-/schemas-1.6.1.tgz#7d1c071e1e509ca9d2d8a6e48ac7447dd67a534d"
   integrity sha512-eVy947ZMxCJReKJdgfddUIsBIbPTa/i8RwQGwxq4/ss38H5sLOAeSTaun9V7HpJ1hkpDznWKfgzYvjsst9K6ig==
 
-"@salesforce/sf-plugins-core@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/sf-plugins-core/-/sf-plugins-core-4.0.0.tgz#587d8131531b7a53392d73bc4d6d0b0fd75b7e08"
-  integrity sha512-rg0HeqJ4GsyJjow+Rs7icicm7c3Tp43XmwfVUurN/8mKdtG8vR0d5DmZapKP7+r45Mqtlgpkzp2fSjr5fjadNg==
+"@salesforce/sf-plugins-core@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@salesforce/sf-plugins-core/-/sf-plugins-core-5.0.1.tgz#16b085eda99e28f2607957954d6ac957a8d0a0eb"
+  integrity sha512-gKUhAP9DDUlB4bjr0a6bsWiM16hn/n1cW8BglhYHAow8UJ0OQBxx+dfvAO0ftXmfzg82IZdMViiDmQXt0Z+e6A==
   dependencies:
-    "@oclif/core" "^3.0.0"
-    "@salesforce/core" "^5.3.1"
-    "@salesforce/kit" "^3.0.13"
-    "@salesforce/ts-types" "^2.0.7"
+    "@oclif/core" "^3.11.0"
+    "@salesforce/core" "^6.1.0"
+    "@salesforce/kit" "^3.0.15"
+    "@salesforce/ts-types" "^2.0.9"
+    "@types/inquirer" "^8.2.3"
     chalk "^4"
     inquirer "^8.2.5"
-
-"@salesforce/ts-types@^2.0.7", "@salesforce/ts-types@^2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-2.0.8.tgz#e732b5a42cbec6bda79c089a0633fc643daf8bca"
-  integrity sha512-vuzLcxtThBhpuhmnoh8GFrVU8XjdoNyQm9gPtmcjUyUD/9nQIBTAX8oGoUvCiiq93c4LFEmSua+xm3yu0bbNfg==
-  dependencies:
-    tslib "^2.6.2"
 
 "@salesforce/ts-types@^2.0.9":
   version "2.0.9"
@@ -1149,13 +1159,6 @@
   version "10.3.0"
   resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-10.3.0.tgz#55fdff1ecab9f354019129daf4df0dd4d923ea66"
   integrity sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==
-  dependencies:
-    "@sinonjs/commons" "^3.0.0"
-
-"@sinonjs/fake-timers@^11.2.2":
-  version "11.2.2"
-  resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-11.2.2.tgz#50063cc3574f4a27bd8453180a04171c85cc9699"
-  integrity sha512-G2piCSxQ7oWOxwGSAyFHfPIsyeJGXYtc6mFbnFA+kRXkiEnTl8c/8jul2S329iFBnDI9HGoeWWAZvuvOkZccgw==
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
@@ -1272,6 +1275,14 @@
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@types/http-cache-semantics/-/http-cache-semantics-4.0.1.tgz#0ea7b61496902b95890dc4c3a116b60cb8dae812"
   integrity sha512-SZs7ekbP8CN0txVG2xVRH6EgKmEm31BOxA07vkFaETzZz1xh+cbt8BcI0slpymvwhx5dlFnQG2rTlPVQn+iRPQ==
+
+"@types/inquirer@^8.2.3":
+  version "8.2.10"
+  resolved "https://registry.yarnpkg.com/@types/inquirer/-/inquirer-8.2.10.tgz#9444dce2d764c35bc5bb4d742598aaa4acb6561b"
+  integrity sha512-IdD5NmHyVjWM8SHWo/kPBgtzXatwPkfwzyP3fN1jF2g9BWt5WO+8hL2F4o2GKIYsU40PpqeevuUWvkS/roXJkA==
+  dependencies:
+    "@types/through" "*"
+    rxjs "^7.2.0"
 
 "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.4"
@@ -1395,6 +1406,13 @@
   resolved "https://registry.yarnpkg.com/@types/sinonjs__fake-timers/-/sinonjs__fake-timers-8.1.2.tgz#bf2e02a3dbd4aecaf95942ecd99b7402e03fad5e"
   integrity sha512-9GcLXF0/v3t80caGs5p2rRfkB+a8VBGLJZVih6CNFkx8IZ994wiKKLSRs9nuFwk1HevWs/1mnUmkApGrSGsShA==
 
+"@types/through@*":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@types/through/-/through-0.0.33.tgz#14ebf599320e1c7851e7d598149af183c6b9ea56"
+  integrity sha512-HsJ+z3QuETzP3cswwtzt2vEIiHBk/dCcHGhbmG5X3ecnwFD/lPrMpliGXxSCg03L9AhrdwA4Oz/qfspkDW+xGQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/vinyl@^2.0.4":
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/@types/vinyl/-/vinyl-2.0.7.tgz#9739a9a2afaf9af32761c54a0e82c735279f726c"
@@ -1403,7 +1421,7 @@
     "@types/expect" "^1.20.4"
     "@types/node" "*"
 
-"@typescript-eslint/eslint-plugin@^6.10.0", "@typescript-eslint/eslint-plugin@^6.11.0":
+"@typescript-eslint/eslint-plugin@^6.10.0":
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-6.11.0.tgz#52aae65174ff526576351f9ccd41cea01001463f"
   integrity sha512-uXnpZDc4VRjY4iuypDBKzW1rz9T5YBBK0snMn8MaTSNd2kMlj50LnLBABELjJiOL5YHk7ZD8hbSpI9ubzqYI0w==
@@ -1420,7 +1438,7 @@
     semver "^7.5.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/parser@^6.10.0", "@typescript-eslint/parser@^6.11.0":
+"@typescript-eslint/parser@^6.10.0":
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-6.11.0.tgz#9640d9595d905f3be4f278bf515130e6129b202e"
   integrity sha512-+whEdjk+d5do5nxfxx73oanLL9ghKO3EwM9kBCkUtWMRwWuPaFv9ScuqlYfQ6pAD6ZiJhky7TZ2ZYhrMsfMxVQ==
@@ -4061,11 +4079,6 @@ husky@^7.0.4:
   resolved "https://registry.yarnpkg.com/husky/-/husky-7.0.4.tgz#242048245dc49c8fb1bf0cc7cfb98dd722531535"
   integrity sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ==
 
-husky@^8.0.3:
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-8.0.3.tgz#4936d7212e46d1dea28fef29bb3a108872cd9184"
-  integrity sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==
-
 hyperlinker@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/hyperlinker/-/hyperlinker-1.0.0.tgz#23dc9e38a206b208ee49bc2d6c8ef47027df0c0e"
@@ -5502,7 +5515,7 @@ nise@^4.1.0:
     just-extend "^4.0.2"
     path-to-regexp "^1.7.0"
 
-nise@^5.1.4, nise@^5.1.5:
+nise@^5.1.4:
   version "5.1.5"
   resolved "https://registry.yarnpkg.com/nise/-/nise-5.1.5.tgz#f2aef9536280b6c18940e32ba1fbdc770b8964ee"
   integrity sha512-VJuPIfUFaXNRzETTQEEItTOP8Y171ijr+JLq42wHes3DiryR8vT+1TXQW/Rx8JNUhyYYWyIvjXTU6dOhJcs9Nw==
@@ -6180,7 +6193,7 @@ pino-abstract-transport@^1.0.0:
     readable-stream "^4.0.0"
     split2 "^4.0.0"
 
-pino-abstract-transport@v1.1.0:
+pino-abstract-transport@^1.1.0, pino-abstract-transport@v1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pino-abstract-transport/-/pino-abstract-transport-1.1.0.tgz#083d98f966262164504afb989bccd05f665937a8"
   integrity sha512-lsleG3/2a/JIWUtf9Q5gUNErBqwIu1tUKTT3dUzaf5DySw9ra1wcqKjJjLX1VTY64Wk1eEOYsVGSaGfCK85ekA==
@@ -6217,6 +6230,23 @@ pino@^8.16.0:
   version "8.16.1"
   resolved "https://registry.yarnpkg.com/pino/-/pino-8.16.1.tgz#dcaf82764b1a27f24101317cdd6453e96290f1d9"
   integrity sha512-3bKsVhBmgPjGV9pyn4fO/8RtoVDR8ssW1ev819FsRXlRNgW8gR/9Kx+gCK4UPWd4JjrRDLWpzd/pb1AyWm3MGA==
+  dependencies:
+    atomic-sleep "^1.0.0"
+    fast-redact "^3.1.1"
+    on-exit-leak-free "^2.1.0"
+    pino-abstract-transport v1.1.0
+    pino-std-serializers "^6.0.0"
+    process-warning "^2.0.0"
+    quick-format-unescaped "^4.0.3"
+    real-require "^0.2.0"
+    safe-stable-stringify "^2.3.1"
+    sonic-boom "^3.7.0"
+    thread-stream "^2.0.0"
+
+pino@^8.16.1:
+  version "8.16.2"
+  resolved "https://registry.yarnpkg.com/pino/-/pino-8.16.2.tgz#7a906f2d9a8c5b4c57412c9ca95d6820bd2090cd"
+  integrity sha512-2advCDGVEvkKu9TTVSa/kWW7Z3htI/sBKEZpqiHk6ive0i/7f5b1rsU8jn0aimxqfnSz5bj/nOYkwhBUn5xxvg==
   dependencies:
     atomic-sleep "^1.0.0"
     fast-redact "^3.1.1"
@@ -6702,7 +6732,7 @@ rxjs@^6.6.0:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.5.5:
+rxjs@^7.2.0, rxjs@^7.5.5:
   version "7.8.1"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.1.tgz#6f6f3d99ea8044291efd92e7c7fcf562c4057543"
   integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==
@@ -6929,18 +6959,6 @@ sinon@^16.0.0:
     "@sinonjs/samsam" "^8.0.0"
     diff "^5.1.0"
     nise "^5.1.4"
-    supports-color "^7.2.0"
-
-sinon@^17.0.1:
-  version "17.0.1"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-17.0.1.tgz#26b8ef719261bf8df43f925924cccc96748e407a"
-  integrity sha512-wmwE19Lie0MLT+ZYNpDymasPHUKTaZHUH/pKEubRXIzySv9Atnlw+BUMGCzWgV7b7wO+Hw6f1TEOr0IUnmU8/g==
-  dependencies:
-    "@sinonjs/commons" "^3.0.0"
-    "@sinonjs/fake-timers" "^11.2.2"
-    "@sinonjs/samsam" "^8.0.0"
-    diff "^5.1.0"
-    nise "^5.1.5"
     supports-color "^7.2.0"
 
 slash@^2.0.0:
