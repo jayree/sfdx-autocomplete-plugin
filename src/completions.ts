@@ -54,6 +54,9 @@ export class CompletionLookup {
     options: async () => ['https://test.salesforce.com', 'https://login.salesforce.com'],
   };
 
+  private readonly topicSeparator!: string;
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   public readonly CompletionMapping: { [key: string]: Completion } = {
     targetusername: CompletionLookup.targetUserNameCompletion,
     'target-org': CompletionLookup.targetUserNameCompletion,
@@ -71,8 +74,10 @@ export class CompletionLookup {
 
   public constructor(
     private readonly name?: string,
-    private readonly topicSeparator = ' ',
-  ) {}
+    topicSeparator = ' ',
+  ) {
+    this.topicSeparator = topicSeparator;
+  }
 
   public run(): Completion | undefined {
     return this.CompletionMapping[this.name as string];
