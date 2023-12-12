@@ -89,7 +89,6 @@
     "prepack": "sf-prepack",
     "prepare": "patch-package && sf-install",
     "test": "wireit",
-    "test:compile": "wireit",
     "test:only": "wireit",
     "version": "oclif readme"
   },
@@ -159,7 +158,7 @@
       "output": []
     },
     "test:deprecation-policy": {
-      "command": "ts-node \"./bin/dev.js\" snapshot:compare",
+      "command": "node --loader ts-node/esm --no-warnings=ExperimentalWarning \"./bin/dev.js\" snapshot:compare",
       "files": [
         "src/**/*.ts"
       ],
@@ -169,7 +168,7 @@
       ]
     },
     "test:json-schema": {
-      "command": "ts-node \"./bin/dev.js\" schema:compare",
+      "command": "node --loader ts-node/esm --no-warnings=ExperimentalWarning \"./bin/dev.js\" schema:compare",
       "files": [
         "src/**/*.ts",
         "schemas"

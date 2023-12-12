@@ -6,10 +6,10 @@ export type Completion = {
 };
 export declare class CompletionLookup {
     private readonly name?;
-    private readonly topicSeparator;
     static readonly targetUserNameCompletion: Completion;
     static readonly instanceurlCompletion: Completion;
     static readonly instanceurlCompletionColon: Completion;
+    private readonly topicSeparator;
     readonly CompletionMapping: {
         [key: string]: Completion;
     };
