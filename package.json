@@ -1,7 +1,7 @@
 {
   "name": "sfdx-autocmplt",
   "description": "autocomplete plugin for sfdx and sf CLI",
-  "version": "2.9.30",
+  "version": "2.9.31",
   "author": "jayree @jayree",
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "type": "module",
