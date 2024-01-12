@@ -1472,13 +1472,13 @@
     http-call "^5.2.2"
     lodash.template "^4.5.0"
 
-"@oclif/test@^3.1.8":
-  version "3.1.8"
-  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-3.1.8.tgz#12402a1be848af24e7696b259a7bc68a3153235f"
-  integrity sha512-QtBK+gq7mOSns1DhB4URNNvanYiLfwyJ4dY4iL1qyv0ishmRLMRsXnRwlml8e9RHqKg17Sj+I3dnMqWyfJV3rw==
+"@oclif/test@^3.1.10":
+  version "3.1.10"
+  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-3.1.10.tgz#8168c7643a393cb5d2a52f0b7133afc4564e5111"
+  integrity sha512-Jv91n9M9V8z/WheKFSQQ65Pc6mlackg4kO8XbXrIiK3kd/Z2xVojCB3Fq6dN19Ow3OZB0Uc0J+8H62XOR0Pblw==
   dependencies:
-    "@oclif/core" "^3.15.1"
-    chai "^4.3.10"
+    "@oclif/core" "^3.16.0"
+    chai "^4.4.0"
     fancy-test "^3.0.8"
 
 "@octokit/auth-token@^2.4.4":
@@ -3213,10 +3213,10 @@ cardinal@^2.1.1:
     ansicolors "~0.3.2"
     redeyed "~2.1.0"
 
-chai@^4.3.10:
-  version "4.3.10"
-  resolved "https://registry.yarnpkg.com/chai/-/chai-4.3.10.tgz#d784cec635e3b7e2ffb66446a63b4e33bd390384"
-  integrity sha512-0UXG04VuVbruMUYbJ6JctvH0YnC/4q3/AkT18q4NaITo91CUm0liMS9VqzT9vZhVQ/1eqPanMWjBM+Juhfb/9g==
+chai@^4.3.10, chai@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/chai/-/chai-4.4.0.tgz#f9ac79f26726a867ac9d90a9b382120479d5f55b"
+  integrity sha512-x9cHNq1uvkCdU+5xTkNh5WtgD4e4yDFCsp9jVc7N7qVeKeftv3gO/ZrviX5d+3ZfxdYnZXZYujjRInu1RogU6A==
   dependencies:
     assertion-error "^1.1.0"
     check-error "^1.0.3"
