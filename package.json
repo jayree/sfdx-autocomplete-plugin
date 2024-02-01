@@ -75,7 +75,8 @@
         "releaseNotesPath": "https://github.com/jayree/sfdx-autocomplete-plugin/tree/main",
         "releaseNotesFilename": "CHANGELOG.md"
       }
-    }
+    },
+    "topicSeparator": " "
   },
   "repository": "jayree/sfdx-autocomplete-plugin",
   "scripts": {
