@@ -431,9 +431,9 @@ end`);
 
     for await (const command of this.commands) {
       completions.push(
-        `complete -f -c ${cliBin} -n '__fish_${cliBin}_needs_command' -a ${command.id} -d "${command.description?.split(
-          '\n',
-        )[0]}"`,
+        `complete -f -c ${cliBin} -n '__fish_${cliBin}_needs_command' -a ${command.id} -d "${
+          command.description?.split('\n')[0]
+        }"`,
       );
       const flags: {
         [name: string]: Command.Flag.Cached;
