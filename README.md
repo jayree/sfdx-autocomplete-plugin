@@ -31,10 +31,10 @@ Docs: https://oclif.io/docs/topic_separator
 ## Commands
 <!-- commands -->
 * [`sfdx autocmplt`](#sfdx-autocmplt)
-* [`sfdx autocomplete:create`](#sfdx-autocompletecreate)
-* [`sfdx autocomplete:doctor`](#sfdx-autocompletedoctor)
-* [`sfdx autocomplete:options`](#sfdx-autocompleteoptions)
-* [`sfdx autocomplete:script`](#sfdx-autocompletescript)
+* [`sfdx autocomplete create`](#sfdx-autocomplete-create)
+* [`sfdx autocomplete doctor`](#sfdx-autocomplete-doctor)
+* [`sfdx autocomplete options`](#sfdx-autocomplete-options)
+* [`sfdx autocomplete script`](#sfdx-autocomplete-script)
 
 ### `sfdx autocmplt`
 
@@ -54,30 +54,30 @@ DESCRIPTION
   display autocomplete installation instructions
 ```
 
-_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.35/src/commands/autocmplt/index.ts)_
+_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.36/src/commands/autocmplt/index.ts)_
 
-### `sfdx autocomplete:create`
+### `sfdx autocomplete create`
 
 create autocomplete setup scripts and completion functions
 
 ```
 USAGE
-  $ sfdx autocomplete:create
+  $ sfdx autocomplete create
 
 DESCRIPTION
   create autocomplete setup scripts and completion functions
 
 ALIASES
-  $ sfdx autocomplete:create
+  $ sfdx autocomplete create
 ```
 
-### `sfdx autocomplete:doctor`
+### `sfdx autocomplete doctor`
 
 autocomplete diagnostic
 
 ```
 USAGE
-  $ sfdx autocomplete:doctor [SHELL] [--debug]
+  $ sfdx autocomplete doctor [SHELL] [--debug]
 
 ARGUMENTS
   SHELL  shell type
@@ -89,31 +89,31 @@ DESCRIPTION
   autocomplete diagnostic
 
 ALIASES
-  $ sfdx autocomplete:doctor
+  $ sfdx autocomplete doctor
 ```
 
-### `sfdx autocomplete:options`
+### `sfdx autocomplete options`
 
 display arg or flag completion options (used internally by completion fuctions)
 
 ```
 USAGE
-  $ sfdx autocomplete:options [COMPLETION]
+  $ sfdx autocomplete options [COMPLETION]
 
 DESCRIPTION
   display arg or flag completion options (used internally by completion fuctions)
 
 ALIASES
-  $ sfdx autocomplete:options
+  $ sfdx autocomplete options
 ```
 
-### `sfdx autocomplete:script`
+### `sfdx autocomplete script`
 
 display autocomplete setup script for shell
 
 ```
 USAGE
-  $ sfdx autocomplete:script SHELL
+  $ sfdx autocomplete script SHELL
 
 ARGUMENTS
   SHELL  shell type
@@ -122,6 +122,6 @@ DESCRIPTION
   display autocomplete setup script for shell
 
 ALIASES
-  $ sfdx autocomplete:script
+  $ sfdx autocomplete script
 ```
 <!-- commandsstop -->
