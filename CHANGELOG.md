@@ -1,3 +1,10 @@
+## [2.9.39](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.38...v2.9.39) (2024-02-21)
+
+
+### Bug Fixes
+
+* **deps:** bump ip from 2.0.0 to 2.0.1 ([#575](https://github.com/jayree/sfdx-autocomplete-plugin/issues/575)) ([6f76c32](https://github.com/jayree/sfdx-autocomplete-plugin/commit/6f76c322ded25e2925f9307015c6ef1bb7a1a5ff))
+
 ## [2.9.38](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.37...v2.9.38) (2024-02-16)
 
 
