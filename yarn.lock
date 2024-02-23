@@ -1481,7 +1481,7 @@
     node-gyp "^8.2.0"
     read-package-json-fast "^2.0.1"
 
-"@oclif/core@^3.18.2", "@oclif/core@^3.19.1", "@oclif/core@^3.19.2", "@oclif/core@^3.19.5":
+"@oclif/core@^3.18.2", "@oclif/core@^3.19.2", "@oclif/core@^3.19.5":
   version "3.19.5"
   resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.19.5.tgz#6523684c1ca94e05479569532177121cef35be21"
   integrity sha512-banrxfcaWo0/xEk9LfDLt+jV+4+tR7bUBFRFXPIA9AAjikRWGV+mpSN5M3UvoaZM6aj4q5mZN7bhegxTzQcDtQ==
@@ -1556,12 +1556,12 @@
     http-call "^5.2.2"
     lodash.template "^4.5.0"
 
-"@oclif/test@^3.1.16":
-  version "3.1.16"
-  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-3.1.16.tgz#acb66688a0caf08b5089da3d8f05201e1cf75819"
-  integrity sha512-LeoojG2tD8XDN9HzEt1j+JUKSyYz7qGp55SfvnXCa8d7k4Hq9jTzTiubu+s2mE4Nq9Ns5X40NZNSm85COxbsqw==
+"@oclif/test@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-3.2.0.tgz#2cc5e1520832bfcc8b16a1c7cffa967aad80904a"
+  integrity sha512-CTIKOfkhhKKbUjYEhFJRzlg4T2bLF56Z6S/22CHdTbmo4xyyL/lQvlCJjeqrTEf1yvWSa1oBNprRzcU6Z6qffw==
   dependencies:
-    "@oclif/core" "^3.19.1"
+    "@oclif/core" "^3.19.2"
     chai "^4.4.1"
     fancy-test "^3.0.10"
 
