@@ -87,7 +87,7 @@
     "docs": "sf-docs",
     "format": "wireit",
     "lint": "wireit",
-    "postpack": "sf-clean",
+    "postpack": "sf-clean --ignore-signing-artifacts",
     "prepack": "sf-prepack",
     "prepare": "patch-package && sf-install",
     "test": "wireit",
