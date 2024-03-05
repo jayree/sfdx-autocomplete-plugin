@@ -1,8 +1,8 @@
 diff --git a/node_modules/@salesforce/dev-scripts/bin/sf-clean.js b/node_modules/@salesforce/dev-scripts/bin/sf-clean.js
-index 90af01f..ff466a9 100755
+index 9d8e66d..283771e 100755
 --- a/node_modules/@salesforce/dev-scripts/bin/sf-clean.js
 +++ b/node_modules/@salesforce/dev-scripts/bin/sf-clean.js
-@@ -38,7 +38,7 @@ if (gitignorePath) {
+@@ -40,7 +40,7 @@ if (gitignorePath) {
  
    // The first line of the segment is what we are looking for. Either # -- CLEAN or # -- CLEAN ALL
    if (segments['CLEAN']) {
@@ -11,7 +11,7 @@ index 90af01f..ff466a9 100755
    } else {
      const example = join(__dirname, '..', 'files', '.gitignore');
      log(
-@@ -48,7 +48,7 @@ if (gitignorePath) {
+@@ -50,7 +50,7 @@ if (gitignorePath) {
      );
    }
    if (segments['CLEAN ALL']) {
@@ -20,8 +20,8 @@ index 90af01f..ff466a9 100755
    }
  }
  
-@@ -57,5 +57,6 @@ if (cleanAll) {
-   toClean = [...toClean, ...toCleanAll];
+@@ -63,5 +63,6 @@ if (ignoreSigningArtifacts) {
+   toClean = toClean.filter((item) => !item.endsWith('.tgz') && !item.endsWith('.sig'));
  }
  
 +toClean = [...new Set(toClean)]
@@ -171,7 +171,7 @@ index c1d55c8..a33594b 100644
  
  module.exports = PackageJson;
 diff --git a/node_modules/@salesforce/dev-scripts/utils/sf-config.js b/node_modules/@salesforce/dev-scripts/utils/sf-config.js
-index dd56169..4f142ca 100644
+index 8d1bc90..ff2b105 100644
 --- a/node_modules/@salesforce/dev-scripts/utils/sf-config.js
 +++ b/node_modules/@salesforce/dev-scripts/utils/sf-config.js
 @@ -33,7 +33,7 @@ const PACKAGE_DEFAULTS = {
