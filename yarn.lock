@@ -1472,10 +1472,10 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/core@^3.19.2", "@oclif/core@^3.19.5", "@oclif/core@^3.19.6", "@oclif/core@^3.21.0":
-  version "3.23.0"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.23.0.tgz#d0ccc5f99c376e4bcfce04e8e94efae8417a53f8"
-  integrity sha512-giQ/8Ft8yXWg4IyPVtynPb7ihoQsa3A/1Q53UIJIhh+8k+EedE3lJ01yn6sq6Ha35IGqsG1WhkeHzlJIuldEaw==
+"@oclif/core@^3.19.2", "@oclif/core@^3.19.6", "@oclif/core@^3.21.0", "@oclif/core@^3.25.1":
+  version "3.25.1"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.25.1.tgz#f61375d53b6a627009fc353423ac5e94a453fe50"
+  integrity sha512-L0WTgrcXBa1mc7CYxG0W07sRa4Zs5XpFD2HHhck7Xfqq7jnNcKDSuZ/LdqesVCry6eUHMh3C00IhJr6Msk19Iw==
   dependencies:
     "@types/cli-progress" "^3.11.5"
     ansi-escapes "^4.3.2"
