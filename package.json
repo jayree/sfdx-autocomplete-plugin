@@ -1,13 +1,13 @@
 {
   "name": "sfdx-autocmplt",
   "description": "autocomplete plugin for sfdx and sf CLI",
-  "version": "2.9.43",
+  "version": "2.9.44",
   "author": "jayree @jayree",
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "type": "module",
   "dependencies": {
     "@oclif/core": "^3.25.3",
-    "@salesforce/core": "^6.7.1",
+    "@salesforce/core": "^6.7.3",
     "@salesforce/sf-plugins-core": "^7.1.16",
     "chalk": "^5.2.0",
     "debug": "^4.3.4",
@@ -15,9 +15,9 @@
     "tslib": "^2.6.2"
   },
   "devDependencies": {
-    "@oclif/plugin-command-snapshot": "^5.1.2",
-    "@oclif/plugin-help": "^6.0.18",
-    "@oclif/test": "^3.2.6",
+    "@oclif/plugin-command-snapshot": "^5.1.4",
+    "@oclif/plugin-help": "^6.0.20",
+    "@oclif/test": "^3.2.8",
     "@salesforce/dev-scripts": "^8.4.2",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
@@ -25,7 +25,7 @@
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-sf-plugin": "^1.17.4",
     "is-ci": "^3.0.1",
-    "oclif": "^4.6.1",
+    "oclif": "^4.7.1",
     "patch-package": "^8.0.0",
     "prettier": "^3.2.5",
     "pretty-quick": "^4.0.0",
