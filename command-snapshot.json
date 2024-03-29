@@ -1,42 +1,42 @@
 [
   {
-    "command": "autocmplt",
-    "plugin": "sfdx-autocmplt",
-    "flags": ["refresh-cache"],
     "alias": [],
+    "command": "autocmplt",
+    "flagAliases": [],
     "flagChars": ["r"],
-    "flagAliases": []
+    "flags": ["flags-dir", "refresh-cache"],
+    "plugin": "sfdx-autocmplt"
   },
   {
-    "command": "autocmplt:create",
-    "plugin": "sfdx-autocmplt",
-    "flags": [],
     "alias": ["autocomplete:create"],
+    "command": "autocmplt:create",
+    "flagAliases": [],
     "flagChars": [],
-    "flagAliases": []
+    "flags": ["flags-dir"],
+    "plugin": "sfdx-autocmplt"
   },
   {
-    "command": "autocmplt:doctor",
-    "plugin": "sfdx-autocmplt",
-    "flags": ["debug"],
     "alias": ["autocomplete:doctor"],
+    "command": "autocmplt:doctor",
+    "flagAliases": [],
     "flagChars": [],
-    "flagAliases": []
+    "flags": ["debug", "flags-dir"],
+    "plugin": "sfdx-autocmplt"
   },
   {
-    "command": "autocmplt:options",
-    "plugin": "sfdx-autocmplt",
-    "flags": [],
     "alias": ["autocomplete:options"],
+    "command": "autocmplt:options",
+    "flagAliases": [],
     "flagChars": [],
-    "flagAliases": []
+    "flags": ["flags-dir"],
+    "plugin": "sfdx-autocmplt"
   },
   {
-    "command": "autocmplt:script",
-    "plugin": "sfdx-autocmplt",
-    "flags": [],
     "alias": ["autocomplete:script"],
+    "command": "autocmplt:script",
+    "flagAliases": [],
     "flagChars": [],
-    "flagAliases": []
+    "flags": ["flags-dir"],
+    "plugin": "sfdx-autocmplt"
   }
 ]
