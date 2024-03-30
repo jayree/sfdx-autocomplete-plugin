@@ -42,7 +42,7 @@ display autocomplete installation instructions
 
 ```
 USAGE
-  $ sfdx autocmplt [SHELL] [-r]
+  $ sfdx autocmplt [SHELL] [--flags-dir <value>] [-r]
 
 ARGUMENTS
   SHELL  shell type
@@ -50,11 +50,14 @@ ARGUMENTS
 FLAGS
   -r, --refresh-cache  refresh cache only (ignores displaying instructions)
 
+GLOBAL FLAGS
+  --flags-dir=<value>  Import flag values from a directory.
+
 DESCRIPTION
   display autocomplete installation instructions
 ```
 
-_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.44/src/commands/autocmplt/index.ts)_
+_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.45/src/commands/autocmplt/index.ts)_
 
 ### `sfdx autocomplete create`
 
@@ -62,7 +65,10 @@ create autocomplete setup scripts and completion functions
 
 ```
 USAGE
-  $ sfdx autocomplete create
+  $ sfdx autocomplete create [--flags-dir <value>]
+
+GLOBAL FLAGS
+  --flags-dir=<value>  Import flag values from a directory.
 
 DESCRIPTION
   create autocomplete setup scripts and completion functions
@@ -77,13 +83,16 @@ autocomplete diagnostic
 
 ```
 USAGE
-  $ sfdx autocomplete doctor [SHELL] [--debug]
+  $ sfdx autocomplete doctor [SHELL] [--flags-dir <value>] [--debug]
 
 ARGUMENTS
   SHELL  shell type
 
 FLAGS
   --debug  list completable commands
+
+GLOBAL FLAGS
+  --flags-dir=<value>  Import flag values from a directory.
 
 DESCRIPTION
   autocomplete diagnostic
@@ -98,7 +107,10 @@ display arg or flag completion options (used internally by completion fuctions)
 
 ```
 USAGE
-  $ sfdx autocomplete options [COMPLETION]
+  $ sfdx autocomplete options [COMPLETION] [--flags-dir <value>]
+
+GLOBAL FLAGS
+  --flags-dir=<value>  Import flag values from a directory.
 
 DESCRIPTION
   display arg or flag completion options (used internally by completion fuctions)
@@ -113,10 +125,13 @@ display autocomplete setup script for shell
 
 ```
 USAGE
-  $ sfdx autocomplete script SHELL
+  $ sfdx autocomplete script SHELL [--flags-dir <value>]
 
 ARGUMENTS
   SHELL  shell type
+
+GLOBAL FLAGS
+  --flags-dir=<value>  Import flag values from a directory.
 
 DESCRIPTION
   display autocomplete setup script for shell
