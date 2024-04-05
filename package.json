@@ -18,7 +18,7 @@
     "@oclif/plugin-command-snapshot": "^5.1.4",
     "@oclif/plugin-help": "^6.0.20",
     "@oclif/test": "^3.2.8",
-    "@salesforce/dev-scripts": "^8.4.2",
+    "@salesforce/dev-scripts": "^8.4.3",
     "@types/debug": "^4.1.12",
     "@types/fs-extra": "^11.0.4",
     "c8": "^9.1.0",
