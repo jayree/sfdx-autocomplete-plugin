@@ -30,13 +30,13 @@ Docs: https://oclif.io/docs/topic_separator
 
 ## Commands
 <!-- commands -->
-* [`sfdx autocmplt`](#sfdx-autocmplt)
+* [`sfdx autocmplt [SHELL]`](#sfdx-autocmplt-shell)
 * [`sfdx autocomplete create`](#sfdx-autocomplete-create)
-* [`sfdx autocomplete doctor`](#sfdx-autocomplete-doctor)
-* [`sfdx autocomplete options`](#sfdx-autocomplete-options)
-* [`sfdx autocomplete script`](#sfdx-autocomplete-script)
+* [`sfdx autocomplete doctor [SHELL]`](#sfdx-autocomplete-doctor-shell)
+* [`sfdx autocomplete options [COMPLETION]`](#sfdx-autocomplete-options-completion)
+* [`sfdx autocomplete script SHELL`](#sfdx-autocomplete-script-shell)
 
-### `sfdx autocmplt`
+### `sfdx autocmplt [SHELL]`
 
 display autocomplete installation instructions
 
@@ -57,7 +57,7 @@ DESCRIPTION
   display autocomplete installation instructions
 ```
 
-_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.52/src/commands/autocmplt/index.ts)_
+_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.53/src/commands/autocmplt/index.ts)_
 
 ### `sfdx autocomplete create`
 
@@ -77,7 +77,7 @@ ALIASES
   $ sfdx autocomplete create
 ```
 
-### `sfdx autocomplete doctor`
+### `sfdx autocomplete doctor [SHELL]`
 
 autocomplete diagnostic
 
@@ -101,7 +101,7 @@ ALIASES
   $ sfdx autocomplete doctor
 ```
 
-### `sfdx autocomplete options`
+### `sfdx autocomplete options [COMPLETION]`
 
 display arg or flag completion options (used internally by completion fuctions)
 
@@ -119,7 +119,7 @@ ALIASES
   $ sfdx autocomplete options
 ```
 
-### `sfdx autocomplete script`
+### `sfdx autocomplete script SHELL`
 
 display autocomplete setup script for shell
 
