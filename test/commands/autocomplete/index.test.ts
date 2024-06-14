@@ -4,18 +4,14 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { createRequire } from 'node:module';
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const { expect, test } = createRequire(import.meta.url)('@oclif/test');
+
+import { expect } from 'chai';
+import { runCommand } from '@oclif/test';
 
 describe('autocmplt:index', () => {
-  test
-    .stdout()
-    .command(['autocmplt', 'bash'])
-    .it('provides bash instructions', (ctx: { stdout: string }) => {
-      expect(ctx.stdout).to.contain(`
+  it('provides bash instructions', async () => {
+    const { stdout } = await runCommand<{ name: string }>(['autocmplt', 'bash']);
+    expect(stdout).to.contain(`
 Setup Instructions for SFDX CLI Autocomplete ---
 
 1) Add the autocomplete env var to your bash profile and source it
@@ -31,13 +27,11 @@ $ sfdx apps:info --app=<TAB><TAB> # Flag option completion
 Enjoy!
 
 `);
-    });
+  });
 
-  test
-    .stdout()
-    .command(['autocmplt', 'zsh'])
-    .it('provides zsh instructions', (ctx: { stdout: string }) => {
-      expect(ctx.stdout).to.contain(`
+  it('provides zsh instructions', async () => {
+    const { stdout } = await runCommand<{ name: string }>(['autocmplt', 'zsh']);
+    expect(stdout).to.contain(`
 Setup Instructions for SFDX CLI Autocomplete ---
 
 1) Add the autocomplete env var to your zsh profile and source it
@@ -53,13 +47,11 @@ $ sfdx apps:info --app=<TAB> # Flag option completion
 Enjoy!
 
 `);
-    });
+  });
 
-  test
-    .stdout()
-    .command(['autocmplt', 'fish'])
-    .it('provides fish instructions', (ctx: { stdout: string }) => {
-      expect(ctx.stdout).to.contain(`
+  it('provides fish instructions', async () => {
+    const { stdout } = await runCommand<{ name: string }>(['autocmplt', 'fish']);
+    expect(stdout).to.contain(`
 Setup Instructions for SFDX CLI Autocomplete ---
 
 1) Update your shell to load the new completions
@@ -75,5 +67,5 @@ $ sfdx apps:info --app=<TAB> # Flag option completion
 Enjoy!
 
 `);
-    });
+  });
 });
