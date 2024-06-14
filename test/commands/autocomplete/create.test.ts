@@ -6,8 +6,8 @@
  */
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Config, Plugin, Command } from '@oclif/core';
-import { readJson } from '@oclif/core/lib/util/fs.js';
+import { readFile } from 'node:fs/promises';
+import { Config, Plugin, Command, Interfaces } from '@oclif/core';
 import { expect } from 'chai';
 
 // eslint-disable-next-line no-underscore-dangle
@@ -19,6 +19,11 @@ import Create from '../../../src/commands/autocmplt/create.js';
 
 const root = resolve(__dirname, '../../../package.json');
 const config = new Config({ root });
+
+const readJson = async (path: string): Promise<Interfaces.Manifest> => {
+  const contents = await readFile(path, 'utf8');
+  return JSON.parse(contents) as Interfaces.Manifest;
+};
 
 const cacheBuildFlagsTest: Command.Loadable = {
   id: 'autocmplt:create',

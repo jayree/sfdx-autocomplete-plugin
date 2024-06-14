@@ -7,7 +7,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Config, Command } from '@oclif/core';
-import { Plugin as IPlugin, PJSON, Options } from '@oclif/core/lib/interfaces';
+import { Plugin as IPlugin, PJSON, Options } from '@oclif/core/interfaces';
 import { expect } from 'chai';
 import ZshCompWithSpaces from '../../src/autocomplete/zsh-spaces.js';
 
@@ -160,7 +160,7 @@ const pluginA: IPlugin = {
   commandsDir: '.',
   commands: [commandPluginA, commandPluginB, commandPluginC, commandPluginD],
   _base: '',
-  pjson: {} as PJSON.CLI,
+  pjson: {} as PJSON,
   commandIDs: ['deploy'],
   root: '',
   options: {} as Options,
