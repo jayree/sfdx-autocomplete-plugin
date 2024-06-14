@@ -9,7 +9,7 @@ export default class Options extends AutocompleteBase {
     static hidden: boolean;
     static readonly description = "display arg or flag completion options (used internally by completion fuctions)";
     static args: {
-        completion: import("@oclif/core/lib/interfaces/parser.js").Arg<string | undefined, Record<string, unknown>>;
+        completion: import("@oclif/core/interfaces").Arg<string | undefined, Record<string, unknown>>;
     };
     run(): Promise<void>;
     findFlagFromWildArg(wild: string, klass: Command.Class): Flags;
