@@ -1,3 +1,10 @@
+## [2.9.58](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.57...v2.9.58) (2024-06-15)
+
+
+### Bug Fixes
+
+* **deps:** bump @oclif/core from 3.26.6 to 4.0.6 ([#685](https://github.com/jayree/sfdx-autocomplete-plugin/issues/685)) ([f80e4e4](https://github.com/jayree/sfdx-autocomplete-plugin/commit/f80e4e4c7b592a3f76f07af1dc282960137df3d7))
+
 ## [2.9.57](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.56...v2.9.57) (2024-06-14)
 
 
