@@ -30,11 +30,10 @@ export const completions: Hook<'update'> = async function () {
   };
 
   process.once('beforeExit', () => {
-    ux.spinner.start(`${this.config.bin}-autocmplt: Updating completions`);
-    void rm();
-    void acCreate.run([], this.config);
-
     try {
+      ux.spinner.start(`${this.config.bin}-autocmplt: Updating completions`);
+      void rm();
+      void acCreate.run([], this.config);
       void update(CompletionLookup.targetUserNameCompletion, 'targetusername');
     } catch (err) {
       this.debug((err as Error).message);
