@@ -1,3 +1,10 @@
+## [2.9.62](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.61...v2.9.62) (2024-07-01)
+
+
+### Bug Fixes
+
+* update recache ([c474d77](https://github.com/jayree/sfdx-autocomplete-plugin/commit/c474d779a3cdfc87990cac0c249a82eff6eb56c6))
+
 ## [2.9.61](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.60...v2.9.61) (2024-06-28)
 
 
