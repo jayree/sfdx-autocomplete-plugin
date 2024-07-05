@@ -10,10 +10,22 @@ import { Config, Interfaces, Command } from '@oclif/core';
 import { CompletionLookup } from '../completions.js';
 import { wantsLocalDirsArray, wantsLocalFilesArray } from './wantsLocal.js';
 
+function isSanitized(description: string): boolean {
+  const backtickAndDoubleQuoteRegex = /[^\\]([`"])/;
+  const squareBracketRegex = /[^\\]([[\]])/;
+
+  return !backtickAndDoubleQuoteRegex.test(description) && !squareBracketRegex.test(description);
+}
+
 function sanitizeSummary(description?: string): string {
   if (description === undefined) {
     return '';
   }
+
+  if (isSanitized(description)) {
+    return description.split('\n')[0]; // only use the first line
+  }
+
   return (
     description
       .replace(/([`"])/g, '\\\\\\$1') // backticks and double-quotes require triple-backslashes
