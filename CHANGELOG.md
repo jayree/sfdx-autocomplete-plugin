@@ -1,3 +1,10 @@
+## [2.9.64](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.63...v2.9.64) (2024-07-05)
+
+
+### Bug Fixes
+
+* flag description with double-quotes ([#708](https://github.com/jayree/sfdx-autocomplete-plugin/issues/708)) ([f30caeb](https://github.com/jayree/sfdx-autocomplete-plugin/commit/f30caeb01774503595861aca53d50c6061230b4b))
+
 ## [2.9.63](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.62...v2.9.63) (2024-07-05)
 
 
