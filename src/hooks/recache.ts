@@ -35,9 +35,9 @@ export const completions: Hook<'update'> = async function () {
       void rm();
       void acCreate.run([], this.config);
       void update(CompletionLookup.targetUserNameCompletion, 'targetusername');
+      ux.spinner.stop();
     } catch (err) {
       this.debug((err as Error).message);
     }
-    ux.spinner.stop();
   });
 };
