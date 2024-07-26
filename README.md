@@ -57,7 +57,7 @@ DESCRIPTION
   display autocomplete installation instructions
 ```
 
-_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.67/src/commands/autocmplt/index.ts)_
+_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.68/src/commands/autocmplt/index.ts)_
 
 ### `sfdx autocomplete create`
 
