@@ -1616,13 +1616,13 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/core@^4", "@oclif/core@^4.0.11", "@oclif/core@^4.0.12":
-  version "4.0.12"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-4.0.12.tgz#b47089631827e2c909bfffc8c14d7b1781e502ce"
-  integrity sha512-o2dfPtmi2uBGHgpvHr+GNfoRKysKgQGiffONoMN3R+qBVNeIkJIZhVk31HreDkAI9LAzS92BWNgp/l7lXDxdvg==
+"@oclif/core@^4", "@oclif/core@^4.0.12", "@oclif/core@^4.0.14":
+  version "4.0.14"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-4.0.14.tgz#538000e922bcdcd5e1aad667252ad67131bd9e11"
+  integrity sha512-oXXlUuDw6gWjIBI+mR5i4/SJRv9fz8N/d1xr1yMhW1incx/u0oYO2CpUNKn0sGDyONMdyOIVPMqgsU+as7jdrQ==
   dependencies:
     ansi-escapes "^4.3.2"
-    ansis "^3.2.1"
+    ansis "^3.3.1"
     clean-stack "^3.0.1"
     cli-spinners "^2.9.2"
     debug "^4.3.5"
