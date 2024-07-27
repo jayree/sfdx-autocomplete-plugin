@@ -23,6 +23,7 @@ export default class Index extends AutocompleteBase {
   };
 
   public static flags = {
+    ...AutocompleteBase.flags,
     'refresh-cache': Flags.boolean({
       description: 'refresh cache only (ignores displaying instructions)',
       char: 'r',
