@@ -1,13 +1,13 @@
 diff --git a/node_modules/@salesforce/dev-config/tsconfig-esm.json b/node_modules/@salesforce/dev-config/tsconfig-esm.json
-index 89e09eb..f569273 100644
+index d8ec500..256d092 100644
 --- a/node_modules/@salesforce/dev-config/tsconfig-esm.json
 +++ b/node_modules/@salesforce/dev-config/tsconfig-esm.json
 @@ -2,12 +2,13 @@
    "compilerOptions": {
      "module": "Node16",
      "target": "ES2022",
--    "lib": ["ES2022"],
-+    "lib": ["ES2022","DOM"],
+-    "lib": ["ES2023"],
++    "lib": ["ES2023", "DOM"],
      "sourceMap": true,
      "declaration": true,
      "moduleResolution": "Node16",
