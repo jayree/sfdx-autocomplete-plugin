@@ -27,6 +27,7 @@ export default class Doctor extends AutocompleteBase {
     shell: Args.string({ description: 'shell type', required: false }),
   };
   public static flags = {
+    ...AutocompleteBase.flags,
     debug: Flags.boolean({
       description: 'list completable commands',
     }),
