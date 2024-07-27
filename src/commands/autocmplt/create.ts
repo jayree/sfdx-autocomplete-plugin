@@ -432,7 +432,7 @@ end`);
     for await (const command of this.commands) {
       completions.push(
         `complete -f -c ${cliBin} -n '__fish_${cliBin}_needs_command' -a ${command.id} -d "${
-          command.description?.split('\n')[0]
+          command.description?.split('\n')[0] as string
         }"`,
       );
       const flags: {
@@ -444,7 +444,7 @@ end`);
         const f = flags[flag];
         const shortFlag = f.char ? `-s ${f.char}` : '';
         const description = `-d "${sanitizeDescription(f.summary ?? f.description)}"`;
-        let options = f.type === 'option' ? `-r -a "${f.options?.join(' ')}"` : '';
+        let options = f.type === 'option' ? `-r -a "${f.options?.join(' ') as string}"` : '';
         if (options.length === 0) {
           const cacheKey: string = f.name;
           const cacheCompletion = this.findCompletion(cacheKey);

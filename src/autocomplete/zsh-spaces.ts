@@ -247,7 +247,7 @@ _${bin}
     let valuesBlock = '_values "completions"';
 
     subArgs.forEach((subArg) => {
-      valuesBlock += ` \\\n              "${subArg.id}[${subArg.summary}]"`;
+      valuesBlock += ` \\\n              "${subArg.id}[${subArg.summary as string}]"`;
     });
 
     return valuesBlock;
