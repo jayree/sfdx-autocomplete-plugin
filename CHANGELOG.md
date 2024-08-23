@@ -1,3 +1,11 @@
+## [2.9.73](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.72...v2.9.73) (2024-08-23)
+
+
+### Bug Fixes
+
+* **deps:** bump @oclif/core from 4.0.17 to 4.0.18 ([#763](https://github.com/jayree/sfdx-autocomplete-plugin/issues/763)) ([2683180](https://github.com/jayree/sfdx-autocomplete-plugin/commit/2683180df5e81e6a1b790a51783fbb3cde1bb612))
+* **deps:** bump @salesforce/sf-plugins-core from 11.3.2 to 11.3.4 ([#764](https://github.com/jayree/sfdx-autocomplete-plugin/issues/764)) ([52b153d](https://github.com/jayree/sfdx-autocomplete-plugin/commit/52b153d11eda5c80e9eb65dd5d175a9910adc1ad))
+
 ## [2.9.72](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.71...v2.9.72) (2024-08-17)
 
 
