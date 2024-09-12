@@ -1,3 +1,10 @@
+## [2.9.76](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.75...v2.9.76) (2024-09-12)
+
+
+### Bug Fixes
+
+* **deps:** bump path-to-regexp from 1.8.0 to 1.9.0 ([#785](https://github.com/jayree/sfdx-autocomplete-plugin/issues/785)) ([8355da1](https://github.com/jayree/sfdx-autocomplete-plugin/commit/8355da10cc168832f964abbdccbe750ab8307cf5))
+
 ## [2.9.75](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.74...v2.9.75) (2024-09-06)
 
 
