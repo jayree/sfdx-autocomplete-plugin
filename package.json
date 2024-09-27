@@ -6,7 +6,7 @@
   "bugs": "https://github.com/jayree/sfdx-autocomplete-plugin/issues",
   "type": "module",
   "dependencies": {
-    "@oclif/core": "^4.0.22",
+    "@oclif/core": "^4.0.23",
     "@salesforce/core": "^8.5.7",
     "@salesforce/sf-plugins-core": "^11.3.10",
     "chalk": "^5.2.0",
