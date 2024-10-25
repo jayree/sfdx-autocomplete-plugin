@@ -7,7 +7,7 @@
   "type": "module",
   "dependencies": {
     "@oclif/core": "^4.0.30",
-    "@salesforce/core": "^8.6.2",
+    "@salesforce/core": "^8.6.3",
     "@salesforce/sf-plugins-core": "^11.3.12",
     "chalk": "^5.2.0",
     "debug": "^4.3.7",
