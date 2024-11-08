@@ -23,7 +23,7 @@
     "@types/fs-extra": "^11.0.4",
     "c8": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-sf-plugin": "^1.20.10",
+    "eslint-plugin-sf-plugin": "^1.20.11",
     "is-ci": "^3.0.1",
     "oclif": "^4.15.16",
     "patch-package": "^8.0.0",
