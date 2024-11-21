@@ -1,3 +1,10 @@
+## [2.9.84](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.83...v2.9.84) (2024-11-21)
+
+
+### Bug Fixes
+
+* **deps:** bump cross-spawn from 7.0.3 to 7.0.6 ([#837](https://github.com/jayree/sfdx-autocomplete-plugin/issues/837)) ([f88ae4d](https://github.com/jayree/sfdx-autocomplete-plugin/commit/f88ae4d716783fa6bb03ec2edc06e300ac390c1e))
+
 ## [2.9.83](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.82...v2.9.83) (2024-11-15)
 
 
