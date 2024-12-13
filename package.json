@@ -10,7 +10,7 @@
     "@salesforce/core": "^8.8.0",
     "@salesforce/sf-plugins-core": "^11.3.12",
     "chalk": "^5.2.0",
-    "debug": "^4.3.7",
+    "debug": "^4.4.0",
     "fs-extra": "^11.2.0",
     "tslib": "^2.8.1"
   },
