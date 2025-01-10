@@ -1481,12 +1481,12 @@
     lodash "^4.17.21"
     registry-auth-token "^5.0.3"
 
-"@oclif/test@^4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-4.1.4.tgz#6bfe9f53036bf50a39b89bbf0d304d221a35e76d"
-  integrity sha512-0gUIkJJVDDpM2BNuo1+vBrf71DO3iVSFjUcLo+kma6co5vVOKG1COfVmxV7mB8XCNTuBWAZ4pJ4vsASxTxE5yg==
+"@oclif/test@^4.1.6":
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/@oclif/test/-/test-4.1.6.tgz#10ef80555af1b54c7f14c67f881775dcf0b561b5"
+  integrity sha512-1UcMu+5XXGsMgsIZmEbvGKjS6/Z8meu2VNh22Oop9s5dQAHX72Ds70dxwncVbRepFGhIIJ3xzyZbtBIy/sgt3Q==
   dependencies:
-    ansis "^3.4.0"
+    ansis "^3.6.0"
     debug "^4.4.0"
 
 "@pkgjs/parseargs@^0.11.0":
