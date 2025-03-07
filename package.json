@@ -27,7 +27,7 @@
     "is-ci": "^4.1.0",
     "oclif": "^4.17.34",
     "patch-package": "^8.0.0",
-    "prettier": "^3.5.2",
+    "prettier": "^3.5.3",
     "pretty-quick": "^4.1.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
