@@ -15,7 +15,7 @@
     "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "@oclif/plugin-command-snapshot": "^5.2.36",
+    "@oclif/plugin-command-snapshot": "^5.2.37",
     "@oclif/plugin-help": "^6.2.26",
     "@oclif/test": "^4.1.12",
     "@salesforce/dev-scripts": "^10.2.12",
