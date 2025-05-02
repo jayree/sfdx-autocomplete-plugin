@@ -1714,10 +1714,10 @@
     "@pnpm/network.ca-file" "^1.0.1"
     config-chain "^1.1.11"
 
-"@salesforce/core@^8.5.1", "@salesforce/core@^8.9.1":
-  version "8.9.1"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.9.1.tgz#e31d307d495cc0b916c0b9312fba751714034e0a"
-  integrity sha512-Q1evH4WD7IYWgbcIYCUDi3FTEMgy1KLVg4Xa4GacKLNcOBfom5s6whNsz3gUFESqjndGDwV5Pbgpi0ImC17PfQ==
+"@salesforce/core@^8.10.1", "@salesforce/core@^8.5.1", "@salesforce/core@^8.9.1":
+  version "8.10.1"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.10.1.tgz#d80283ac9515a5e38677c1aadd4ab91a00866f0d"
+  integrity sha512-2Pk8MUlO9HTUo6K9bpFxLyc7KUxuIIgmGrFliCQJiUW2N85uvMdB8F+WJD2b8ZOH+6bQ575qynmJlbKmfcLAtQ==
   dependencies:
     "@jsforce/jsforce-node" "^3.7.0"
     "@salesforce/kit" "^3.2.2"
