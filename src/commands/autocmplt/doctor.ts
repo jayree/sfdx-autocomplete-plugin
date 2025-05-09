@@ -6,7 +6,7 @@
  */
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Flags } from '@salesforce/sf-plugins-core';
+import { convertToNewTableAPI, Flags } from '@salesforce/sf-plugins-core';
 import { Args } from '@oclif/core';
 import fs from 'fs-extra';
 import { PJSON } from '@oclif/core/interfaces';
@@ -96,12 +96,14 @@ export default class Doctor extends AutocompleteBase {
       value: targetusernamesCacheValue,
     });
     this.table(
-      data,
-      {
-        name: {},
-        value: {},
-      },
-      { 'no-header': true },
+      convertToNewTableAPI(
+        data,
+        {
+          name: {},
+          value: {},
+        },
+        { 'no-header': true },
+      ),
     );
 
     if (flags.debug) this.printList();
