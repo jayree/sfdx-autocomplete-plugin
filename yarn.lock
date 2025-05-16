@@ -1737,7 +1737,7 @@
     "@pnpm/network.ca-file" "^1.0.1"
     config-chain "^1.1.11"
 
-"@salesforce/core@^8.10.3", "@salesforce/core@^8.11.0", "@salesforce/core@^8.8.5":
+"@salesforce/core@^8.10.0", "@salesforce/core@^8.10.3", "@salesforce/core@^8.11.0":
   version "8.11.0"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.11.0.tgz#23d5ddcc318008230258ab449e70a26f671123c2"
   integrity sha512-S4UgHKUy1hykRQVaoYm+LSktQgRhI3ltAUoLGI25/Q8gYokERTa2E7MpPMb+X/kTpjJJvDlnQqelB/sQJs/AKA==
@@ -1815,16 +1815,16 @@
   resolved "https://registry.yarnpkg.com/@salesforce/schemas/-/schemas-1.9.0.tgz#ba477a112653a20b4edcf989c61c57bdff9aa3ca"
   integrity sha512-LiN37zG5ODT6z70sL1fxF7BQwtCX9JOWofSU8iliSNIM+WDEeinnoFtVqPInRSNt8I0RiJxIKCrqstsmQRBNvA==
 
-"@salesforce/sf-plugins-core@^12.2.1":
-  version "12.2.1"
-  resolved "https://registry.yarnpkg.com/@salesforce/sf-plugins-core/-/sf-plugins-core-12.2.1.tgz#1048a5d1245f07f0e864f0f76e8818fd21a84fe6"
-  integrity sha512-b3eRSzGO0weBLL1clHaJNgNP1aKkD1Qy2DQEc0ieteEm+fh1FfPA0QpJ9rh/hdmkJRip2x2R2zz9tflJ0wflbg==
+"@salesforce/sf-plugins-core@^12.2.2":
+  version "12.2.2"
+  resolved "https://registry.yarnpkg.com/@salesforce/sf-plugins-core/-/sf-plugins-core-12.2.2.tgz#41e704e47ba997dcb6922ab9563aa19407079c85"
+  integrity sha512-LuNT1kzi0N185xhCBCOU9P650CwoehiICB2lCP1RsO98NqfHTRpD6Rq1TDQtLTudOh3pDUFZTgo8kt4qwz20yw==
   dependencies:
     "@inquirer/confirm" "^3.1.22"
     "@inquirer/password" "^2.2.0"
-    "@oclif/core" "^4.2.10"
+    "@oclif/core" "^4.3.0"
     "@oclif/table" "^0.4.6"
-    "@salesforce/core" "^8.8.5"
+    "@salesforce/core" "^8.10.0"
     "@salesforce/kit" "^3.2.3"
     "@salesforce/ts-types" "^2.0.12"
     ansis "^3.3.2"
