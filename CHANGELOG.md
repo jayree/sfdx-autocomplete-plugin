@@ -1,3 +1,10 @@
+## [2.9.114](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.113...v2.9.114) (2025-07-22)
+
+
+### Bug Fixes
+
+* **deps:** bump form-data from 4.0.0 to 4.0.4 ([#1002](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1002)) ([68d2678](https://github.com/jayree/sfdx-autocomplete-plugin/commit/68d26782dc3c97dd38b484b83bae5225830cf0b6))
+
 ## [2.9.113](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.112...v2.9.113) (2025-07-12)
 
 
