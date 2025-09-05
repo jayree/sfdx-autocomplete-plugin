@@ -25,7 +25,7 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-sf-plugin": "^1.20.31",
     "is-ci": "^4.1.0",
-    "oclif": "^4.22.14",
+    "oclif": "^4.22.16",
     "patch-package": "^8.0.0",
     "prettier": "^3.6.2",
     "pretty-quick": "^4.2.2",
