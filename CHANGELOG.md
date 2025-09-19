@@ -1,3 +1,11 @@
+## [2.9.121](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.120...v2.9.121) (2025-09-19)
+
+
+### Bug Fixes
+
+* **deps:** bump debug from 4.4.1 to 4.4.3 ([#1033](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1033)) ([e052491](https://github.com/jayree/sfdx-autocomplete-plugin/commit/e0524911261c83b6019ff653e66c978c20df6f14))
+* **deps:** bump fs-extra from 11.3.1 to 11.3.2 ([#1032](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1032)) ([bdd0b62](https://github.com/jayree/sfdx-autocomplete-plugin/commit/bdd0b6240683baf952a8fb0d09dc08c75de82c03))
+
 ## [2.9.120](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.119...v2.9.120) (2025-09-12)
 
 
