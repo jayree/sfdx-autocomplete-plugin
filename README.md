@@ -45,7 +45,7 @@ USAGE
   $ sfdx autocmplt [SHELL] [--flags-dir <value>] [-r]
 
 ARGUMENTS
-  SHELL  shell type
+  [SHELL]  shell type
 
 FLAGS
   -r, --refresh-cache  refresh cache only (ignores displaying instructions)
@@ -57,7 +57,7 @@ DESCRIPTION
   display autocomplete installation instructions
 ```
 
-_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.123/src/commands/autocmplt/index.ts)_
+_See code: [src/commands/autocmplt/index.ts](https://github.com/jayree/sfdx-autocomplete-plugin/blob/v2.9.124/src/commands/autocmplt/index.ts)_
 
 ### `sfdx autocomplete create`
 
@@ -86,7 +86,7 @@ USAGE
   $ sfdx autocomplete doctor [SHELL] [--flags-dir <value>] [--debug]
 
 ARGUMENTS
-  SHELL  shell type
+  [SHELL]  shell type
 
 FLAGS
   --debug  list completable commands
