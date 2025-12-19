@@ -1,3 +1,10 @@
+## [2.9.129](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.128...v2.9.129) (2025-12-19)
+
+
+### Bug Fixes
+
+* **deps:** bump fs-extra from 11.3.2 to 11.3.3 ([#1077](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1077)) ([ee2dd04](https://github.com/jayree/sfdx-autocomplete-plugin/commit/ee2dd0435260bf9e4410e856c97570f5181d06a3))
+
 ## [2.9.128](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.127...v2.9.128) (2025-12-12)
 
 
