@@ -1,3 +1,10 @@
+## [2.9.131](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.130...v2.9.131) (2026-01-22)
+
+
+### Bug Fixes
+
+* **deps:** bump lodash from 4.17.21 to 4.17.23 ([#1085](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1085)) ([cc46d4e](https://github.com/jayree/sfdx-autocomplete-plugin/commit/cc46d4ea36d9c9ed65155d5b5f8c83353e0f68ac))
+
 ## [2.9.130](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.129...v2.9.130) (2026-01-16)
 
 
