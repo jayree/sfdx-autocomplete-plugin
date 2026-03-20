@@ -19,7 +19,7 @@
     "@oclif/plugin-help": "^6.2.38",
     "@oclif/test": "^4.1.16",
     "@salesforce/dev-scripts": "^11.0.4",
-    "@types/debug": "^4.1.12",
+    "@types/debug": "^4.1.13",
     "@types/fs-extra": "^11.0.4",
     "c8": "^11.0.0",
     "eslint-plugin-prettier": "^5.5.5",
