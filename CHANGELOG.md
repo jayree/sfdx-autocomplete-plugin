@@ -1,3 +1,11 @@
+## [2.9.140](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.139...v2.9.140) (2026-04-03)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/core from 8.27.1 to 8.28.1 ([#1126](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1126)) ([f2415ba](https://github.com/jayree/sfdx-autocomplete-plugin/commit/f2415ba77d8b429b313b1152e7197173e4695fb5))
+* **deps:** bump lodash from 4.17.23 to 4.18.1 ([#1129](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1129)) ([9f06ae1](https://github.com/jayree/sfdx-autocomplete-plugin/commit/9f06ae16d36aa742ed44e1cc1962e31b0e95e2fd))
+
 ## [2.9.139](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.138...v2.9.139) (2026-03-20)
 
 
