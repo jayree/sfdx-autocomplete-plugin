@@ -17,7 +17,7 @@
   "devDependencies": {
     "@oclif/plugin-command-snapshot": "^5.3.15",
     "@oclif/plugin-help": "^6.2.43",
-    "@oclif/test": "^4.1.17",
+    "@oclif/test": "^4.1.18",
     "@salesforce/dev-scripts": "^11.0.4",
     "@types/debug": "^4.1.13",
     "@types/fs-extra": "^11.0.4",
