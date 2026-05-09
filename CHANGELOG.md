@@ -1,3 +1,11 @@
+## [2.9.145](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.144...v2.9.145) (2026-05-09)
+
+
+### Bug Fixes
+
+* **deps:** bump fast-uri from 3.0.1 to 3.1.2 ([#1152](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1152)) ([8417c65](https://github.com/jayree/sfdx-autocomplete-plugin/commit/8417c6536bd9f53ebcc514e1a6e15155a5a63334))
+* **deps:** bump fast-xml-builder from 1.1.4 to 1.2.0 ([#1151](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1151)) ([611890c](https://github.com/jayree/sfdx-autocomplete-plugin/commit/611890c1ae226effe23913a167c03928121716ba))
+
 ## [2.9.144](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.143...v2.9.144) (2026-05-08)
 
 
