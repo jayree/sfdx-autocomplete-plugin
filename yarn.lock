@@ -1737,10 +1737,10 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/core@^4", "@oclif/core@^4.10.2", "@oclif/core@^4.11.0", "@oclif/core@^4.11.1":
-  version "4.11.1"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-4.11.1.tgz#f72284b4e14c4a3f47a9952ed2234f000fc23536"
-  integrity sha512-+N5yqeoOKPnT0p+ZJiNutMILsZukZrEpsVup24XERla594EkGSWS9tiCqRfvzr1xfvf/AhM9pb0yPaf8L3Y9Uw==
+"@oclif/core@^4", "@oclif/core@^4.10.2", "@oclif/core@^4.11.1", "@oclif/core@^4.11.2":
+  version "4.11.2"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-4.11.2.tgz#c8062fc16f0d82c247f60670364026483a48d522"
+  integrity sha512-LWDalCgy+hYyAkLa9sMIXMXk6ws5RzQhVnkmfXtVIIyEEYigbXQ/9/x+s76p53MiXxNc6SJB7lfwkPF+SdzfMQ==
   dependencies:
     ansi-escapes "^4.3.2"
     ansis "^3.17.0"
@@ -1753,7 +1753,7 @@
     is-wsl "^2.2.0"
     lilconfig "^3.1.3"
     minimatch "^10.2.5"
-    semver "^7.7.3"
+    semver "^7.8.0"
     string-width "^4.2.3"
     supports-color "^8"
     tinyglobby "^0.2.14"
@@ -1805,10 +1805,10 @@
     lodash "^4.17.23"
     registry-auth-token "^5.1.1"
 
-"@oclif/table@^0.5.6":
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/@oclif/table/-/table-0.5.6.tgz#cc22cc3f620c9f23bdb734b0dd6f97cdda4a0f28"
-  integrity sha512-W0SlIIkcqYxRSbZVw+VnFPT6hStjm5OoMduli35569OXezBPS92yNsoIA9jAuAt3lVIGlnUIetnAUUjs+yLHKg==
+"@oclif/table@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@oclif/table/-/table-0.5.7.tgz#0198755a73fb4c8f4738dc472fab50b5a31cd19e"
+  integrity sha512-iS7gXzOhUf2toij0pxkcD6sPnXzr/j4eLugHwjSKI2+WgytjUycP7A3i6OIvXDrIGMuq8+S7wgZ7tCC1I18q+Q==
   dependencies:
     "@types/react" "^18.3.12"
     change-case "^5.4.4"
@@ -1939,15 +1939,15 @@
   resolved "https://registry.yarnpkg.com/@salesforce/prettier-config/-/prettier-config-0.0.3.tgz#ba648d4886bb38adabe073dbea0b3a91b3753bb0"
   integrity sha512-hYOhoPTCSYMDYn+U1rlEk16PoBeAJPkrdg4/UtAzupM1mRRJOwEPMG1d7U8DxJFKuXW3DMEYWr2MwAIBDaHmFg==
 
-"@salesforce/sf-plugins-core@^12.2.13":
-  version "12.2.13"
-  resolved "https://registry.yarnpkg.com/@salesforce/sf-plugins-core/-/sf-plugins-core-12.2.13.tgz#7dd7e9ad19c8279c97d020727d7acbcf17a5877b"
-  integrity sha512-Ug+CIQ7yLZVqdmSlgFPCnkzFXz5gzCR/l5hnMoVDrgNdI/PmCHAx2ZS0WsM3xkebkkOHtWFIZQ9ARip7wAbROw==
+"@salesforce/sf-plugins-core@^12.2.16":
+  version "12.2.16"
+  resolved "https://registry.yarnpkg.com/@salesforce/sf-plugins-core/-/sf-plugins-core-12.2.16.tgz#664ef3540f4556ba83a1e5378b5721d2aabde91e"
+  integrity sha512-csZxi6gJ675/+9dc1Q9KDDq21XRy+tKtgr1ZSPyA6TeP0J4bnuIfsk9cZCOzxaI6T8L6lM3CyWltQMJ927vpzA==
   dependencies:
     "@inquirer/confirm" "^6.0.12"
     "@inquirer/password" "^5.0.12"
-    "@oclif/core" "^4.11.0"
-    "@oclif/table" "^0.5.6"
+    "@oclif/core" "^4.11.2"
+    "@oclif/table" "^0.5.7"
     "@salesforce/core" "^8.29.0"
     "@salesforce/kit" "^3.2.3"
     "@salesforce/ts-types" "^2.0.12"
@@ -7435,6 +7435,11 @@ semver@^7.3.4, semver@^7.3.5, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0, semve
   version "7.7.4"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.4.tgz#28464e36060e991fa7a11d0279d2d3f3b57a7e8a"
   integrity sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==
+
+semver@^7.8.0:
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.8.0.tgz#ed0661039fcbcda2ce71f01fa6adbefaa77040df"
+  integrity sha512-AcM7dV/5ul4EekoQ29Agm5vri8JNqRyj39o0qpX6vDF2GZrtutZl5RwgD1XnZjiTAfncsJhMI48QQH3sN87YNA==
 
 sentence-case@^3.0.4:
   version "3.0.4"
