@@ -1,3 +1,10 @@
+## [2.9.148](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.147...v2.9.148) (2026-05-28)
+
+
+### Bug Fixes
+
+* **deps:** bump tmp from 0.2.5 to 0.2.7 ([#1166](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1166)) ([0eda5b3](https://github.com/jayree/sfdx-autocomplete-plugin/commit/0eda5b3564a77fb8bcb20c0c25da1ef417bb9f23))
+
 ## [2.9.147](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.146...v2.9.147) (2026-05-22)
 
 
