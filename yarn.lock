@@ -1543,10 +1543,10 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/plugin-command-snapshot@^5.3.22":
-  version "5.3.22"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-5.3.22.tgz#266853b2e4f327b9051720c444e8d3f15f3058e7"
-  integrity sha512-rbJ8+lTTAPr1CAoqpsRoKBkyMMCwWojSaf+8T8Q7tFltBxCrmNavKTzWKqL7GTTMXKme7jYleZVOxSM2T1A5xg==
+"@oclif/plugin-command-snapshot@^5.3.23":
+  version "5.3.23"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-5.3.23.tgz#c2ad62ba11293e273577d4f03cb74c993a8ad6bd"
+  integrity sha512-Hes42cYgcbznz8meI/PVIgJj9w3bHm2jXDSbiXxe1gP3K8K6Ebqupxvg6M62U/mMPCjzYODhVP+12wVdGk2tdQ==
   dependencies:
     "@oclif/core" "^4"
     ansis "^3.17.0"
