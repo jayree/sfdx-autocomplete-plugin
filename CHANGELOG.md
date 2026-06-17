@@ -1,3 +1,13 @@
+## [2.9.152](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.151...v2.9.152) (2026-06-17)
+
+
+### Bug Fixes
+
+* **deps:** bump @babel/core from 7.25.2 to 7.29.7 ([#1181](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1181)) ([21f9dde](https://github.com/jayree/sfdx-autocomplete-plugin/commit/21f9dde25af011a8af183de6b49429b5587650ee))
+* **deps:** bump form-data from 4.0.5 to 4.0.6 ([#1182](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1182)) ([c991951](https://github.com/jayree/sfdx-autocomplete-plugin/commit/c99195198ff07753fb0054e10cf9310b7ecb7d73))
+* **deps:** bump markdown-it from 14.1.0 to 14.2.0 ([#1180](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1180)) ([d310509](https://github.com/jayree/sfdx-autocomplete-plugin/commit/d310509d9692f02afe628b2b69e67030485748c1))
+* **deps:** bump ws from 8.20.1 to 8.21.0 ([#1183](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1183)) ([e7d9a98](https://github.com/jayree/sfdx-autocomplete-plugin/commit/e7d9a9806bf0febd0bfa1a45d74a01773d0ad017))
+
 ## [2.9.151](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.150...v2.9.151) (2026-06-12)
 
 
