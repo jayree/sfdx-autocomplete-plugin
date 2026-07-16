@@ -1,3 +1,10 @@
+## [2.9.157](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.156...v2.9.157) (2026-07-16)
+
+
+### Bug Fixes
+
+* **deps:** bump websocket-driver from 0.7.4 to 0.7.5 ([#1211](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1211)) ([ffc7c2e](https://github.com/jayree/sfdx-autocomplete-plugin/commit/ffc7c2ed6fb11effce609ab9163bf7f891c7e30f))
+
 ## [2.9.156](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.155...v2.9.156) (2026-07-10)
 
 
