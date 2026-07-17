@@ -1149,10 +1149,10 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/plugin-command-snapshot@^5.3.30":
-  version "5.3.30"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-5.3.30.tgz#0353f303d7bbfd8461833693f160288868c4bbb3"
-  integrity sha512-DyRRsNNlCs15vxoGQ1CcyP9Kkt+JGMg+Axovyd4Eutkg6Z/Q55HrIvxAT6shjIkWoFH44cqcDrhCGCA/7EFsLQ==
+"@oclif/plugin-command-snapshot@^5.3.31":
+  version "5.3.31"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-5.3.31.tgz#1064f54273cead813d90c07604c16c3e99f07850"
+  integrity sha512-jDfwOlgIK+p8Q/YZcBsExZPGeFArtFZ5tqWV+tkW/fKLMMAIbKcrW/NPFFTGsaS3tL8nJfeqyT0f4e5ODd+vDA==
   dependencies:
     "@oclif/core" "^4"
     ansis "^3.17.0"
@@ -1162,7 +1162,7 @@
     lodash.get "^4.4.2"
     lodash.sortby "^4.7.0"
     semver "^7.8.5"
-    ts-json-schema-generator "^1.5.1"
+    ts-json-schema-generator "^2.9.0"
 
 "@oclif/plugin-help@^6.2.53":
   version "6.2.53"
@@ -2533,10 +2533,10 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-12.0.0.tgz#b929db6df8546080adfd004ab215ed48cf6f2592"
-  integrity sha512-MwVNWlYjDTtOjX5PiD7o5pK0UrFU/OYgcJfjjK4RaHZETNtjJqrZa9Y9ds88+A+f+d5lv+561eZ+yCKoS3gbAA==
+commander@^14.0.3:
+  version "14.0.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-14.0.3.tgz#425d79b48f9af82fcd9e4fc1ea8af6c5ec07bbc2"
+  integrity sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==
 
 comment-parser@1.4.1:
   version "1.4.1"
@@ -3808,7 +3808,7 @@ glob@^7.0.0, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^8.0.3, glob@^8.1.0:
+glob@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/glob/-/glob-8.1.0.tgz#d388f656593ef708ee3e34640fdfb99a9fd1c33e"
   integrity sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==
@@ -6178,10 +6178,15 @@ safe-regex-test@^1.0.3:
     es-errors "^1.3.0"
     is-regex "^1.1.4"
 
-safe-stable-stringify@^2.3.1, safe-stable-stringify@^2.4.3:
+safe-stable-stringify@^2.3.1:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/safe-stable-stringify/-/safe-stable-stringify-2.4.3.tgz#138c84b6f6edb3db5f8ef3ef7115b8f55ccbf886"
   integrity sha512-e2bDA2WJT0wxseVd4lsDP4+3ONX6HpMXQa1ZhFQ7SU+GjvORCmShbCMltrtIDfkYhVHrOcPtj+KhmDBdPdZD1g==
+
+safe-stable-stringify@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/safe-stable-stringify/-/safe-stable-stringify-2.5.0.tgz#4ca2f8e385f2831c432a719b108a3bf7af42a1dd"
+  integrity sha512-b3rppTKm9T+PsVCBEOUR46GWI7fdOs00VKZ1+9c1EWDaDMvjQc6tUwuFyIprgGgTcWoVHSKrU8H31ZHA2e0RHA==
 
 "safer-buffer@>= 2.1.2 < 3.0.0":
   version "2.1.2"
@@ -6798,18 +6803,19 @@ ts-api-utils@^1.3.0:
   resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-1.3.0.tgz#4b490e27129f1e8e686b45cc4ab63714dc60eea1"
   integrity sha512-UQMIo7pb8WRomKR1/+MFVLTroIvDVtMX3K6OUir8ynLyzB8Jeriont2bTAtmNPa1ekAgN7YPDyf6V+ygrdU+eQ==
 
-ts-json-schema-generator@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/ts-json-schema-generator/-/ts-json-schema-generator-1.5.1.tgz#7759c421240be86d393a884ad186f926b22332db"
-  integrity sha512-apX5qG2+NA66j7b4AJm8q/DpdTeOsjfh7A3LpKsUiil0FepkNwtN28zYgjrsiiya2/OPhsr/PSjX5FUYg79rCg==
+ts-json-schema-generator@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/ts-json-schema-generator/-/ts-json-schema-generator-2.9.0.tgz#cc2b99db0e64ee9ee6898c8c74905337536ef9fc"
+  integrity sha512-NR5ZE108uiPtBHBJNGnhwoUaUx5vWTDJzDFG9YlRoqxPU76n+5FClRh92dcGgysbe1smRmYalM9Saj97GW1J4Q==
   dependencies:
     "@types/json-schema" "^7.0.15"
-    commander "^12.0.0"
-    glob "^8.0.3"
+    commander "^14.0.3"
+    glob "^13.0.6"
     json5 "^2.2.3"
     normalize-path "^3.0.0"
-    safe-stable-stringify "^2.4.3"
-    typescript "~5.4.2"
+    safe-stable-stringify "^2.5.0"
+    tslib "^2.8.1"
+    typescript "^5.9.3"
 
 ts-node@^10.8.1, ts-node@^10.9.2:
   version "10.9.2"
@@ -6975,11 +6981,6 @@ typedoc@^0.26.5:
   version "5.9.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.9.3.tgz#5b4f59e15310ab17a216f5d6cf53ee476ede670f"
   integrity sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==
-
-typescript@~5.4.2:
-  version "5.4.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.4.5.tgz#42ccef2c571fdbd0f6718b1d1f5e6e5ef006f611"
-  integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
 
 uc.micro@^2.0.0, uc.micro@^2.1.0:
   version "2.1.0"
