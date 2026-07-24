@@ -1,3 +1,14 @@
+## [2.9.159](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.158...v2.9.159) (2026-07-24)
+
+
+### Bug Fixes
+
+* **deps:** bump @oclif/core from 4.11.14 to 4.13.0 ([#1217](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1217)) ([78f9597](https://github.com/jayree/sfdx-autocomplete-plugin/commit/78f95977a3ab97bad3f5f543f3caaefc39906633))
+* **deps:** bump @salesforce/core from 8.32.4 to 8.32.6 ([#1215](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1215)) ([01b35c9](https://github.com/jayree/sfdx-autocomplete-plugin/commit/01b35c9f80435af5f2126198b88eb92ebf520355))
+* **deps:** bump fast-uri from 3.1.2 to 3.1.4 ([#1220](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1220)) ([bb1ea17](https://github.com/jayree/sfdx-autocomplete-plugin/commit/bb1ea1798c515966d8aca9cc64b6e9bab9c2246d))
+* **deps:** bump fs-extra from 11.3.6 to 11.4.0 ([#1218](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1218)) ([1cb3081](https://github.com/jayree/sfdx-autocomplete-plugin/commit/1cb3081370ef1f8c58fd0f43be61256771d5fad7))
+* **deps:** bump linkify-it from 5.0.1 to 5.0.2 ([#1221](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1221)) ([d6693e6](https://github.com/jayree/sfdx-autocomplete-plugin/commit/d6693e6879606201bd6c30c9635ea563d30a9472))
+
 ## [2.9.158](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.157...v2.9.158) (2026-07-17)
 
 
