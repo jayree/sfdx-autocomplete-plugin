@@ -1,3 +1,10 @@
+## [2.9.164](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.163...v2.9.164) (2026-08-25)
+
+
+### Bug Fixes
+
+* **deps:** bump github/codeql-action from 4.37.7 to 4.37.8 ([#1249](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1249)) ([df4875f](https://github.com/jayree/sfdx-autocomplete-plugin/commit/df4875fb8376a70febe021b2746b59195af9593b))
+
 ## [2.9.163](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.162...v2.9.163) (2026-08-21)
 
 
