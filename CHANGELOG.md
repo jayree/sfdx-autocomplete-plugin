@@ -1,3 +1,10 @@
+## [2.9.165](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.164...v2.9.165) (2026-09-02)
+
+
+### Bug Fixes
+
+* **deps:** bump browserslist from 4.23.0 to 4.28.8 ([#1258](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1258)) ([5cd14da](https://github.com/jayree/sfdx-autocomplete-plugin/commit/5cd14dac6693b2e1a864dbded5b4d92af43b4f1b))
+
 ## [2.9.164](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.163...v2.9.164) (2026-08-25)
 
 
