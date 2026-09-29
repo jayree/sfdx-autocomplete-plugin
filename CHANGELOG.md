@@ -1,3 +1,10 @@
+## [2.9.167](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.166...v2.9.167) (2026-09-29)
+
+
+### Bug Fixes
+
+* **deps:** bump undici from 8.10.0 to 8.11.2 ([#1275](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1275)) ([f1a54ca](https://github.com/jayree/sfdx-autocomplete-plugin/commit/f1a54caf9067070c86a4e94de917f91924bd9bb7))
+
 ## [2.9.166](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.165...v2.9.166) (2026-09-03)
 
 
