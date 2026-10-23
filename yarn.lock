@@ -1324,10 +1324,10 @@
     wrap-ansi "^7.0.0"
     wsl-utils "^0.4.0"
 
-"@oclif/core@^5.0.0", "@oclif/core@^5.1.2":
-  version "5.1.8"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-5.1.8.tgz#109564a941264534a5378f99a77e88e2a485c627"
-  integrity sha512-K1b3zdmbwANV9Jk+QN8aFvnXY/IhfWRnmhWn/V57h7alzbtck2je2DVVf0EkA01FokreF7Tpe+7hiGS87q30SA==
+"@oclif/core@^5.0.0", "@oclif/core@^5.1.2", "@oclif/core@^5.1.8":
+  version "5.1.9"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-5.1.9.tgz#6781c6c08ffeb1bc308f5501f77904859b1d3103"
+  integrity sha512-jZfN6pxHkgDpHD0dk4nhtaUtYdK39oZoWJCfmkpp7CUE+6mUZSb3WDrdBHnxI5n6CJIiWBrLchM7rBvuV0lRSA==
   dependencies:
     ansi-escapes "^4.3.2"
     ansis "^3.17.0"
@@ -1363,7 +1363,7 @@
     semver "^7.8.5"
     ts-json-schema-generator "^2.9.0"
 
-"@oclif/plugin-help@^7.0.2", "@oclif/plugin-help@^7.0.4":
+"@oclif/plugin-help@^7.0.4":
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@oclif/plugin-help/-/plugin-help-7.0.4.tgz#84ffc8e9995ed2265e10b92cbf7e30841a78ebd9"
   integrity sha512-i3AKiJrHF8y/Hj/1QfNBVaE4N9sOlodA/CFq8Lv998BZAHe/uBwgqL94FvaZenj/3REyl01stptAUp/AQjpfOw==
@@ -1380,12 +1380,12 @@
     ansis "^3.17.0"
     fast-levenshtein "^3.0.0"
 
-"@oclif/plugin-warn-if-update-available@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-warn-if-update-available/-/plugin-warn-if-update-available-4.0.0.tgz#2405a09513ebf7727dbf1906b0a2684eb5e5802d"
-  integrity sha512-F6VnIkO3xBEawTuaOjWQIOsOePZL3s4vDVbBqQgC+NYU+oBnFaJoGB8mJ+mtpdo/7H0lQ1YsKsMwCNb7EbsIZg==
+"@oclif/plugin-warn-if-update-available@^4.0.3":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-warn-if-update-available/-/plugin-warn-if-update-available-4.0.4.tgz#c3e290136d40a9a5312129ca73a16e8244fe9a29"
+  integrity sha512-Q/cslxPr4nfnF1r8nTemNV6Ds+yojZE7QL2g/DPRKAKlYWm/7oOejrEvGyCNHoskDLcgwtcRbelfL3xtJ172Qw==
   dependencies:
-    "@oclif/core" "^5.0.0"
+    "@oclif/core" "^5.1.8"
     ansis "^3.17.0"
     debug "^4.4.3"
     http-call "^5.2.2"
@@ -5710,10 +5710,10 @@ object.values@^1.1.7:
     define-properties "^1.2.0"
     es-abstract "^1.22.1"
 
-oclif@^6.0.8:
-  version "6.0.8"
-  resolved "https://registry.yarnpkg.com/oclif/-/oclif-6.0.8.tgz#a4e5b1b47a8ee82de301de77ad281142f7a5f57f"
-  integrity sha512-AAyS71vbahR1cnjpqV977nRHfVZAW3g0nEYbZNeRn22g+pZ4lJ7ATCJbF3/e8GOpU0tK5ubxdo5g8zFxnUOyGg==
+oclif@^6.0.10:
+  version "6.0.10"
+  resolved "https://registry.yarnpkg.com/oclif/-/oclif-6.0.10.tgz#32e108b132be71fd2fcb28d4da0ba036726f5170"
+  integrity sha512-LS+ZNHNsp2kXi6zDExwWY143zPeTsTTy+ubK0K6D8s+0a7nEmeInmrGcHJ68QgLYoNw8ubTgAkhl8U3rl9t9Sg==
   dependencies:
     "@aws-sdk/client-cloudfront" "^3.1147.0"
     "@aws-sdk/client-s3" "^3.1079.0"
@@ -5721,9 +5721,9 @@ oclif@^6.0.8:
     "@inquirer/input" "^2.2.4"
     "@inquirer/select" "^2.5.0"
     "@oclif/core" "^5.0.0"
-    "@oclif/plugin-help" "^7.0.2"
+    "@oclif/plugin-help" "^7.0.4"
     "@oclif/plugin-not-found" "^4.0.0"
-    "@oclif/plugin-warn-if-update-available" "^4.0.0"
+    "@oclif/plugin-warn-if-update-available" "^4.0.3"
     ansis "^3.16.0"
     async-retry "^1.3.3"
     change-case "^4"
