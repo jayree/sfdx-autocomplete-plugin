@@ -1,3 +1,13 @@
+## [2.9.173](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.172...v2.9.173) (2026-10-27)
+
+
+### Bug Fixes
+
+* **deps:** bump fast-uri from 3.1.8 to 3.1.9 ([#1308](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1308)) ([92c4d09](https://github.com/jayree/sfdx-autocomplete-plugin/commit/92c4d094aa26f7000f718a1e9b4eac8cabda3780))
+* **deps:** bump github/codeql-action from 4.39.0 to 4.39.1 ([#1305](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1305)) ([5d0e97d](https://github.com/jayree/sfdx-autocomplete-plugin/commit/5d0e97dd408fb6c2d8d8ecc6f20ee4bd7d7818c6))
+* **deps:** bump undici from 8.11.2 to 8.12.3 ([#1306](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1306)) ([aa31735](https://github.com/jayree/sfdx-autocomplete-plugin/commit/aa3173527fbd8dc1f5afd13335e4fdcbf3c15c9c))
+* **deps:** bump zod from 4.1.13 to 4.6.7 ([#1307](https://github.com/jayree/sfdx-autocomplete-plugin/issues/1307)) ([0ac2c78](https://github.com/jayree/sfdx-autocomplete-plugin/commit/0ac2c789df225f01598bdfc4efc3e49e0bbf286c))
+
 ## [2.9.172](https://github.com/jayree/sfdx-autocomplete-plugin/compare/v2.9.171...v2.9.172) (2026-10-23)
 
 
